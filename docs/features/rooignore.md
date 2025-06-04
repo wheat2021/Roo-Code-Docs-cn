@@ -10,6 +10,7 @@ The `.rooignore` file is a key feature for managing Roo Code's interaction with 
 
 *   **Purpose**: To protect sensitive information, prevent accidental changes to build artifacts or large assets, and generally define Roo's operational scope within your workspace.
 *   **How to Use**: Create a file named `.rooignore` in the root directory of your VS Code workspace. List patterns in this file to tell Roo which files and directories to ignore.
+*   **Scope**: `.rooignore` affects both Roo's tools and context mentions (like `@directory` attachments).
 
 Roo actively monitors the `.rooignore` file. Any changes you make are reloaded automatically, ensuring Roo always uses the most current rules. The `.rooignore` file itself is always implicitly ignored, so Roo cannot change its own access rules.
 
@@ -43,8 +44,13 @@ These tools directly check `.rooignore` before any file operation. If a file is 
 
 ### File Discovery and Listing
 
-*   **[`list_files`](/advanced-usage/available-tools/list-files) Tool**: When Roo lists files, ignored files are typically omitted or marked with a 🔒 symbol (see "User Experience" below).
+*   **[`list_files`](/advanced-usage/available-tools/list-files) Tool & `@directory` Attachments**: When Roo lists files or when you use `@directory` attachments, ignored files are omitted or marked with a 🔒 symbol (see "User Experience" below). Both use identical filtering logic.
 *   **Environment Details**: Information about your workspace (like open tabs and project structure) provided to Roo is filtered to exclude or mark ignored items.
+
+### Context Mentions
+
+*   **`@directory` Attachments**: Directory contents respect `.rooignore` patterns. Ignored files are filtered out or marked with `[🔒]` prefix depending on the `showRooIgnoredFiles` setting.
+*   **Single File Mentions**: Ignored files return "(File is ignored by .rooignore)" instead of content.
 
 ### Command Execution
 
@@ -58,7 +64,8 @@ These tools directly check `.rooignore` before any file operation. If a file is 
 
 ## User Experience and Notifications
 
-*   **Visual Cue (🔒)**: In file listings, files ignored by `.rooignore` may be marked with a lock symbol (🔒), depending on the `showRooIgnoredFiles` setting (defaults to `true`).
+*   **Visual Cue (🔒)**: In file listings and `@directory` attachments, files ignored by `.rooignore` may be marked with a lock symbol (🔒), depending on the `showRooIgnoredFiles` setting (defaults to `true`).
+*   **Ignore Messages**: Single file mentions return "(File is ignored by .rooignore)" instead of content.
 *   **Error Messages**: If a tool operation is blocked, Roo receives an error: `"Access to [file_path] is blocked by the .rooignore file settings. You must try to continue in the task without using this file, or ask the user to update the .rooignore file."`
 *   **Chat Notifications**: You will typically see a notification in the Roo chat interface when an action is blocked due to `.rooignore`.
 
