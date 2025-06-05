@@ -62,6 +62,7 @@ const sidebars: SidebarsConfig = {
           items: [
             'features/experimental/experimental-features',
             'features/experimental/codebase-indexing',
+            'features/experimental/concurrent-file-reads',
             'features/experimental/power-steering',
           ],
         },
@@ -190,6 +191,9 @@ const sidebars: SidebarsConfig = {
           items: [
             { type: 'doc', id: 'update-notes/v3.19', label: '3.19 Combined' },
             { type: 'doc', id: 'update-notes/v3.19.0', label: '3.19.0' },
+            { type: 'doc', id: 'update-notes/v3.19.1', label: '3.19.1' },
+            { type: 'doc', id: 'update-notes/v3.19.2', label: '3.19.2' },
+            { type: 'doc', id: 'update-notes/v3.19.3', label: '3.19.3' },
           ],
         },
         {
