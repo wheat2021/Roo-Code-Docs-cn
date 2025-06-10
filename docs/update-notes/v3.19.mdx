@@ -1,108 +1,33 @@
-# Roo Code 3.19 Release Notes (2025-06-02)
+# Roo Code 3.19 Release Notes (2025-06-09)
 
 This release series focuses on streamlining the user interface with intelligent context condensing enabled by default, improved mode organization, enhanced file protection, experimental multi-file reading capabilities, and numerous quality-of-life improvements.
 
-## Intelligent Context Condensing Now Default
-We've enabled intelligent content condensing by default and relocated the condense button for easier access:
+## Provider Updates
 
-<img src="/img/intelligent-context-condensing/intelligent-context-condensing-2.png" alt="Context condensed message in chat" width="600" />
+*   **OpenRouter Latency**: Replaced explicit caching with implicit caching for Gemini models via OpenRouter to significantly reduce latency ([#4488](https://github.com/RooCodeInc/Roo-Code/pull/4488))
 
-- **Default Activation**: Intelligent context condensing is now enabled out of the box for all users
-- **Improved Button Placement**: Moved the condense button out of the expanded task menu for quicker access
-- **Smart Error Handling**: The system now skips condensing and shows clear error messages if context grows during the condensing process
-
-<img src="/img/intelligent-context-condensing/intelligent-context-condensing.png" alt="Settings for Intelligent Context Condensing" width="600" />
-*Intelligent Context Condensing configuration options: automatic triggering toggle, threshold slider, API configuration selection, and custom prompt customization.*
-
-For comprehensive details about this feature, see the main [Intelligent Context Condensing documentation](/features/intelligent-context-condensing).
-
-## Streamlined Mode Organization
-We've reorganized the interface for better workflow organization:
-
-- **Modes Tab**: Transformed the Prompts tab into a dedicated Modes tab for clearer navigation
-- **Settings Relocation**: Moved support prompts to Settings for better organization
-- **Cleaner Interface**: Simplified the main interface by grouping related features more logically
-
-Navigate between different modes and prompts more intuitively.
-
-## Multi-File Reading (Experimental)
-We've introduced an experimental feature for handling large codebases more efficiently:
-
-- **Batch File Processing**: Read up to 100 files in a single operation for comprehensive code analysis
-- **Performance Control**: Adjustable concurrent file read limits to optimize for your system
-- **Smart Permission Management**: Streamlined approval process for multi-file operations
-- **Efficiency Boost**: Dramatically reduces the time needed to analyze multiple related files
-
-This experimental feature transforms how Roo Code understands and works with your entire codebase at once (thanks samhvw8!).
-
-## Enterprise-Ready VPC Endpoint Support
-We've added crucial enterprise security features for [AWS Bedrock](/providers/bedrock) users:
-
-- **Secure Corporate Access**: Configure custom VPC endpoints to keep all LLM transactions within your firewall
-- **Easy Configuration**: Simple checkbox and text field to enable VPC endpoint usage
-- **Compliance Ready**: Meet your organization's security policies while using powerful AI models
-- **Flexible Control**: Toggle VPC endpoints on/off as needed with settings persistence
-
-Enterprise customers can now use Roo Code with AWS Bedrock while maintaining complete network security (thanks kcwhite!). See the [AWS Bedrock configuration guide](/providers/bedrock#configuration-in-roo-code) for setup instructions.
+*   **Bedrock**: Improved model information detection for custom Bedrock ARNs, ensuring better compatibility (thanks adamhill!)
 
 ## QOL Improvements
 
 *   **Fix reading PDF, DOCX, and IPYNB files in [`read_file`](/advanced-usage/available-tools/read-file) tool**: Ensures reliable reading of these file types (thanks samhvw8!)
-*   **Enhanced Sidebar Compatibility**: Menu functionality now remains stable when moving Roo between primary and secondary sidebars (thanks chrarnoldus!)
-*   **Streamable HTTP Transport for MCP Servers**: Added support for MCP servers using streamable HTTP-based transport (thanks taylorwilsdon!) ([#3260](https://github.com/RooCodeInc/Roo-Code/pull/3260))
-*   **MCP Server Instructions Support**: Added support for server instructions in MCP configuration (thanks qingyuan1109!) ([#4210](https://github.com/RooCodeInc/Roo-Code/pull/4210))
-*   **Optimized Chat Layout and Styles**: Fine-tuned the layout and styling of chat messages for improved readability (thanks zhangtony239!) ([#4205](https://github.com/RooCodeInc/Roo-Code/pull/4205))
-*   **MCP Server Connection Reliability**: Fixed SSE connection issue for MCP servers using web-based transports (thanks taylorwilsdon!) ([#4251](https://github.com/RooCodeInc/Roo-Code/pull/4251))
+*   **History Preview**: Buttons in the history preview now fade when there is no interaction, providing a cleaner UI (thanks samhvw8!) ([#4458](https://github.com/RooCodeInc/Roo-Code/pull/4458))
 
 ## Bug Fixes
 
-*   **Major Memory Leak Fixes**: Multiple memory leaks resolved for improved stability and performance:
-    - **ChatView**: Fixed leaks from unmanaged async operations and setTimeouts (thanks kiwina!)
-    - **WorkspaceTracker**: FileSystemWatcher and other disposables are now properly cleaned up (thanks kiwina!)
-    - **RooTips**: setTimeout is now cleared to prevent state updates on unmounted components (thanks kiwina!)
-    - **RooIgnoreController**: FileSystemWatcher leak resolved by ensuring Task.dispose() is always called (thanks kiwina!)
-    - **Clipboard**: useCopyToClipboard now clears setTimeout to avoid memory leaks (thanks kiwina!)
-    - **ClineProvider**: Instance cleanup improved to prevent lingering resources (thanks xyOz-dev!)
-*   **Directory Mention Protection**: Fixed [`@directory`](/basic-usage/context-mentions) not respecting [`.rooignore`](/features/rooignore) files (thanks xyOz-dev!)
-*   **Tool File Protection**: Added [`rooignore`](/features/rooignore) checking for [`insert_content`](/advanced-usage/available-tools/insert-content) and [`search_and_replace`](/advanced-usage/available-tools/search-and-replace) tools
-*   **Memory Leak Fix**: Resolved memory leak in ChatView by stabilizing callback props (thanks samhvw8!)
-*   **Empty File Creation**: Fixed [`write_to_file`](/advanced-usage/available-tools/write-to-file) to properly create empty files when content is empty (thanks Ruakij!)
-*   **Chat Input Stability**: Fixed chat input clearing during running tasks (thanks xyOz-dev!)
-*   **MCP Server Authentication**: Fixed SSE header passing to correctly authenticate with remote MCP servers
-*   **AWS Bedrock Conversations**: Resolved context condensing error that required conversations to start with user messages
-*   **Terminal UTF-8 Encoding**: Fixed encoding errors when running Ruby/CocoaPods commands (thanks mr-ryan-james!)
-*   **Sidebar Context Menus**: Resolved empty menu items by properly setting sidebar name (thanks chrarnoldus!)
-*   **Documentation Links**: Fixed broken CONTRIBUTING.md link in feature request template (thanks cannuri!)
-*   **Prevent Full File Dump on User Edit**: Resolved an issue where editing a file before saving a proposed modification could dump the entire file content into the context. This fix prevents context bloat, maintains model focus, and reduces costs ([#4219](https://github.com/RooCodeInc/Roo-Code/pull/4219), [#3654](https://github.com/RooCodeInc/Roo-Code/pull/3654)) (thanks KJ7LNW!).
-*   **Correct OpenAI-Compatible API Key Label**: The label for OpenAI-compatible API keys in settings now correctly reads "API Key" instead of "OpenAI API Key" for better clarity ([#4191](https://github.com/RooCodeInc/Roo-Code/pull/4191)).
-*   **Prevent Invalid Markers in `apply_diff` REPLACE**: Added validation to ensure `:start_line:` and `:end_line:` markers are not incorrectly included in the `REPLACE` section of `apply_diff` operations, improving robustness ([#4015](https://github.com/RooCodeInc/Roo-Code/pull/4015)) (thanks KJ7LNW!).
-*   **Fix Virtuoso Footer Re-rendering**: Addressed an issue where the Virtuoso component's footer would continuously re-render, improving UI performance ([#4209](https://github.com/RooCodeInc/Roo-Code/pull/4209)) (thanks kiwina!).
-*   **Release Memory in `apply_diff`**: Optimized memory usage in the `apply_diff` tool by explicitly releasing the original content buffer after use, helping to prevent potential memory leaks ([#4193](https://github.com/RooCodeInc/Roo-Code/pull/4193)) (thanks xyOz-dev!).
-*   **Fix Directory Link Handling in Markdown**: Enhanced how directory links in markdown (e.g., `[some/directory/](some/directory/)`) are handled, ensuring they correctly open in the Explorer view ([#3690](https://github.com/RooCodeInc/Roo-Code/pull/3690)) (thanks KJ7LNW!).
-*   **Typo Fixes**: Corrected various typos in comments and tool use prompts ([#4220](https://github.com/RooCodeInc/Roo-Code/pull/4220), [#4095](https://github.com/RooCodeInc/Roo-Code/pull/4095)) (thanks mrubens, noritaka1166!).
+*   **Mermaid Diagrams**: Fixed Content Security Policy (CSP) errors for Mermaid diagrams by implementing an enhanced bundling strategy (thanks KJ7LNW!)
+*   **LiteLLM Provider**: Fixed a bug that caused an error when the LiteLLM provider URL contained a trailing slash (thanks kcwhite!) ([#4275](https://github.com/RooCodeInc/Roo-Code/pull/4275))
+*   **Copy Button**: Fixed an issue with the copy button logic (thanks samhvw8!) ([#4458](https://github.com/RooCodeInc/Roo-Code/pull/4458))
+*   **MCP Server Management**: Fixed a bug where the MCP server list would not update correctly after changes (like adding or deleting servers) without a full extension reload. The manual refresh button and automatic refresh on configuration changes now work reliably. (thanks taylorwilsdon!) ([#4267](https://github.com/RooCodeInc/Roo-Code/pull/4267))
 
-## Provider Updates
+## Documentation Updates
 
-*   **Gemini 2.5 Pro Preview 06-05 Model Support**: Added support for the newly released Gemini 2.5 Pro Preview 06-05 model (thanks daniel-lxs and shariqriazz!). This model is available in the [Gemini](/providers/gemini), [Vertex](/providers/vertex), and [OpenRouter](/providers/openrouter) providers.
-*   **DeepSeek R1 0528**: Add DeepSeek R1 0528 model support to [Chutes provider](/providers/chutes) (thanks zeozeozeo!)
-*   **AWS Regions**: Updated AWS regions to include Spain and Hyderabad
-*   **Enhanced LiteLLM Provider**: Added cached read and write tokens to stats and cost calculation (thanks mollux!) ([#4206](https://github.com/RooCodeInc/Roo-Code/pull/4206))
+*   **Concurrent File Reads**: Clarified that the default concurrent file read limit is 15, not the maximum (thanks olearycrew!) ([#4474](https://github.com/RooCodeInc/Roo-Code/pull/4474))
 
 ## Misc Improvements
 
+*   **OpenAI Compatible Embedder**: Added a new embedder for codebase indexing that is compatible with the OpenAI API, expanding options for local and custom embedding models (thanks SannidhyaSah!)
 *   **Enforce [`codebase_search`](/advanced-usage/available-tools/codebase-search) as primary tool**: Roo Code now always uses codebase_search as the first step for code understanding tasks, improving accuracy and consistency (thanks hannesrudolph!)
-*   **Improved Docker setup for evals**: Dockerfile and docker-compose updated for better isolation, real-time monitoring, and streamlined configuration
-*   **Move evals into pnpm workspace, switch from SQLite to Postgres**: Evals are now managed in a pnpm workspace and use PostgreSQL for improved scalability
-*   **Refactor [MCP](/features/mcp/overview) to use getDefaultEnvironment for stdio client transport**: Simplifies MCP client setup and improves maintainability (thanks samhvw8!)
-*   **Get rid of "partial" component in names referencing not necessarily partial messages**: Improves code clarity (thanks wkordalski!)
-*   **Improve feature request template**: Makes it easier to submit actionable feature requests (thanks elianiva!)
-*   **MCP Environment Variables**: Add environment variable injection support for whole MCP config (thanks NamesMT!)
-*   **Shell Compatibility**: Improve POSIX shell compatibility in pre-push hook (thanks PeterDaveHello and chrarnoldus!)
-*   **Windows Terminal**: Update PAGER environment variable for Windows compatibility in Terminal (thanks SmartManoj!)
-*   **Search Clarity**: Update codebase search description to emphasize English query requirements (thanks ChuKhaLi!)
-*   **Backend Task Tracking**: Added metadata to Unbound API requests for improved service reliability (thanks pugazhendhi-m!)
-*   **Model-Specific Caching**: Optimized cache strategies for Gemini and Anthropic models for better performance
-*   **Unified History Item UI**: Refactored history item UI components for code consistency (thanks daniel-lxs!) ([#4151](https://github.com/RooCodeInc/Roo-Code/pull/4151))
-*   **Node.js Upgrade**: Upgraded Node.js to `v20.19.2` to incorporate the latest security enhancements and ensure a more secure environment (thanks PeterDaveHello!) ([#4212](https://github.com/RooCodeInc/Roo-Code/pull/4212))
+*   **Build Scripts**: Removed unnecessary `npx` usage from some npm scripts (thanks user202729!) ([#4003](https://github.com/RooCodeInc/Roo-Code/pull/4003))
 
 Thank you to all our contributors for making Roo Code better with each release!
