@@ -1,6 +1,6 @@
 # Roo Code 3.20.0 Release Notes (2025-06-12)
 
-This release introduces the experimental Marketplace for extensions and modes, multi-file edits, and numerous other improvements and bug fixes.
+This release introduces the experimental Marketplace for extensions and modes, concurrent file edits and reads, and numerous other improvements and bug fixes.
 
 ## MCP & Mode Marketplace (experimental)
 
@@ -17,27 +17,27 @@ We've introduced an experimental [Marketplace](/features/marketplace) for discov
 
 ## Concurrent Edits (aka multi-file)(experimental)
 
-You can now perform edits across multiple files at once, dramatically speeding up refactoring and multi-file changes. Instead of approving each file edit individually, you can review and approve all changes at once through a unified batch approval interface.
+You can now perform edits across multiple files at once, dramatically speeding up refactoring and multi-file changes. Instead of approving each file edit individually, you can review and approve all changes at once through a unified batch approval interface. Check out our [concurrent file edits documentation](/features/experimental/concurrent-file-edits) for more details.
 
 **To enable:** Open Roo Code settings (gear icon) → Experimental Settings → Enable "Enable multi-file edits"
 
-For more information, see the [documentation](/features/experimental/concurrent-file-edits). (thanks samhvw8!) ([#4608](https://github.com/RooCodeInc/Roo-Code/pull/4608))
+(thanks samhvw8!) ([#4608](https://github.com/RooCodeInc/Roo-Code/pull/4608))
 
 <img src="/img/concurrent-file-edits/concurrent-file-edits-1.png" alt="Batch diff approval interface showing multiple file changes" width="600" />
 
 ## Concurrent Reads (aka multi-file)
 
-The setting for concurrent reads has been moved to the context settings, with a default of 5. This feature allows Roo to read multiple files from your workspace in a single step, significantly improving efficiency when working on tasks that require context from several files.
+The setting for concurrent reads has been moved to the context settings, with a default of 5. This feature allows Roo to read multiple files from your workspace in a single step, significantly improving efficiency when working on tasks that require context from several files. Learn more in our [concurrent file reads documentation](/features/concurrent-file-reads).
 
-For more information, see the [documentation](/features/concurrent-file-reads). ([#4597](https://github.com/RooCodeInc/Roo-Code/pull/4597))
+([#4597](https://github.com/RooCodeInc/Roo-Code/pull/4597))
 
 <img src="/img/concurrent-file-reads/concurrent-file-reads-2.png" alt="Batch approval interface for reading multiple files" width="600" />
 
 ## Prompt History
 
-Navigate your prompt history with a terminal-like experience using the arrow keys. This feature makes it easy to reuse and refine previous prompts, whether from your current conversation or past tasks.
+Navigate your prompt history with a terminal-like experience using the arrow keys. This feature makes it easy to reuse and refine previous prompts, whether from your current conversation or past tasks. See our [keyboard shortcuts documentation](/features/keyboard-shortcuts#command-line-style-prompt-history-navigation) for usage details.
 
-For more information, see the [documentation](/features/keyboard-shortcuts#command-line-style-prompt-history-navigation). ([#4580](https://github.com/RooCodeInc/Roo-Code/pull/4580))
+([#4580](https://github.com/RooCodeInc/Roo-Code/pull/4580))
 
 ## QOL Improvements
 

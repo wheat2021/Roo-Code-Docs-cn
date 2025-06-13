@@ -118,4 +118,4 @@ Each tool group provides specific capabilities:
 - **`command`**: Terminal command execution
 - **`mcp`**: Model Context Protocol server interactions
 
-For detailed information about available tools, see the [Available Tools documentation](/advanced-usage/available-tools).
+For detailed information about available tools, see the [Available Tools documentation](/advanced-usage/available-tools/tool-use-overview).
