@@ -2,9 +2,13 @@
 
 Modes in Roo Code are specialized personas that tailor the assistant's behavior to your current task. Each mode offers different capabilities, expertise, and access levels to help you accomplish specific goals.
 
-:::info Sticky Models
+:::info Sticky Models & Mode Persistence
 Each mode remembers your last-used model. When switching modes, Roo automatically selects that model—no manual selection needed. Assign different models to different modes (e.g., Gemini 2.5 Preview for `🏗️ Architect` mode, Claude Sonnet 3.7 for `💻 Code` mode) and Roo will switch models automatically when you change modes.
+
+Additionally, your selected mode persists between sessions—Roo remembers which mode you were using when you return.
 :::
+
+---
 
 ## Why Use Different Modes?
 
@@ -12,6 +16,8 @@ Each mode remembers your last-used model. When switching modes, Roo automaticall
 - **Safety controls:** Prevent unintended file modifications when focusing on planning or learning
 - **Focused interactions:** Receive responses optimized for your current activity
 - **Workflow optimization:** Seamlessly transition between planning, implementing, debugging, and learning
+
+---
 
 ## Switching Between Modes
 
@@ -21,7 +27,7 @@ Four ways to switch modes:
    
    <img src="/img/using-modes/using-modes.png" alt="Using the dropdown menu to switch modes" width="400" />
 
-2. **Slash command:** Type `/architect`, `/ask`, `/debug`, `/code`, or `/orchestrator` in the chat input
+2. **Slash command:** Type `/architect`, `/ask`, `/debug`, `/code`, or `/orchestrator` at the beginning of your message. This will switch to that mode and clear the input field.
    
    <img src="/img/using-modes/using-modes-1.png" alt="Using slash commands to switch modes" width="400" />
 
@@ -36,6 +42,8 @@ Four ways to switch modes:
 4. **Accept suggestions:** Click on mode switch suggestions that Roo offers when appropriate
    
     <img src="/img/using-modes/using-modes-2.png" alt="Accepting a mode switch suggestion from Roo" width="400" />
+
+---
 
 ## Built-in Modes
 
@@ -85,10 +93,29 @@ Four ways to switch modes:
 |--------|---------|
 | **Name** | `🪃 Orchestrator` |
 | **Description** | A strategic workflow orchestrator (aka Boomerang Mode) that breaks down complex tasks and delegates them to specialized modes. Learn more about [Boomerang Tasks](/features/boomerang-tasks). |
-| **Tool Access** | Access to `read`, `browser`, `command`, `mcp`, and restricted `edit` (mode configuration files only: `.roomodes`, `custom_modes.json`) |
+| **Tool Access** | No direct tool access (uses `new_task` tool to delegate work to other modes) |
 | **Ideal For** | Managing multi-step projects, coordinating work across different modes, and automating complex workflows |
 | **Special Features** | Uses the [`new_task`](/advanced-usage/available-tools/new-task) tool to delegate subtasks to other modes. |
+
+---
+
+## Additional Modes
+
+Additional specialized modes may be available depending on your Roo Code configuration, including Test, Design Engineer, Release Engineer, Translate, Issue Fixer, Issue Writer, Integration Tester, PR Reviewer, and Docs Extractor modes. Check your mode selector for the complete list available in your installation.
+
+---
 
 ## Customizing Modes
 
 Tailor Roo Code's behavior by customizing existing modes or creating new specialized assistants. Define tool access, file permissions, and behavior instructions to enforce team standards or create purpose-specific assistants. See [Custom Modes documentation](/features/custom-modes) for setup instructions.
+
+### Understanding Tool Groups
+
+Each tool group provides specific capabilities:
+- **`read`**: File reading, listing, and searching capabilities
+- **`edit`**: File modification and creation capabilities
+- **`browser`**: Web browsing and search capabilities
+- **`command`**: Terminal command execution
+- **`mcp`**: Model Context Protocol server interactions
+
+For detailed information about available tools, see the [Available Tools documentation](/advanced-usage/available-tools).

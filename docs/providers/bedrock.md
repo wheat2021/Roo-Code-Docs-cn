@@ -8,6 +8,8 @@ Roo Code supports accessing models through Amazon Bedrock, a fully managed servi
 
 **Website:** [https://aws.amazon.com/bedrock/](https://aws.amazon.com/bedrock/)
 
+---
+
 ## Prerequisites
 
 *   **AWS Account:** You need an active AWS account.
@@ -17,6 +19,8 @@ Roo Code supports accessing models through Amazon Bedrock, a fully managed servi
     ```bash
      aws configure
     ```
+
+---
 
 ## Getting Credentials
 
@@ -28,6 +32,8 @@ You have two main options for configuring AWS credentials:
     *   *(Optional)* Create a session token if required by your IAM configuration.
 2.  **AWS Profile:**
     *   Configure an AWS profile using the AWS CLI or by manually editing your AWS credentials file.  See the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) for details.
+
+---
 
 ## Supported Models
 
@@ -72,6 +78,8 @@ Roo Code supports the following models through Bedrock (based on source code):
 
 Refer to the [Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html) for the most up-to-date list of available models and their IDs. Make sure to use the *model ID* when configuring Roo Code, not the model name.
 
+---
+
 ## Configuration in Roo Code
 
 1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
@@ -89,6 +97,21 @@ Refer to the [Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/
     *   Enter your VPC endpoint URL in the text field that appears
     *   This ensures all LLM transactions remain within your corporate network
 7.  **Select Model:** Choose your desired model from the "Model" dropdown.
+
+---
+---
+
+## Reasoning Budget for Claude Models
+
+Roo Code supports using the reasoning budget (extended thinking) for Anthropic's Claude models on Bedrock. This allows the model to "think" more before responding, which can be useful for complex tasks.
+
+To enable the reasoning budget:
+
+1.  **Select a supported Claude model** (e.g., `anthropic.claude-3-sonnet-20240229-v1:0`).
+2.  **Enable Reasoning Mode** in the model settings.
+3.  **Adjust the thinking budget** to control how much the model should "think".
+
+This feature is only available for supported Claude models.
 
 ## Tips and Notes
 

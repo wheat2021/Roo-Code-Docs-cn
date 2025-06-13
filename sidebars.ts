@@ -30,15 +30,16 @@ const sidebars: SidebarsConfig = {
         'features/code-actions',
         'features/custom-instructions',
         'features/custom-modes',
-        'features/enhance-prompt',
         'features/fast-edits',
+        'features/enhance-prompt',
+        'features/settings-management',
         'features/intelligent-context-condensing',
         'features/keyboard-shortcuts',
         'features/model-temperature',
+        'features/concurrent-file-reads',
         'features/rooignore',
-        'features/settings-management',
-        'features/shell-integration',
         'features/suggested-responses',
+        'features/shell-integration',
         {
           type: 'category',
           label: 'MCP',
@@ -61,8 +62,9 @@ const sidebars: SidebarsConfig = {
           items: [
             'features/experimental/experimental-features',
             'features/experimental/codebase-indexing',
-            'features/experimental/concurrent-file-reads',
+            'features/experimental/concurrent-file-edits',
             'features/experimental/power-steering',
+            'features/marketplace',
           ],
         },
         'features/more-features',
@@ -187,6 +189,14 @@ const sidebars: SidebarsConfig = {
         'update-notes/index',
         {
           type: 'category',
+          label: '3.20',
+          items: [
+            { type: 'doc', id: 'update-notes/v3.20', label: '3.20 Combined' },
+            { type: 'doc', id: 'update-notes/v3.20.0', label: '3.20.0' },
+          ],
+        },
+        {
+          type: 'category',
           label: '3.19',
           items: [
             { type: 'doc', id: 'update-notes/v3.19', label: '3.19 Combined' },
@@ -197,6 +207,7 @@ const sidebars: SidebarsConfig = {
             { type: 'doc', id: 'update-notes/v3.19.4', label: '3.19.4' },
             { type: 'doc', id: 'update-notes/v3.19.5', label: '3.19.5' },
             { type: 'doc', id: 'update-notes/v3.19.6', label: '3.19.6' },
+            { type: 'doc', id: 'update-notes/v3.19.7', label: '3.19.7' },
           ],
         },
         {
