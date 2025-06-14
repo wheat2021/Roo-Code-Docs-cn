@@ -1,7 +1,7 @@
 
 # search_files
 
-The `search_files` tool performs regex searches across multiple files in your project. It helps Roo locate specific code patterns, text, or other content throughout your codebase with contextual results.
+The `search_files` tool performs regex searches across multiple files within your project's workspace. For security, it cannot search outside the current workspace directory. It helps Roo locate specific code patterns, text, or other content throughout your codebase with contextual results.
 
 ---
 
@@ -9,7 +9,7 @@ The `search_files` tool performs regex searches across multiple files in your pr
 
 The tool accepts these parameters:
 
-- `path` (required): The path of the directory to search in, relative to the current working directory
+- `path` (required): The path of the directory to search in, relative to the current workspace directory. The search is confined to the workspace.
 - `regex` (required): The regular expression pattern to search for (uses Rust regex syntax)
 - `file_pattern` (optional): Glob pattern to filter files (e.g., '*.ts' for TypeScript files)
 
@@ -51,6 +51,7 @@ This tool searches across files in a specified directory using regular expressio
 - Cannot search within compressed files or archives
 - Default context size is fixed (1 line before and after)
 - May display varying context sizes when matches are close together due to result grouping
+- For security, searches are strictly limited to the current workspace and cannot access parent directories or other locations on the file system.
 
 ---
 
