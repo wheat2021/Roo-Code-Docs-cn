@@ -10,12 +10,12 @@ Roo Code (formerly Roo Cline) is an AI-powered autonomous coding agent that live
 
 ## What Can Roo Code Do?
 
-- 🚀 **Generate Code** from natural language descriptions
-- 🔧 **Refactor & Debug** existing code
-- 📝 **Write & Update** documentation
-- 🤔 **Answer Questions** about your codebase
-- 🔄 **Automate** repetitive tasks
-- 🏗️ **Create** new files and projects
+- **Generate Code** from natural language descriptions
+- **Refactor & Debug** existing code
+- **Write & Update** documentation
+- **Answer Questions** about your codebase
+- **Automate** repetitive tasks
+- **Create** new files and projects
 
 ---
 
