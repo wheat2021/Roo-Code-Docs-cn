@@ -165,6 +165,7 @@ const sidebars: SidebarsConfig = {
             'community/dynamic-rules',
             'community/roo-commander',
             'community/maestro',
+            'community/roocabulary',
           ],
         },
         {
