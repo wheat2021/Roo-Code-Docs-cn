@@ -270,6 +270,44 @@ For optimal shell integration with WSL, we recommend:
 
 ## Known Issues and Workarounds
 
+### Cygwin (bash, zsh)
+
+Cygwin provides a Unix-like environment on Windows systems. To configure Cygwin as your terminal in VS Code:
+
+1. Install Cygwin from [https://www.cygwin.com/](https://www.cygwin.com/)
+
+2. Open VS Code settings:
+   - Select File > Preferences > Settings
+   - Click the "Open Settings (JSON)" icon in the top right corner
+   
+3. Add the following configuration to your `settings.json` (inside the top-level curly braces `{}`):
+   ```json
+   {
+     "terminal.integrated.profiles.windows": {
+       "Cygwin": {
+         "path": "C:\\cygwin64\\bin\\bash.exe",
+         "args": ["--login"],
+         "env": {"CHERE_INVOKING": "1"}
+       }
+     },
+     "terminal.integrated.defaultProfile.windows": "Cygwin"
+   }
+   ```
+
+   > Note: If you have 32-bit Cygwin installed, use `"C:\\cygwin\\bin\\bash.exe"` for the path.
+
+4. Understanding the configuration:
+   - `path`: Points to the Bash executable in your Cygwin installation
+   - `args`: The `--login` flag ensures the shell reads profile files
+   - `env`: The `CHERE_INVOKING` environment variable tells Cygwin to use the current directory as the working directory
+   - `terminal.integrated.defaultProfile.windows`: Sets Cygwin as the default terminal profile
+
+5. To open a new Cygwin terminal:
+   - Press Ctrl+Shift+(backtick) to open a new terminal, or
+   - Press `F1`, type "Terminal: Create New Terminal (with Profile)", and select "Cygwin"
+
+While our testing shows that this works out of the box, if you encounter shell integration issues with Cygwin, ensure you have added the appropriate shell integration hooks to your Cygwin bash profile as described in the "Manual Shell Integration Installation" section.
+
 ### VS Code Shell Integration for Fish + Cygwin on Windows
 
 For fellow Windows users running Fish terminal within a Cygwin environment, here's how VS Code's shell integration works:
@@ -331,6 +369,9 @@ For fellow Windows users running Fish terminal within a Cygwin environment, here
       },
 
       // Optional: Set fish as your default if desired
+---
+
+## Known Issues and Workarounds
       // "terminal.integrated.defaultProfile.windows": "fish", // or "fish-direct" depending what you use.
 
       // ... other settings ...
@@ -369,9 +410,6 @@ This setup works reliably on Windows systems using Cygwin, Fish, and the Starshi
    - Try enabling some or all ZSH-related workarounds in Roo settings
    - These settings can help regardless of your operating system
 
----
-
-## Known Issues and Workarounds
 
 ### Ctrl+C Behavior
 
@@ -383,7 +421,7 @@ This setup works reliably on Windows systems using Cygwin, Fish, and the Starshi
 
 **Issue**: Commands that span multiple lines can confuse Roo and may show output from previous commands mixed in with current output.
 
-**Workaround**: Instead of multi-line commands, use command chaining with `&&` to keep everything on one line (e.g., `echo a && echo b` instead of typing each command on a separate line).
+**Workaround**: Instead of multi-line commands, use command chaining with `&amp;&amp;` to keep everything on one line (e.g., `echo a &amp;&amp; echo b` instead of typing each command on a separate line).
 
 ### PowerShell-Specific Issues
 
@@ -397,7 +435,6 @@ This setup works reliably on Windows systems using Cygwin, Fish, and the Starshi
 **Issue**: Sometimes VS Code doesn't show or capture all the output from a command.
 
 **Workaround**: If you notice missing output, try closing and reopening the terminal tab, then run the command again. This refreshes the terminal connection.
-
 ---
 
 ## Troubleshooting Resources
