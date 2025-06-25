@@ -50,6 +50,12 @@ Choose one of these options for generating embeddings:
 - Supports any Ollama-compatible embedding model
 - Requires Ollama base URL configuration
 
+**OpenAI Compatible**
+- Works with any OpenAI-compatible API endpoint
+- Supports providers like Google Gemini, Azure OpenAI, and others
+- Requires base URL and API key configuration
+- Uses OpenAI-style request/response format
+
 ### Setting Up Ollama for Embeddings
 
 1. **Install Ollama**
@@ -78,6 +84,28 @@ Choose one of these options for generating embeddings:
 5. **Configure in Roo Code**
    - Set Ollama Base URL: `http://localhost:11434`
    - Select Model: `nomic-embed-text`
+
+### Setting Up OpenAI Compatible Providers
+
+OpenAI Compatible providers use the same API format as OpenAI but with different endpoints. This includes Google Gemini, Azure OpenAI, and other compatible services.
+
+**Example: Google Gemini**
+
+1. **Get API Key**
+   - Visit [Google AI Studio](https://aistudio.google.com/)
+   - Create or select a project
+   - Generate an API key
+
+2. **Configure in Roo Code**
+   - **Provider**: Select "OpenAI Compatible"
+   - **Base URL**: `https://generativelanguage.googleapis.com/v1beta/openai/`
+   - **API Key**: Your Google AI Studio API key
+   - **Model**: `text-embedding-004`
+   - **Embedding Dimension**: `768`
+
+**Other Compatible Providers:**
+- **Azure OpenAI**: `https://your-resource.openai.azure.com/openai/deployments/your-deployment/`
+- **Local OpenAI-compatible servers**: Custom endpoints running compatible APIs
 
 ### Vector Database
 
@@ -128,6 +156,7 @@ For team or production use:
 4. Configure your embedding provider:
    - **OpenAI**: Enter API key and select model
    - **Ollama**: Enter base URL and select model
+   - **OpenAI Compatible**: Enter base URL, API key, and select model
 5. Set Qdrant URL and optional API key
 6. Click **Save** to start initial indexing
 
