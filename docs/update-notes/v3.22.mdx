@@ -44,6 +44,7 @@ This gives you another powerful free option alongside local models and other fre
 
 <img src="/img/v3.22.0/v3.22.0-1.png" alt="VSCode settings showing the Enable Roo Code quick fixes toggle option" width="300" />
 
+* **Mode Switching**: Follow-up question suggestions can now switch modes directly, eliminating the need to manually change modes after selecting a suggestion ([#5200](https://github.com/RooCodeInc/Roo-Code/pull/5200))
 * **Consistent Tooltips**: Standardized tooltip delays to 300ms across the entire application for smooth, predictable behavior ([#5098](https://github.com/RooCodeInc/Roo-Code/pull/5098))
 * **Cost Transparency**: Improved OpenRouter BYOK cost calculation accuracy using official upstream costs and restored cached token count visibility ([#5145](https://github.com/RooCodeInc/Roo-Code/pull/5145))
 
@@ -53,6 +54,8 @@ This gives you another powerful free option alongside local models and other fre
 
 ## Bug Fixes
 
+* **Task Sharing**: Fixed share button popover not opening when clicked - now works properly while maintaining tooltip functionality (thanks daniel-lxs!) ([#5203](https://github.com/RooCodeInc/Roo-Code/pull/5203))
+* **Claude Code Reliability**: Fixed hanging and failures when working with large conversation histories on Linux and Code-Server environments by implementing stdin streaming instead of command-line arguments (thanks Fovty, edgan, flyguy7299!) ([#5186](https://github.com/RooCodeInc/Roo-Code/pull/5186))
 * **Custom Modes**: Fixed JSON backwards compatibility for `.roomodes` files, ensuring older custom modes work correctly after updating from previous versions (thanks daniel-lxs, domc66, africa1207!) ([#5199](https://github.com/RooCodeInc/Roo-Code/pull/5199))
 * **Checkpoint Menu**: Fixed checkpoint popover not opening when clicked, restoring access to checkpoint functionality (thanks daniel-lxs, aprpure!) ([#5192](https://github.com/RooCodeInc/Roo-Code/pull/5192))
 * **Terminal Integration**: Fixed keyboard shortcut errors when adding terminal content to context (thanks MuriloFP, iamhenry!) ([#5161](https://github.com/RooCodeInc/Roo-Code/pull/5161))
