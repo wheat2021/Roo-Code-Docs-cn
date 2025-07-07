@@ -1,53 +1,53 @@
-# Typing Your Requests
+# 撰写你的请求
 
-Roo Code is designed to understand natural language.  You don't need to use any special commands or syntax to communicate with it.  Just type your request in plain English, as if you were talking to a human developer.
+Roo Code 旨在理解自然语言。你无需使用任何特殊命令或语法与其交流。只需用简单的中文输入你的请求，就像与一位人类开发者交谈一样。
 
-<img src="/img/typing-your-requests/naturally.gif" alt="Example of typing a request in Roo Code" width="600" />
+<img src="/img/typing-your-requests/naturally.gif" alt="在 Roo Code 中输入请求的示例" width="600" />
 
 ---
 
-## Effective Request Strategies
+## 高效请求策略
 
-Clearly state what you want Roo Code to do.  Avoid vague or ambiguous language.
+清晰地说明你希望 Roo Code 做什么。避免使用模糊或含糊不清的语言。
 
-| Strategy | Implementation |
+| 策略 | 实现 |
 |----------|----------------|
-| **Be specific** | "Fix the bug in `calculateTotal` that returns incorrect results" instead of "Fix the code" |
-| **Provide context** | Use @ [Context Mentions](/basic-usage/context-mentions) for file and code references |
-| **Break down tasks** | Submit complex tasks in smaller manageable steps |
-| **Include examples** | Provide sample code when you need specific formatting or style |
+| **明确具体** | “修复 `calculateTotal` 中返回不正确结果的错误”，而不是“修复代码” |
+| **提供上下文** | 使用 @[提及上下文](/basic-usage/context-mentions) 来引用文件和代码 |
+| **分解任务** | 将复杂的任务分解成更小、可管理的步骤提交 |
+| **包含示例** | 当你需要特定的格式或样式时，提供示例代码 |
 
 ---
 
-## Example Requests
+## 请求示例
 
 ```
-create a new file named `utils.py` and add a function called `add` that takes two numbers as arguments and returns their sum
+创建一个名为 `utils.py` 的新文件，并添加一个名为 `add` 的函数，该函数接受两个数字作为参数并返回它们的和
 ```
 ```
-in the file @src/components/Button.tsx, change the color of the button to blue
+在文件 @src/components/Button.tsx 中，将按钮的颜色更改为蓝色
 ```
 ```
-find all instances of the variable `oldValue` in @/src/App.js and replace them with `newValue`
+在 @/src/App.js 中找到所有 `oldValue` 变量的实例，并将其替换为 `newValue`
 ```
 ```
-run the command `npm install` in the terminal
+在终端中运行命令 `npm install`
 ```
 ```
-explain the function `calculateTotal` in @/src/utils.ts
+解释 @/src/utils.ts 中的 `calculateTotal` 函数
 ```
 ```
-@problems address all detected problems
+@problems 解决所有检测到的问题
 ```
 
 ---
 
-## Common Pitfalls to Avoid
+## 需要避免的常见陷阱
 
-| DON'T | DO |
+| 不要 | 要做 |
 |-------|---------|
-| Vague requests | Specify exactly what needs to be done |
-| Assuming context | Explicitly reference files and functions |
-| Excessive technical jargon | Use clear, straightforward language |
-| Multiple unrelated tasks | Submit one focused request at a time |
-| Proceeding without confirmation | Check the code to make sure it's complete |
+| 模糊的请求 | 明确指出需要做什么 |
+| 假定上下文 | 明确引用文件和函数 |
+| 过多的技术术语 | 使用清晰、直白的语言 |
+| 多个不相关的任务 | 一次提交一个集中的请求 |
+| 未经确认就继续 | 检查代码以确保其完整 |

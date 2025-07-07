@@ -1,117 +1,117 @@
 # access_mcp_resource
 
-The `access_mcp_resource` tool retrieves data from resources exposed by connected Model Context Protocol (MCP) servers. It allows Roo to access files, API responses, documentation, or system information that provides additional context for tasks.
+`access_mcp_resource` 工具从已连接的“模型上下文协议”（MCP）服务器暴露的资源中检索数据。它允许 Roo 访问文件、API 响应、文档或系统信息，为任务提供额外的上下文。
 
 ---
 
-## Parameters
+## 参数
 
-The tool accepts these parameters:
+该工具接受以下参数：
 
-- `server_name` (required): The name of the MCP server providing the resource
-- `uri` (required): The URI identifying the specific resource to access
-
----
-
-## What It Does
-
-This tool connects to MCP servers and fetches data from their exposed resources. Unlike `use_mcp_tool` which executes actions, this tool specifically retrieves information that serves as context for tasks.
+- `server_name` (必需): 提供资源的 MCP 服务器的名称。
+- `uri` (必需): 标识要访问的特定资源的 URI。
 
 ---
 
-## When is it used?
+## 功能
 
-- When Roo needs additional context from external systems
-- When Roo needs to access domain-specific data from specialized MCP servers
-- When Roo needs to retrieve reference documentation hosted by MCP servers
-- When Roo needs to integrate real-time data from external APIs via MCP
+此工具连接到 MCP 服务器并从其暴露的资源中获取数据。与执行操作的 `use_mcp_tool` 不同，此工具专门检索用作任务上下文的信息。
 
 ---
 
-## Key Features
+## 使用时机
 
-- Retrieves both text and image data from MCP resources
-- Requires user approval before executing resource access
-- Uses URI-based addressing to precisely identify resources
-- Integrates with the Model Context Protocol SDK
-- Displays resource content appropriately based on content type
-- Supports timeouts for reliable network operations
-- Handles server connection states (connected, connecting, disconnected)
-- Discovers available resources from connected servers
-- Processes structured response data with metadata
-- Handles image content special rendering
+- 当 Roo 需要来自外部系统的额外上下文时。
+- 当 Roo 需要从专门的 MCP 服务器访问特定领域的数据时。
+- 当 Roo 需要检索由 MCP 服务器托管的参考文档时。
+- 当 Roo 需要通过 MCP 集成来自外部 API 的实时数据时。
 
 ---
 
-## Limitations
+## 主要特性
 
-- Depends on external MCP servers being available and connected
-- Limited to the resources provided by connected servers
-- Cannot access resources from disabled servers
-- Network issues can affect reliability and performance
-- Resource access subject to configured timeouts
-- URI formats are determined by the specific MCP server implementation
-- No offline or cached resource access capabilities
-
----
-
-## How It Works
-
-When the `access_mcp_resource` tool is invoked, it follows this process:
-
-1. **Connection Validation**:
-   - Verifies that an MCP hub is available and initialized
-   - Confirms the specified server exists in the connection list
-   - Checks if the server is disabled (returns an error if it is)
-
-2. **User Approval**:
-   - Presents the resource access request to the user for approval
-   - Provides server name and resource URI for user verification
-   - Proceeds only if the user approves the resource access
-
-3. **Resource Request**:
-   - Uses the Model Context Protocol SDK to communicate with servers
-   - Makes a `resources/read` request to the server through the MCP hub
-   - Applies configured timeouts to prevent hanging on unresponsive servers
-
-4. **Response Processing**:
-   - Receives a structured response with metadata and content arrays
-   - Processes text content for display to the user
-   - Handles image data specially for appropriate display
-   - Returns the processed resource data to Roo for use in the current task
+- 从 MCP 资源中检索文本和图像数据。
+- 在执行资源访问前需要用户批准。
+- 使用基于 URI 的寻址方式精确识别资源。
+- 与“模型上下文协议”SDK 集成。
+- 根据内容类型适当显示资源内容。
+- 支持超时以实现可靠的网络操作。
+- 处理服务器连接状态（已连接、连接中、已断开）。
+- 从已连接的服务器发现可用资源。
+- 处理带有元数据的结构化响应数据。
+- 处理图像内容的特殊渲染。
 
 ---
 
-## Resource Types
+## 限制
 
-MCP servers can provide two main types of resources:
-
-1. **Standard Resources**:
-   - Fixed resources with specific URIs
-   - Defined name, description, and MIME type
-   - Direct access without parameters
-   - Typically represent static data or real-time information
-
-2. **Resource Templates**:
-   - Parameterized resources with placeholder values in URIs
-   - Allow dynamic resource generation based on provided parameters
-   - Can represent queries or filtered views of data
-   - More flexible but require additional URI formatting
+- 依赖于外部 MCP 服务器的可用性和连接状态。
+- 仅限于已连接服务器提供的资源。
+- 无法访问已禁用服务器的资源。
+- 网络问题可能会影响可靠性和性能。
+- 资源访问受配置的超时限制。
+- URI 格式由具体的 MCP 服务器实现决定。
+- 不具备离线或缓存资源访问能力。
 
 ---
 
-## Examples When Used
+## 工作原理
 
-- When helping with API development, Roo retrieves endpoint specifications from MCP resources to ensure correct implementation.
-- When assisting with data visualization, Roo accesses current data samples from connected MCP servers.
-- When working in specialized domains, Roo retrieves technical documentation to provide accurate guidance.
-- When generating industry-specific code, Roo references compliance requirements from documentation resources.
+当调用 `access_mcp_resource` 工具时，它会遵循以下流程：
+
+1.  **连接验证**:
+    -   验证 MCP 中心是否可用并已初始化。
+    -   确认指定的服务器存在于连接列表中。
+    -   检查服务器是否被禁用（如果是，则返回错误）。
+
+2.  **用户批准**:
+    -   向用户呈现资源访问请求以供批准。
+    -   提供服务器名称和资源 URI 供用户验证。
+    -   仅在用户批准资源访问后继续。
+
+3.  **资源请求**:
+    -   使用“模型上下文协议”SDK 与服务器通信。
+    -   通过 MCP 中心向服务器发出 `resources/read` 请求。
+    -   应用配置的超时以防止在无响应的服务器上挂起。
+
+4.  **响应处理**:
+    -   接收带有元数据和内容数组的结构化响应。
+    -   处理文本内容以显示给用户。
+    -   特殊处理图像数据以便适当显示。
+    -   将处理后的资源数据返回给 Roo，用于当前任务。
 
 ---
 
-## Usage Examples
+## 资源类型
 
-Accessing current weather data:
+MCP 服务器可以提供两种主要类型的资源：
+
+1.  **标准资源**:
+    -   具有特定 URI 的固定资源。
+    -   定义了名称、描述和 MIME 类型。
+    -   无需参数即可直接访问。
+    -   通常代表静态数据或实时信息。
+
+2.  **资源模板**:
+    -   URI 中带有占位符值的参数化资源。
+    -   允许根据提供的参数动态生成资源。
+    -   可以代表查询或数据的筛选视图。
+    -   更灵活但需要额外的 URI 格式化。
+
+---
+
+## 使用案例
+
+- 在协助 API 开发时，Roo 从 MCP 资源中检索端点规范以确保正确实现。
+- 在协助数据可视化时，Roo 从连接的 MCP 服务器访问当前数据样本。
+- 在特定领域工作时，Roo 检索技术文档以提供准确的指导。
+- 在生成行业特定代码时，Roo 从文档资源中引用合规性要求。
+
+---
+
+## 用法示例
+
+访问当前天气数据：
 ```
 <access_mcp_resource>
 <server_name>weather-server</server_name>
@@ -119,7 +119,7 @@ Accessing current weather data:
 </access_mcp_resource>
 ```
 
-Retrieving API documentation:
+检索 API 文档：
 ```
 <access_mcp_resource>
 <server_name>api-docs</server_name>
@@ -127,7 +127,7 @@ Retrieving API documentation:
 </access_mcp_resource>
 ```
 
-Accessing domain-specific knowledge:
+访问特定领域的知识：
 ```
 <access_mcp_resource>
 <server_name>knowledge-base</server_name>
@@ -135,10 +135,9 @@ Accessing domain-specific knowledge:
 </access_mcp_resource>
 ```
 
-Fetching system configuration:
+获取系统配置：
 ```
 <access_mcp_resource>
 <server_name>infra-monitor</server_name>
 <uri>config://production/database</uri>
 </access_mcp_resource>
-```

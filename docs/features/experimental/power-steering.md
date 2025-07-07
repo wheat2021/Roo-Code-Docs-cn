@@ -1,61 +1,61 @@
 ---
-sidebar_label: 'Power Steering'
+sidebar_label: '动力转向'
 ---
 import Codicon from '@site/src/components/Codicon';
 
-# Power Steering (Experimental Feature)
+# 动力转向（实验性功能）
 
-The "Power Steering" experimental feature (`POWER_STEERING`) is designed to enhance the consistency of Roo Code's responses by more frequently reminding the underlying Large Language Model (LLM) about its current mode definition and any custom instructions.
-
----
-
-## How It Works
-
-When Power Steering is enabled, Roo Code constantly reinforces the LLM's understanding of its assigned role (e.g., "You are a helpful coding assistant") and any specific guidelines provided by the user (e.g., "Always provide code examples in Python").
-
-This is achieved by explicitly including the `modeDetails.roleDefinition` and `modeDetails.customInstructions` within the information sent to the LLM with each interaction.
-
-**Goal:**
-The primary goal is to ensure the LLM adheres more strictly to its defined persona and follows user-specific instructions more consistently. If you find Roo deviating from its role or overlooking custom rules, Power Steering can help maintain its focus.
-
-**Trade-off:**
-These frequent reminders consume additional tokens in each message sent to the LLM. This means:
-*   Increased token usage per message.
-*   Potentially higher operational costs.
-*   The context window may be filled more quickly.
-
-It's a balance between stricter adherence to instructions and resource consumption.
-
-**Default Status:** Disabled.
+“动力转向”实验性功能（`POWER_STEERING`）旨在通过更频繁地提醒底层大型语言模型（LLM）其当前模式定义和任何自定义指令，来增强 Roo Code 响应的一致性。
 
 ---
 
-## Technical Details
+## 工作原理
 
-*   **Experiment ID:** `powerSteering`
-*   **Mechanism:**
-    *   The feature's status is checked by the `getEnvironmentDetails` function.
-    *   If enabled, the current mode's `roleDefinition` and `customInstructions` are added to the details sent to the LLM.
-    *   These details are wrapped in `<environment_details>` tags and become part of the context for each LLM interaction.
-*   **Impact:** By frequently including the role definition and custom instructions, the LLM is steered to generate responses more aligned with these parameters.
+启用动力转向后，Roo Code 会不断强化 LLM 对其指定角色（例如，“你是一个乐于助人的编程助手”）和用户提供的任何特定指南（例如，“始终使用 Python 提供代码示例”）的理解。
 
----
+这是通过在每次交互中发送给 LLM 的信息中明确包含 `modeDetails.roleDefinition` 和 `modeDetails.customInstructions` 来实现的。
 
-## Enabling This Feature
+**目标：**
+主要目标是确保 LLM 更严格地遵守其定义的角色，并更一致地遵循用户特定的指令。如果您发现 Roo 偏离其角色或忽略自定义规则，动力转向可以帮助其保持专注。
 
-Power Steering is managed within the "Experimental Features" section of Roo Code's Advanced Settings.
+**权衡：**
+这些频繁的提醒会在发送给 LLM 的每条消息中消耗额外的令牌。这意味着：
+*   每条消息的令牌使用量增加。
+*   可能导致更高的运营成本。
+*   上下文窗口可能会更快被填满。
 
-1.  Open Roo Code settings (<Codicon name="gear" /> icon in the top right corner).
-2.  Navigate to "Advanced Settings".
-3.  Locate the "Experimental Features" area.
-4.  Toggle the "Power Steering" option.
-5.  Save your changes.
-<img src="/img/power-steering/power-steering.png" alt="Settings for Intelligent Context Condensation and Power Steering" width="600" />
+这是在更严格地遵守指令和资源消耗之间取得的平衡。
 
-For general information on experimental features, see [Experimental Features Overview](/features/experimental/experimental-features).
+**默认状态：** 已禁用。
 
 ---
 
-## Feedback
+## 技术细节
 
-Please report any issues or suggestions regarding this feature on the [Roo Code GitHub Issues page](https://github.com/RooCodeInc/Roo-Code/issues). Your feedback is crucial for improving Roo Code.
+*   **实验 ID：** `powerSteering`
+*   **机制：**
+    *   该功能的状态由 `getEnvironmentDetails` 函数检查。
+    *   如果启用，当前模式的 `roleDefinition` 和 `customInstructions` 将被添加到发送给 LLM 的详细信息中。
+    *   这些详细信息被包裹在 `<environment_details>` 标签中，并成为每次 LLM 交互上下文的一部分。
+*   **影响：** 通过频繁包含角色定义和自定义指令，引导 LLM 生成更符合这些参数的响应。
+
+---
+
+## 启用此功能
+
+动力转向在 Roo Code 高级设置的“实验性功能”部分进行管理。
+
+1.  打开 Roo Code 设置（右上角的 <Codicon name="gear" /> 图标）。
+2.  导航到“高级设置”。
+3.  找到“实验性功能”区域。
+4.  切换“动力转向”选项。
+5.  保存您的更改。
+<img src="/img/power-steering/power-steering.png" alt="智能上下文压缩和动力转向的设置" width="600" />
+
+有关实验性功能的一般信息，请参阅[实验性功能概述](/features/experimental/experimental-features)。
+
+---
+
+## 反馈
+
+请在 [Roo Code GitHub Issues 页面](https://github.com/RooCodeInc/Roo-Code/issues)上报告有关此功能的任何问题或建议。您的反馈对于改进 Roo Code 至关重要。

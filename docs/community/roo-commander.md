@@ -1,5 +1,5 @@
-# Roo Commander Project by jezweb
+# jezweb 的 Roo Commander 项目
 
-[View Project on GitHub](https://github.com/jezweb/roo-commander)
+[在 GitHub 上查看项目](https://github.com/jezweb/roo-commander)
 
-The Roo Commander project provides a sophisticated collection of custom modes for Roo Code designed to manage software development projects using a structured, multi-agent approach. It introduces a virtual, specialized software development team orchestrated by the **👑 Roo Commander** mode, leveraging specialized roles and a structured project journal for enhanced context management and workflow organization.
+Roo Commander 项目为 Roo Code 提供了一套复杂的自定义模式集合，旨在使用结构化的多代理方法来管理软件开发项目。它引入了一个由 **👑 Roo Commander** 模式精心编排的虚拟专业软件开发团队，利用专门的角色和结构化的项目日志来增强上下文管理和工作流程组织。

@@ -1,82 +1,82 @@
 # list_code_definition_names
 
-The `list_code_definition_names` tool provides a structural overview of your codebase by listing code definitions from source files at the top level of a specified directory. It helps Roo understand code architecture by displaying line numbers and definition snippets.
+`list_code_definition_names` 工具通过列出指定目录顶层源文件中的代码定义，提供代码库的结构概览。它通过显示行号和定义片段，帮助 Roo 理解代码架构。
 
 ---
 
-## Parameters
+## 参数
 
-The tool accepts these parameters:
+该工具接受以下参数：
 
-- `path` (required): The path of the directory to list top level source code definitions for, relative to the current working directory
-
----
-
-## What It Does
-
-This tool scans source code files at the top level of a specified directory and extracts code definitions like classes, functions, and interfaces. It displays the line numbers and actual code for each definition, providing a quick way to map the important components of your codebase.
+- `path` (必需): 相对于当前工作目录，要列出其顶层源代码定义的目录路径。
 
 ---
 
-## When is it used?
+## 功能
 
-- When Roo needs to understand your codebase architecture quickly
-- When Roo needs to locate important code constructs across multiple files
-- When planning refactoring or extensions to existing code
-- Before diving into implementation details with other tools
-- When identifying relationships between different parts of your codebase
+此工具扫描指定目录顶层的源文件，并提取类、函数和接口等代码定义。它会显示每个定义的行号和实际代码，从而提供一种快速映射代码库重要组件的方法。
 
 ---
 
-## Key Features
+## 使用时机
 
-- Extracts classes, functions, methods, interfaces, and other definitions from source files
-- Displays line numbers and actual source code for each definition
-- Supports multiple programming languages including JavaScript, TypeScript, Python, Rust, Go, C++, C, C#, Ruby, Java, PHP, Swift, and Kotlin
-- Processes only files at the top level of the specified directory (not subdirectories)
-- Limits processing to a maximum of 50 files for performance
-- Focuses on top-level definitions to avoid overwhelming detail
-- Helps identify code organization patterns across the project
-- Creates a mental map of your codebase's architecture
-- Works in conjunction with other tools like `read_file` for deeper analysis
+- 当 Roo 需要快速了解您的代码库架构时
+- 当 Roo 需要在多个文件中定位重要的代码结构时
+- 在计划重构或扩展现有代码时
+- 在使用其他工具深入研究实现细节之前
+- 在识别代码库不同部分之间的关系时
 
 ---
 
-## Limitations
+## 主要特性
 
-- Only identifies top-level definitions, not nested ones
-- Only processes files at the top level of the specified directory, not subdirectories
-- Limited to processing a maximum of 50 files per request
-- Dependent on language-specific parsers, with varying detection quality
-- May not recognize all definitions in languages with complex syntax
-- Not a substitute for reading code to understand implementation details
-- Cannot detect runtime patterns or dynamic code relationships
-- Does not provide information about how definitions are used
-- May have reduced accuracy with highly dynamic or metaprogrammed code
-- Limited to specific languages supported by the implemented Tree-sitter parsers
-
----
-
-## How It Works
-
-When the `list_code_definition_names` tool is invoked, it follows this process:
-
-1. **Parameter Validation**: Validates the required `path` parameter
-2. **Path Resolution**: Resolves the relative path to an absolute path
-3. **Directory Scanning**: Scans only the top level of the specified directory for source code files (not recursive)
-4. **File Filtering**: Limits processing to a maximum of 50 files
-5. **Language Detection**: Identifies file types based on extensions (.js, .jsx, .ts, .tsx, .py, .rs, .go, .cpp, .hpp, .c, .h, .cs, .rb, .java, .php, .swift, .kt, .kts)
-6. **Code Parsing**: Uses Tree-sitter to parse code and extract definitions through these steps:
-   - Parsing file content into an Abstract Syntax Tree (AST)
-   - Creating a query using a language-specific query string
-   - Sorting the captures by their position in the file
-7. **Result Formatting**: Outputs definitions with line numbers and actual source code
+- 从源文件中提取类、函数、方法、接口和其他定义
+- 显示每个定义的行号和实际源代码
+- 支持多种编程语言，包括 JavaScript、TypeScript、Python、Rust、Go、C++、C、C#、Ruby、Java、PHP、Swift 和 Kotlin
+- 仅处理指定目录顶层的文件（不包括子目录）
+- 为保证性能，最多处理 50 个文件
+- 专注于顶层定义，以避免信息过载
+- 帮助识别整个项目中的代码组织模式
+- 创建代码库架构的思维导图
+- 与 `read_file` 等其他工具结合使用以进行更深入的分析
 
 ---
 
-## Output Format
+## 限制
 
-The output shows file paths followed by line numbers and the actual source code of each definition. For example:
+- 仅识别顶层定义，不识别嵌套定义
+- 仅处理指定目录顶层的文件，不处理子目录
+- 每次请求最多处理 50 个文件
+- 依赖于特定语言的解析器，检测质量可能有所不同
+- 可能无法识别语法复杂语言中的所有定义
+- 不能替代阅读代码来理解实现细节
+- 无法检测运行时模式或动态代码关系
+- 不提供有关如何使用定义的信息
+- 对于高度动态或元编程的代码，准确性可能会降低
+- 仅限于已实现的 Tree-sitter 解析器支持的特定语言
+
+---
+
+## 工作原理
+
+调用 `list_code_definition_names` 工具时，它会遵循以下流程：
+
+1.  **参数验证**: 验证必需的 `path` 参数
+2.  **路径解析**: 将相对路径解析为绝对路径
+3.  **目录扫描**: 仅扫描指定目录的顶层以查找源代码文件（非递归）
+4.  **文件过滤**: 将处理限制在最多 50 个文件
+5.  **语言检测**: 根据扩展名（.js、.jsx、.ts、.tsx、.py、.rs、.go、.cpp、.hpp、.c、.h、.cs、.rb、.java、.php、.swift、.kt、.kts）识别文件类型
+6.  **代码解析**: 使用 Tree-sitter 通过以下步骤解析代码并提取定义：
+    -   将文件内容解析为抽象语法树 (AST)
+    -   使用特定于语言的查询字符串创建查询
+    -   按捕获在文件中的位置对其进行排序
+7.  **结果格式化**: 输出带有行号和实际源代码的定义
+
+---
+
+## 输出格式
+
+输出显示文件路径，后跟行号和每个定义的实际源代码。例如：
 
 ```
 src/utils.js:
@@ -90,45 +90,44 @@ src/models/User.js:
 20--20 | function createUser(data) {
 ```
 
-Each line displays:
-- The start and end line numbers of the definition
-- The pipe symbol (|) as a separator
-- The actual source code of the definition
+每一行显示：
+- 定义的起始和结束行号
+- 管道符号 (|) 作为分隔符
+- 定义的实际源代码
 
-This output format helps you quickly see both where definitions are located in the file and their implementation details.
-
----
-
-## Examples When Used
-
-- When starting a new task, Roo first lists key code definitions to understand the overall structure of your project.
-- When planning refactoring work, Roo uses this tool to identify classes and functions that might be affected.
-- When exploring unfamiliar codebases, Roo maps the important code constructs before diving into implementation details.
-- When adding new features, Roo identifies existing patterns and relevant code definitions to maintain consistency.
-- When troubleshooting bugs, Roo maps the codebase structure to locate potential sources of the issue.
-- When planning architecture changes, Roo identifies all affected components across files.
+这种输出格式可帮助您快速查看定义在文件中的位置及其实现细节。
 
 ---
 
-## Usage Examples
+## 使用示例
 
-Listing code definitions in the current directory:
+- 开始新任务时，Roo 首先列出关键代码定义以了解项目的整体结构。
+- 计划重构工作时，Roo 使用此工具识别可能受影响的类和函数。
+- 探索不熟悉的代码库时，Roo 在深入研究实现细节之前会映射重要的代码结构。
+- 添加新功能时，Roo 会识别现有模式和相关代码定义以保持一致性。
+- 排除故障时，Roo 会映射代码库结构以定位问题的潜在来源。
+- 计划架构更改时，Roo 会识别所有受影响的跨文件组件。
+
+---
+
+## 用法示例
+
+列出当前目录中的代码定义：
 ```
 <list_code_definition_names>
 <path>.</path>
 </list_code_definition_names>
 ```
 
-Examining a specific module's structure:
+检查特定模块的结构：
 ```
 <list_code_definition_names>
 <path>src/components</path>
 </list_code_definition_names>
 ```
 
-Exploring a utility library:
+探索一个实用工具库：
 ```
 <list_code_definition_names>
 <path>lib/utils</path>
 </list_code_definition_names>
-```

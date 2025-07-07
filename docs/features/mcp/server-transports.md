@@ -1,111 +1,111 @@
 ---
-title: MCP Server Transports
-sidebar_label: STDIO, Streamable HTTP & SSE Transports
+title: MCP 服务器传输
+sidebar_label: STDIO、可流式 HTTP 和 SSE 传输
 ---
 
-# MCP Server Transports: STDIO, Streamable HTTP & SSE
+# MCP 服务器传输：STDIO、可流式 HTTP 和 SSE
 
-Model Context Protocol (MCP) supports three primary transport mechanisms for communication between Roo Code and MCP servers: Standard Input/Output (STDIO), Streamable HTTP (the modern standard), and Server-Sent Events (SSE) (for legacy use). Each has distinct characteristics, advantages, and use cases.
+模型上下文协议 (MCP) 支持三种主要的传输机制，用于 Roo Code 和 MCP 服务器之间的通信：标准输入/输出 (STDIO)、可流式 HTTP (现代标准) 和服务器发送事件 (SSE) (用于旧版)。每种机制都有其独特的特性、优势和用例。
 
 ---
 
-## STDIO Transport
+## STDIO 传输
 
-STDIO transport runs locally on your machine and communicates via standard input/output streams.
+STDIO 传输在您的本地计算机上运行，并通过标准输入/输出流进行通信。
 
-### How STDIO Transport Works
+### STDIO 传输如何工作
 
-1. The client (Roo Code) spawns an MCP server as a child process
-2. Communication happens through process streams: client writes to server's STDIN, server responds to STDOUT
-3. Each message is delimited by a newline character
-4. Messages are formatted as JSON-RPC 2.0
+1.  客户端 (Roo Code) 将 MCP 服务器作为子进程生成。
+2.  通信通过进程流进行：客户端写入服务器的 STDIN，服务器响应到 STDOUT。
+3.  每条消息都由换行符分隔。
+4.  消息格式为 JSON-RPC 2.0。
 
 ```
-Client                    Server
+客户端                    服务器
   |                         |
-  |---- JSON message ------>| (via STDIN)
-  |                         | (processes request)
-  |<---- JSON message ------| (via STDOUT)
+  |---- JSON 消息 ------>| (通过 STDIN)
+  |                         | (处理请求)
+  |<---- JSON 消息 ------| (通过 STDOUT)
   |                         |
 ```
 
-### STDIO Characteristics
+### STDIO 特性
 
-* **Locality**: Runs on the same machine as Roo Code
-* **Performance**: Very low latency and overhead (no network stack involved)
-* **Simplicity**: Direct process communication without network configuration
-* **Relationship**: One-to-one relationship between client and server
-* **Security**: Inherently more secure as no network exposure
+*   **本地性**: 与 Roo Code 在同一台机器上运行。
+*   **性能**: 延迟和开销非常低 (不涉及网络堆栈)。
+*   **简单性**: 直接的进程通信，无需网络配置。
+*   **关系**: 客户端和服务器之间的一对一关系。
+*   **安全性**: 由于没有网络暴露，本质上更安全。
 
-### When to Use STDIO
+### 何时使用 STDIO
 
-STDIO transport is ideal for:
+STDIO 传输非常适用于：
 
-* Local integrations and tools running on the same machine
-* Security-sensitive operations
-* Low-latency requirements
-* Single-client scenarios (one Roo Code instance per server)
-* Command-line tools or IDE extensions
+*   在同一台机器上运行的本地集成和工具。
+*   对安全敏感的操作。
+*   低延迟要求。
+*   单客户端场景 (每个服务器一个 Roo Code 实例)。
+*   命令行工具或 IDE 扩展。
 
-### STDIO Implementation Example
+### STDIO 实现示例
 
 ```typescript
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 
 const server = new Server({name: 'local-server', version: '1.0.0'});
-// Register tools...
+// 注册工具...
 
-// Use STDIO transport
+// 使用 STDIO 传输
 const transport = new StdioServerTransport(server);
 transport.listen();
 ```
 ---
 
-## Streamable HTTP Transport
+## 可流式 HTTP 传输
 
-Streamable HTTP transport is the modern standard for remote MCP server communication, replacing the older HTTP+SSE transport. It operates over HTTP/HTTPS and allows for more flexible server implementations.
+可流式 HTTP 传输是远程 MCP 服务器通信的现代标准，取代了旧的 HTTP+SSE 传输。它通过 HTTP/HTTPS 运行，并允许更灵活的服务器实现。
 
-### How Streamable HTTP Transport Works
+### 可流式 HTTP 传输如何工作
 
-1. The server provides a single HTTP endpoint (MCP endpoint) that supports both POST and GET methods.
-2. The client (Roo Code) sends requests to this MCP endpoint using HTTP POST.
-3. The server processes the request and sends back a response.
-4. Optionally, the server can use Server-Sent Events (SSE) over the same connection to stream multiple messages or notifications to the client. This allows for basic request-response interactions as well as more advanced streaming and server-initiated communication.
+1.  服务器提供一个支持 POST 和 GET 方法的单一 HTTP 端点 (MCP 端点)。
+2.  客户端 (Roo Code) 使用 HTTP POST 向此 MCP 端点发送请求。
+3.  服务器处理请求并返回响应。
+4.  或者，服务器可以使用同一连接上的服务器发送事件 (SSE) 向客户端流式传输多个消息或通知。这允许基本的请求-响应交互以及更高级的流式处理和服务器发起的通信。
 
 ```
-Client                             Server
+客户端                             服务器
   |                                  |
-  |---- HTTP POST /mcp_endpoint ---->| (client request)
-  |                                  | (processes request)
-  |<--- HTTP Response / SSE Stream --| (server response / stream)
+  |---- HTTP POST /mcp_endpoint ---->| (客户端请求)
+  |                                  | (处理请求)
+  |<--- HTTP 响应 / SSE 流 --| (服务器响应 / 流)
   |                                  |
 ```
 
-### Streamable HTTP Characteristics
+### 可流式 HTTP 特性
 
-* **Modern Standard**: Preferred method for new remote MCP server implementations.
-* **Remote Access**: Can be hosted on a different machine from Roo Code.
-* **Scalability**: Can handle multiple client connections concurrently.
-* **Protocol**: Works over standard HTTP/HTTPS.
-* **Flexibility**: Supports simple request-response and advanced streaming.
-* **Single Endpoint**: Uses a single URL path for all MCP communication.
-* **Authentication**: Can use standard HTTP authentication mechanisms.
-* **Backwards Compatibility**: Servers can maintain compatibility with older HTTP+SSE clients.
+*   **现代标准**: 新的远程 MCP 服务器实现的首选方法。
+*   **远程访问**: 可以托管在与 Roo Code 不同的机器上。
+*   **可伸缩性**: 可以同时处理多个客户端连接。
+*   **协议**: 通过标准 HTTP/HTTPS 工作。
+*   **灵活性**: 支持简单的请求-响应和高级流式处理。
+*   **单端点**: 对所有 MCP 通信使用单个 URL 路径。
+*   **身份验证**: 可以使用标准的 HTTP 身份验证机制。
+*   **向后兼容性**: 服务器可以与旧的 HTTP+SSE 客户端保持兼容性。
 
-### When to Use Streamable HTTP
+### 何时使用可流式 HTTP
 
-Streamable HTTP transport is ideal for:
+可流式 HTTP 传输非常适用于：
 
-* All new remote MCP server developments.
-* Servers requiring robust, scalable, and flexible communication.
-* Integrations that might involve streaming data or server-sent notifications.
-* Public services or centralized tools.
-* Replacing legacy SSE transport implementations.
+*   所有新的远程 MCP 服务器开发。
+*   需要健壮、可伸缩和灵活通信的服务器。
+*   可能涉及流数据或服务器发送通知的集成。
+*   公共服务或集中式工具。
+*   替换旧的 SSE 传输实现。
 
-### Streamable HTTP Implementation Example
+### 可流式 HTTP 实现示例
 
-Configuration in `settings.json`:
+`settings.json` 中的配置：
 ```json
 "mcp.servers": {
   "StreamableHTTPMCPName": {
@@ -115,60 +115,60 @@ Configuration in `settings.json`:
 }
 ```
 
-For server-side implementation, refer to the MCP SDK documentation for `StreamableHTTPClientTransport`.
+有关服务器端实现，请参阅 MCP SDK 文档中的 `StreamableHTTPClientTransport`。
 
-### Backwards Compatibility with HTTP+SSE
+### 与 HTTP+SSE 的向后兼容性
 
-Clients and servers can maintain backwards compatibility with the deprecated HTTP+SSE transport (from protocol version 2024-11-05).
+客户端和服务器可以与已弃用的 HTTP+SSE 传输 (自协议版本 2024-11-05 起) 保持向后兼容性。
 
-Servers wanting to support older clients should:
-* Continue to host both the SSE (`/events`) and POST (`/message`) endpoints of the old transport, alongside the new “MCP endpoint” defined for the Streamable HTTP transport.
+希望支持旧客户端的服务器应：
+*   继续托管旧传输的 SSE (`/events`) 和 POST (`/message`) 端点，以及为可流式 HTTP 传输定义的新“MCP 端点”。
 
 ---
 
-## SSE Transport (Legacy)
+## SSE 传输 (旧版)
 
-Server-Sent Events (SSE) transport is a legacy method for remote server communication over HTTP/HTTPS. For new implementations, **Streamable HTTP transport is recommended.** SSE remains available for compatibility with older MCP servers.
+服务器发送事件 (SSE) 传输是一种用于通过 HTTP/HTTPS 进行远程服务器通信的旧方法。对于新的实现，**建议使用可流式 HTTP 传输**。SSE 仍然可用于与旧的 MCP 服务器兼容。
 
-### How SSE Transport Works
+### SSE 传输如何工作
 
-1. The client (Roo Code) connects to the server's SSE endpoint via HTTP GET request
-2. This establishes a persistent connection where the server can push events to the client
-3. For client-to-server communication, the client makes HTTP POST requests to a separate endpoint
-4. Communication happens over two channels:
-   * Event Stream (GET): Server-to-client updates
-   * Message Endpoint (POST): Client-to-server requests
+1.  客户端 (Roo Code) 通过 HTTP GET 请求连接到服务器的 SSE 端点。
+2.  这会建立一个持久连接，服务器可以通过该连接向客户端推送事件。
+3.  对于客户端到服务器的通信，客户端向一个单独的端点发出 HTTP POST 请求。
+4.  通信通过两个通道进行：
+    *   事件流 (GET)：服务器到客户端的更新。
+    *   消息端点 (POST)：客户端到服务器的请求。
 
 ```
-Client                             Server
+客户端                             服务器
   |                                  |
-  |---- HTTP GET /events ----------->| (establish SSE connection)
-  |<---- SSE event stream -----------| (persistent connection)
+  |---- HTTP GET /events ----------->| (建立 SSE 连接)
+  |<---- SSE 事件流 -----------| (持久连接)
   |                                  |
-  |---- HTTP POST /message --------->| (client request)
-  |<---- SSE event with response ----| (server response)
+  |---- HTTP POST /message --------->| (客户端请求)
+  |<---- 带有响应的 SSE 事件 ----| (服务器响应)
   |                                  |
 ```
 
-### SSE Characteristics
+### SSE 特性
 
-* **Remote Access**: Can be hosted on a different machine from Roo Code
-* **Scalability**: Can handle multiple client connections concurrently
-* **Protocol**: Works over standard HTTP (no special protocols needed)
-* **Persistence**: Maintains a persistent connection for server-to-client messages
-* **Authentication**: Can use standard HTTP authentication mechanisms
+*   **远程访问**: 可以托管在与 Roo Code 不同的机器上。
+*   **可伸缩性**: 可以同时处理多个客户端连接。
+*   **协议**: 通过标准 HTTP 工作 (无需特殊协议)。
+*   **持久性**: 为服务器到客户端的消息维护一个持久连接。
+*   **身份验证**: 可以使用标准的 HTTP 身份验证机制。
 
-### When to Use SSE
+### 何时使用 SSE
 
-SSE transport is better for:
+SSE 传输更适用于：
 
-* Remote access across networks
-* Multi-client scenarios
-* Public services
-* Centralized tools that many users need to access
-* Integration with web services
+*   跨网络的远程访问。
+*   多客户端场景。
+*   公共服务。
+*   许多用户需要访问的集中式工具。
+*   与 Web 服务集成。
 
-### SSE Implementation Example
+### SSE 实现示例
 
 ```typescript
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
@@ -177,94 +177,94 @@ import express from 'express';
 
 const app = express();
 const server = new Server({name: 'remote-server', version: '1.0.0'});
-// Register tools...
+// 注册工具...
 
-// Use SSE transport
+// 使用 SSE 传输
 const transport = new SSEServerTransport(server);
 app.use('/mcp', transport.requestHandler());
 app.listen(3000, () => {
-  console.log('MCP server listening on port 3000');
+  console.log('MCP 服务器正在监听 3000 端口');
 });
 ```
 ---
 
-## Local vs. Hosted: Deployment Aspects
+## 本地与托管：部署方面
 
-The choice between STDIO and SSE transports directly impacts how you'll deploy and manage your MCP servers.
+在 STDIO 和 SSE 传输之间的选择直接影响您将如何部署和管理您的 MCP 服务器。
 
-### STDIO: Local Deployment Model
+### STDIO：本地部署模型
 
-STDIO servers run locally on the same machine as Roo Code, which has several important implications:
+STDIO 服务器在与 Roo Code 相同的机器上本地运行，这有几个重要的影响：
 
-* **Installation**: The server executable must be installed on each user's machine
-* **Distribution**: You need to provide installation packages for different operating systems
-* **Updates**: Each instance must be updated separately
-* **Resources**: Uses the local machine's CPU, memory, and disk
-* **Access Control**: Relies on the local machine's filesystem permissions
-* **Integration**: Easy integration with local system resources (files, processes)
-* **Execution**: Starts and stops with Roo Code (child process lifecycle)
-* **Dependencies**: Any dependencies must be installed on the user's machine
+*   **安装**: 服务器可执行文件必须安装在每个用户的机器上。
+*   **分发**: 您需要为不同的操作系统提供安装包。
+*   **更新**: 每个实例必须单独更新。
+*   **资源**: 使用本地机器的 CPU、内存和磁盘。
+*   **访问控制**: 依赖于本地机器的文件系统权限。
+*   **集成**: 与本地系统资源 (文件、进程) 的轻松集成。
+*   **执行**: 与 Roo Code 一起启动和停止 (子进程生命周期)。
+*   **依赖项**: 任何依赖项都必须安装在用户的机器上。
 
-#### Practical Example
+#### 实际示例
 
-A local file search tool using STDIO would:
-* Run on the user's machine
-* Have direct access to the local filesystem
-* Start when needed by Roo Code
-* Not require network configuration
-* Need to be installed alongside Roo Code or via a package manager
+使用 STDIO 的本地文件搜索工具将：
+*   在用户的机器上运行。
+*   直接访问本地文件系统。
+*   在 Roo Code 需要时启动。
+*   不需要网络配置。
+*   需要与 Roo Code 一起安装或通过包管理器安装。
 
-### Streamable HTTP / SSE (Legacy): Hosted Deployment Model
+### 可流式 HTTP / SSE (旧版)：托管部署模型
 
-Streamable HTTP (recommended) and legacy SSE servers can be deployed to remote servers and accessed over the network:
+可流式 HTTP (推荐) 和旧版 SSE 服务器可以部署到远程服务器并通过网络访问：
 
-* **Installation**: Installed once on a server, accessed by many users
-* **Distribution**: Single deployment serves multiple clients
-* **Updates**: Centralized updates affect all users immediately
-* **Resources**: Uses server resources, not local machine resources
-* **Access Control**: Managed through authentication and authorization systems
-* **Integration**: More complex integration with user-specific resources
-* **Execution**: Runs as an independent service (often continuously)
-* **Dependencies**: Managed on the server, not on user machines
+*   **安装**: 在服务器上安装一次，由许多用户访问。
+*   **分发**: 单一部署为多个客户端提供服务。
+*   **更新**: 集中式更新会立即影响所有用户。
+*   **资源**: 使用服务器资源，而不是本地机器资源。
+*   **访问控制**: 通过身份验证和授权系统进行管理。
+*   **集成**: 与用户特定资源的集成更复杂。
+*   **执行**: 作为独立服务运行 (通常是持续运行)。
+*   **依赖项**: 在服务器上管理，而不是在用户机器上。
 
-#### Practical Example
+#### 实际示例
 
-A database query tool using SSE would:
-* Run on a central server
-* Connect to databases with server-side credentials
-* Be continuously available for multiple users
-* Require proper network security configuration
-* Be deployed using container or cloud technologies
+使用 SSE 的数据库查询工具将：
+*   在中央服务器上运行。
+*   使用服务器端凭据连接到数据库。
+*   为多个用户持续可用。
+*   需要适当的网络安全配置。
+*   使用容器或云技术进行部署。
 
-### Hybrid Approaches
+### 混合方法
 
-Some scenarios benefit from a hybrid approach:
+某些场景受益于混合方法：
 
-1. **STDIO with Network Access**: A local STDIO server that acts as a proxy to remote services
-2. **SSE with Local Commands**: A remote SSE server that can trigger operations on the client machine through callbacks
-3. **Gateway Pattern**: STDIO servers for local operations that connect to SSE servers for specialized functions
+1.  **带有网络访问的 STDIO**: 一个本地 STDIO 服务器，充当远程服务的代理。
+2.  **带有本地命令的 SSE**: 一个远程 SSE 服务器，可以通过回调触发客户端机器上的操作。
+3.  **网关模式**: 用于本地操作的 STDIO 服务器，连接到用于专门功能的 SSE 服务器。
 
 ---
 
-## Choosing Between Transports
+## 在传输之间进行选择
 
-| Consideration | STDIO | Streamable HTTP | SSE (Legacy) |
+| 考虑因素 | STDIO | 可流式 HTTP | SSE (旧版) |
 |---------------|-------|-----------------|--------------|
-| **Location** | Local machine only | Local or remote | Local or remote |
-| **Clients** | Single client | Multiple clients | Multiple clients |
-| **Performance** | Lower latency | Higher latency (network overhead) | Higher latency (network overhead) |
-| **Setup Complexity** | Simpler | More complex (requires HTTP server) | More complex (requires HTTP server, potentially two endpoints) |
-| **Security** | Inherently secure | Requires explicit security measures | Requires explicit security measures |
-| **Network Access** | Not needed | Required | Required |
-| **Scalability** | Limited to local machine | Can distribute across network | Can distribute across network |
-| **Deployment** | Per-user installation | Centralized installation | Centralized installation |
-| **Updates** | Distributed updates | Centralized updates | Centralized updates |
-| **Resource Usage** | Uses client resources | Uses server resources | Uses server resources |
-| **Dependencies** | Client-side dependencies | Server-side dependencies | Server-side dependencies |
-| **Recommendation** | Ideal for local, secure, single-client tools | **Modern standard for all new remote servers** | Legacy, for existing older servers |
+| **位置** | 仅本地机器 | 本地或远程 | 本地或远程 |
+| **客户端** | 单个客户端 | 多个客户端 | 多个客户端 |
+| **性能** | 较低的延迟 | 较高的延迟 (网络开销) | 较高的延迟 (网络开销) |
+| **设置复杂性** | 更简单 | 更复杂 (需要 HTTP 服务器) | 更复杂 (需要 HTTP 服务器，可能需要两个端点) |
+| **安全性** | 本质上安全 | 需要明确的安全措施 | 需要明确的安全措施 |
+| **网络访问** | 不需要 | 需要 | 需要 |
+| **可伸缩性** | 限制在本地机器 | 可以在网络中分发 | 可以在网络中分发 |
+| **部署** | 每个用户安装 | 集中式安装 | 集中式安装 |
+| **更新** | 分布式更新 | 集中式更新 | 集中式更新 |
+| **资源使用** | 使用客户端资源 | 使用服务器资源 | 使用服务器资源 |
+| **依赖项** | 客户端依赖项 | 服务器端依赖项 | 服务器端依赖项 |
+| **推荐** | 适用于本地、安全、单客户端工具 | **所有新远程服务器的现代标准** | 旧版，用于现有的旧服务器 |
 
 ---
 
-## Configuring Transports in Roo Code
+## 在 Roo Code 中配置传输
 
-For detailed information on configuring STDIO, Streamable HTTP, and SSE (Legacy) transports in Roo Code, including example configurations, see the [Understanding Transport Types](/features/mcp/using-mcp-in-roo#understanding-transport-types) section in the Using MCP in Roo Code guide.
+有关在 Roo Code 中配置 STDIO、可流式 HTTP 和 SSE (旧版) 传输的详细信息，包括示例配置，请参阅 [在 Roo Code 中使用 MCP](/features/mcp/using-mcp-in-roo#understanding-transport-types) 指南中的“了解传输类型”部分。

@@ -1,18 +1,18 @@
 ---
-title: Using MCP in Roo Code
-sidebar_label: Using MCP in Roo Code
+title: 在 Roo Code 中使用 MCP
+sidebar_label: 在 Roo Code 中使用 MCP
 ---
 
-# Using MCP in Roo Code
+# 在 Roo Code 中使用 MCP
 
-:::info Confused about MCP Servers?
+:::info 对 MCP 服务器感到困惑？
 
-An MCP (Model Context Protocol) server acts as a bridge, giving Roo Code access to a wider range of **tools** and external services like databases, APIs, or custom scripts. It uses a standard communication method, allowing Roo to leverage these external capabilities.
+MCP (Model Context Protocol) 服务器充当一座桥梁，让 Roo Code 能够访问更广泛的**工具**和外部服务，如数据库、API 或自定义脚本。它使用标准的通信方法，使 Roo 能够利用这些外部功能。
 
-For a deeper dive, check out [What is MCP?](/features/mcp/what-is-mcp).
+要深入了解，请查看[什么是 MCP？](/features/mcp/what-is-mcp)。
 :::
 
-Model Context Protocol (MCP) extends Roo Code's capabilities by connecting to external tools and services. This guide covers everything you need to know about using MCP with Roo Code.
+模型上下文协议 (MCP) 通过连接到外部工具和服务来扩展 Roo Code 的功能。本指南涵盖了在 Roo Code 中使用 MCP 所需了解的一切。
 
 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
   <iframe
@@ -33,365 +33,365 @@ Model Context Protocol (MCP) extends Roo Code's capabilities by connecting to ex
 
 ---
 
-## Configuring MCP Servers
+## 配置 MCP 服务器
 
-MCP server configurations can be managed at two levels:
+MCP 服务器配置可以在两个级别进行管理：
 
-1.  **Global Configuration**: Stored in the `mcp_settings.json` file, accessible via VS Code settings (see below). These settings apply across all your workspaces unless overridden by a project-level configuration.
-2.  **Project-level Configuration**: Defined in a `.roo/mcp.json` file within your project's root directory. This allows you to set up project-specific servers and share configurations with your team by committing the file to version control. Roo Code automatically detects and loads this file if it exists.
+1.  **全局配置**：存储在 `mcp_settings.json` 文件中，可通过 VS Code 设置访问（见下文）。这些设置适用于您的所有工作区，除非被项目级配置覆盖。
+2.  **项目级配置**：在项目根目录的 `.roo/mcp.json` 文件中定义。这允许您设置特定于项目的服务器，并通过将文件提交到版本控制来与团队共享配置。如果该文件存在，Roo Code 会自动检测并加载它。
 
-**Precedence**: If a server name exists in both global and project configurations, the **project-level configuration takes precedence**.
+**优先级**：如果服务器名称同时存在于全局和项目配置中，**项目级配置优先**。
 
-### Editing MCP Settings Files
+### 编辑 MCP 设置文件
 
-You can edit both global and project-level MCP configuration files directly from the Roo Code MCP settings view:
+您可以直接从 Roo Code MCP 设置视图中编辑全局和项目级的 MCP 配置文件：
 
-1. Click the <Codicon name="server" /> icon in the top navigation of the Roo Code pane.
+1. 点击 Roo Code 窗格顶部导航栏中的 <Codicon name="server" /> 图标。
 
-  <img src="/img/using-mcp-in-roo/using-mcp-in-roo-10.png" alt="MCP Servers interface in Roo Code" width="400" />
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-10.png" alt="Roo Code 中的 MCP 服务器界面" width="400" />
 
-2. Scroll to the bottom of the MCP settings view.
-3. Click the appropriate button:
-    *   **`Edit Global MCP`**: Opens the global `mcp_settings.json` file.
-    *   **`Edit Project MCP`**: Opens the project-specific `.roo/mcp.json` file. If this file doesn't exist, Roo Code will create it for you.
+2. 滚动到 MCP 设置视图的底部。
+3. 点击相应的按钮：
+    *   **`编辑全局 MCP`**：打开全局 `mcp_settings.json` 文件。
+    *   **`编辑项目 MCP`**：打开项目特定的 `.roo/mcp.json` 文件。如果此文件不存在，Roo Code 将为您创建它。
 
-  <img src="/img/using-mcp-in-roo/using-mcp-in-roo-9.png" alt="Edit Global MCP and Edit Project MCP buttons" width="600" />
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-9.png" alt="编辑全局 MCP 和编辑项目 MCP 按钮" width="600" />
 
-Both files use a JSON format with a `mcpServers` object containing named server configurations:
+两个文件都使用 JSON 格式，其中包含一个 `mcpServers` 对象，该对象包含命名的服务器配置：
 
-  ```json
-  {
-    "mcpServers": {
-      "server1": {
-        "command": "python",
-        "args": ["/path/to/server.py"],
-        "env": {
-          "API_KEY": "your_api_key"
-        },
-        "alwaysAllow": ["tool1", "tool2"],
-        "disabled": false
-      }
-    }
-  }
-    ```
-    *Example of MCP Server config in Roo Code (STDIO Transport)*
+   ```json
+   {
+     "mcpServers": {
+       "server1": {
+         "command": "python",
+         "args": ["/path/to/server.py"],
+         "env": {
+           "API_KEY": "your_api_key"
+         },
+         "alwaysAllow": ["tool1", "tool2"],
+         "disabled": false
+       }
+     }
+   }
+     ```
+     *Roo Code 中 MCP 服务器配置示例 (STDIO 传输)*
 
-  ### Understanding Transport Types
+   ### 理解传输类型
 
-  MCP supports three transport types for server communication: STDIO for local servers, Streamable HTTP (recommended for new remote servers), and SSE (for legacy remote servers).
+   MCP 支持三种服务器通信传输类型：用于本地服务器的 STDIO、推荐用于新远程服务器的 Streamable HTTP，以及用于旧版远程服务器的 SSE。
 
-  #### STDIO Transport
+   #### STDIO 传输
 
-  Used for local servers running on your machine:
+   用于在您的机器上运行的本地服务器：
 
-  * Communicates via standard input/output streams
-  * Lower latency (no network overhead)
-  * Better security (no network exposure)
-  * Simpler setup (no HTTP server needed)
-  * Runs as a child process on your machine
+   * 通过标准输入/输出流进行通信
+   * 延迟更低（无网络开销）
+   * 安全性更高（无网络暴露）
+   * 设置更简单（无需 HTTP 服务器）
+   * 作为您机器上的子进程运行
 
-  For more in-depth information about how STDIO transport works, see [STDIO Transport](/features/mcp/server-transports#stdio-transport).
+   有关 STDIO 传输工作原理的更深入信息，请参阅 [STDIO 传输](/features/mcp/server-transports#stdio-transport)。
 
-  STDIO configuration parameters:
+   STDIO 配置参数：
 
-  *   `command` (required): The executable to run (e.g., `node`, `python`, `npx`, or an absolute path).
-  *   `args` (optional): An array of string arguments to pass to the command. You can reference system environment variables using `${env:VARIABLE_NAME}` syntax.
-  *   `cwd` (optional): The working directory from which to launch the server process. If omitted, defaults to the first workspace folder path or the main process's working directory. Useful if the server script relies on relative paths.
-  *   `env` (optional): An object containing environment variables to set for the server process.
-  *   `alwaysAllow` (optional): An array of tool names from this server to automatically approve.
-  *   `disabled` (optional): Set to `true` to disable this server configuration.
+   *   `command` (必需): 要运行的可执行文件 (例如, `node`, `python`, `npx`, 或绝对路径)。
+   *   `args` (可选): 传递给命令的字符串参数数组。您可以使用 `${env:VARIABLE_NAME}` 语法引用系统环境变量。
+   *   `cwd` (可选): 启动服务器进程的工作目录。如果省略，则默认为第一个工作区文件夹路径或主进程的工作目录。如果服务器脚本依赖于相对路径，则此选项很有用。
+   *   `env` (可选): 包含要为服务器进程设置的环境变量的对象。
+   *   `alwaysAllow` (可选): 要从此服务器自动批准的工具名称数组。
+   *   `disabled` (可选): 设置为 `true` 以禁用此服务器配置。
 
-  STDIO configuration example:
-  ```json
-  {
-    "mcpServers": {
-      "local-server": {
-        "command": "node",
-        "args": ["server.js"],
-        "cwd": "/path/to/project/root", // Optional: Specify working directory
-        "env": {
-          "API_KEY": "your_api_key"
-        },
-        "alwaysAllow": ["tool1", "tool2"],
-        "disabled": false
-      }
-    }
-  }
-  ```
+   STDIO 配置示例：
+   ```json
+   {
+     "mcpServers": {
+       "local-server": {
+         "command": "node",
+         "args": ["server.js"],
+         "cwd": "/path/to/project/root", // 可选：指定工作目录
+         "env": {
+           "API_KEY": "your_api_key"
+         },
+         "alwaysAllow": ["tool1", "tool2"],
+         "disabled": false
+       }
+     }
+   }
+   ```
 
-  #### Using System Environment Variables in Arguments
+   #### 在参数中使用系统环境变量
 
-  You can reference system-level environment variables within the `args` array using the `${env:VARIABLE_NAME}` syntax. This allows you to pass sensitive information like API keys or tokens from your system environment without hardcoding them in your configuration:
+   您可以使用 `${env:VARIABLE_NAME}` 语法在 `args` 数组中引用系统级环境变量。这使您可以从系统环境中传递敏感信息，如 API 密钥或令牌，而无需在配置中硬编码它们：
 
-  ```json
-  {
-    "mcpServers": {
-      "github": {
-        "command": "docker",
-        "args": [
-          "run",
-          "-i",
-          "--rm",
-          "-e",
-          "GITHUB_PERSONAL_ACCESS_TOKEN=${env:GITHUB_PERSONAL_ACCESS_TOKEN}",
-          "ghcr.io/github/github-mcp-server"
-        ],
-        "alwaysAllow": [
-          "get_pull_request"
-        ]
-      }
-    }
-  }
-  ```
+   ```json
+   {
+     "mcpServers": {
+       "github": {
+         "command": "docker",
+         "args": [
+           "run",
+           "-i",
+           "--rm",
+           "-e",
+           "GITHUB_PERSONAL_ACCESS_TOKEN=${env:GITHUB_PERSONAL_ACCESS_TOKEN}",
+           "ghcr.io/github/github-mcp-server"
+         ],
+         "alwaysAllow": [
+           "get_pull_request"
+         ]
+       }
+     }
+   }
+   ```
 
-  In this example, `${env:GITHUB_PERSONAL_ACCESS_TOKEN}` will be replaced with the value of the `GITHUB_PERSONAL_ACCESS_TOKEN` environment variable from your system. This is particularly useful when:
-  - Working with Docker containers that need environment variables passed through
-  - Keeping sensitive credentials out of your configuration files
-  - Using the same configuration across different environments with different credentials
+   在此示例中，`${env:GITHUB_PERSONAL_ACCESS_TOKEN}` 将被替换为您系统中 `GITHUB_PERSONAL_ACCESS_TOKEN` 环境变量的值。这在以下情况中特别有用：
+   - 使用需要传递环境变量的 Docker 容器
+   - 将敏感凭据保留在配置文件之外
+   - 在具有不同凭据的不同环境中使用相同的配置
 
-  **Note:** The environment variable must exist in your system environment for this to work. You can set system environment variables through your operating system's settings or shell configuration files (e.g., `.bashrc`, `.zshrc`, or Windows Environment Variables).
-#### Streamable HTTP Transport
+   **注意：** 环境变量必须存在于您的系统环境中才能正常工作。您可以通过操作系统的设置或 shell 配置文件（例如 `.bashrc`、`.zshrc` 或 Windows 环境变量）来设置系统环境变量。
+ #### Streamable HTTP 传输
 
-This is the **modern standard** for remote servers accessed over HTTP/HTTPS, offering more flexibility and replacing the legacy SSE transport for new implementations.
+ 这是通过 HTTP/HTTPS 访问的远程服务器的**现代标准**，提供更大的灵活性，并取代了用于新实现的旧版 SSE 传输。
 
-*   Communicates via HTTP POST/GET to a single MCP endpoint
-*   Optionally uses Server-Sent Events (SSE) for streaming
-*   Can be hosted on a different machine
-*   Supports multiple client connections
-*   Requires network access
-*   Allows centralized deployment and management
+ *   通过 HTTP POST/GET 与单个 MCP 端点通信
+ *   可选地使用服务器发送事件 (SSE) 进行流式传输
+ *   可以托管在不同的机器上
+ *   支持多个客户端连接
+ *   需要网络访问
+ *   允许集中部署和管理
 
-For more in-depth information about how Streamable HTTP transport works, see [Streamable HTTP Transport](/features/mcp/server-transports#streamable-http-transport).
+ 有关 Streamable HTTP 传输工作原理的更深入信息，请参阅 [Streamable HTTP 传输](/features/mcp/server-transports#streamable-http-transport)。
 
-Streamable HTTP configuration parameters:
+ Streamable HTTP 配置参数：
 
-*   `type` (required): Must be set to `"streamable-http"`.
-*   `url` (required): The full URL of the remote MCP server's single endpoint (e.g., `https://your-server.com/mcp`).
-*   `headers` (optional): An object containing custom HTTP headers to send with requests (e.g., for authentication tokens).
-*   `alwaysAllow` (optional): An array of tool names from this server to automatically approve.
-*   `disabled` (optional): Set to `true` to disable this server configuration.
+ *   `type` (必需): 必须设置为 `"streamable-http"`。
+ *   `url` (必需): 远程 MCP 服务器单个端点的完整 URL (例如, `https://your-server.com/mcp`)。
+ *   `headers` (可选): 包含要与请求一起发送的自定义 HTTP 标头的对象 (例如, 用于身份验证令牌)。
+ *   `alwaysAllow` (可选): 要从此服务器自动批准的工具名称数组。
+ *   `disabled` (可选): 设置为 `true` 以禁用此服务器配置。
 
-Streamable HTTP configuration example:
-```json
-{
-  "mcpServers": {
-    "modern-remote-server": {
-      "type": "streamable-http",
-      "url": "https://your-modern-server.com/api/mcp-endpoint",
-      "headers": {
-        "X-API-Key": "your-secure-api-key"
-      },
-      "alwaysAllow": ["newToolA", "newToolB"],
-      "disabled": false
-    }
-  }
-}
-```
+ Streamable HTTP 配置示例：
+ ```json
+ {
+   "mcpServers": {
+     "modern-remote-server": {
+       "type": "streamable-http",
+       "url": "https://your-modern-server.com/api/mcp-endpoint",
+       "headers": {
+         "X-API-Key": "your-secure-api-key"
+       },
+       "alwaysAllow": ["newToolA", "newToolB"],
+       "disabled": false
+     }
+   }
+ }
+ ```
 
-  #### SSE Transport (Legacy)
+   #### SSE 传输 (旧版)
 
-  Used for older remote servers accessed over HTTP/HTTPS. **For new remote server implementations, [Streamable HTTP Transport](#streamable-http-transport) is recommended.**
+   用于通过 HTTP/HTTPS 访问的旧版远程服务器。**对于新的远程服务器实现，建议使用 [Streamable HTTP 传输](#streamable-http-transport)。**
 
-  * Communicates via Server-Sent Events protocol (typically requires separate endpoints for client-to-server and server-to-client communication)
-  * Can be hosted on a different machine
-  * Supports multiple client connections
-  * Requires network access
-  * Allows centralized deployment and management
+   * 通过服务器发送事件协议进行通信（通常需要用于客户端到服务器和服务器到客户端通信的单独端点）
+   * 可以托管在不同的机器上
+   * 支持多个客户端连接
+   * 需要网络访问
+   * 允许集中部署和管理
 
-  For more in-depth information about how legacy SSE transport works, see [SSE Transport (Legacy)](/features/mcp/server-transports#sse-transport-legacy).
+   有关旧版 SSE 传输工作原理的更深入信息，请参阅 [SSE 传输 (旧版)](/features/mcp/server-transports#sse-transport-legacy)。
 
-  SSE (Legacy) configuration parameters:
+   SSE (旧版) 配置参数：
 
-  *   `type` (optional, but recommended for clarity): Should be set to `"sse"` if providing a `url` for an SSE server, to distinguish from Streamable HTTP. If `url` is present and `type` is omitted, Roo Code might try to infer, but explicit declaration is safer.
-  *   `url` (required): The base URL for the remote MCP server. For legacy SSE, this usually implies separate paths like `/events` (for SSE stream) and `/message` (for POST requests) will be derived or expected by the server.
-  *   `headers` (optional): An object containing custom HTTP headers to send with requests (e.g., for authentication tokens).
-  *   `alwaysAllow` (optional): An array of tool names from this server to automatically approve.
-  *   `disabled` (optional): Set to `true` to disable this server configuration.
+   *   `type` (可选，但为清晰起见建议使用): 如果为 SSE 服务器提供 `url`，则应设置为 `"sse"`，以区别于 Streamable HTTP。如果存在 `url` 但省略了 `type`，Roo Code 可能会尝试推断，但显式声明更安全。
+   *   `url` (必需): 远程 MCP 服务器的基本 URL。对于旧版 SSE，这通常意味着服务器将派生或期望像 `/events` (用于 SSE 流) 和 `/message` (用于 POST 请求) 这样的单独路径。
+   *   `headers` (可选): 包含要与请求一起发送的自定义 HTTP 标头的对象 (例如, 用于身份验证令牌)。
+   *   `alwaysAllow` (可选): 要从此服务器自动批准的工具名称数组。
+   *   `disabled` (可选): 设置为 `true` 以禁用此服务器配置。
 
-  SSE (Legacy) configuration example:
-  ```json
-  {
-    "mcpServers": {
-      "legacy-remote-server": {
-        "type": "sse", // Explicitly define as SSE
-        "url": "https://your-legacy-server-url.com/mcp-base", // Base URL
-        "headers": {
-          "Authorization": "Bearer your-legacy-token"
-        },
-        "alwaysAllow": ["oldToolX"],
-        "disabled": false
-      }
-    }
-  }
-  ```
+   SSE (旧版) 配置示例：
+   ```json
+   {
+     "mcpServers": {
+       "legacy-remote-server": {
+         "type": "sse", // 显式定义为 SSE
+         "url": "https://your-legacy-server-url.com/mcp-base", // 基本 URL
+         "headers": {
+           "Authorization": "Bearer your-legacy-token"
+         },
+         "alwaysAllow": ["oldToolX"],
+         "disabled": false
+       }
+     }
+   }
+   ```
 
-  ## Enabling or Disabling MCP Servers
+## 启用或禁用 MCP 服务器
 
-Disabling your MCP Servers here will remove all MCP related logic and definitions from your system prompt, reducing your token usage. This will prevent Roo Code from connecting to any MCP servers, and the `use_mcp_tool` and `access_mcp_resource` tools will not be available. Check this off if you don't intend to use MCP Servers. This is on by default.
+在此处禁用您的 MCP 服务器将从您的系统提示中删除所有与 MCP 相关的逻辑和定义，从而减少您的令牌使用量。这将阻止 Roo Code 连接到任何 MCP 服务器，并且 `use_mcp_tool` 和 `access_mcp_resource` 工具将不可用。如果您不打算使用 MCP 服务器，请取消选中此项。此项默认开启。
 
-1. Click the <Codicon name="server" /> icon in the top navigation of the Roo Code pane
-2. Check/Uncheck `Enable MCP Servers`
+1. 点击 Roo Code 窗格顶部导航栏中的 <Codicon name="server" /> 图标
+2. 选中/取消选中 `启用 MCP 服务器`
 
-  <img src="/img/using-mcp-in-roo/using-mcp-in-roo-2.png" alt="Enable MCP Servers toggle" width="400" />
-
----
-
-## Enabling or Disabling MCP Server Creation
-
-Disabling your MCP Server Creation here will just remove the instructions from your system prompt that Roo Code uses to write MCP servers while not removing the context related to operating them. This reduces token usage. This is on by default.
-
-1. Click the <Codicon name="server" /> icon in the top navigation of the Roo Code pane
-2. Check/Uncheck `Enable MCP Server Creation`
-
-  <img src="/img/using-mcp-in-roo/using-mcp-in-roo-3.png" alt="Enable MCP Server Creation toggle" width="400" />
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-2.png" alt="启用 MCP 服务器切换" width="400" />
 
 ---
 
-## How to Use Roo to Create an MCP Server
+## 启用或禁用 MCP 服务器创建
 
-If you need a specific tool or capability that isn't available through existing MCP servers, you can ask Roo Code to build a new one for you.
+在此处禁用您的 MCP 服务器创建只会从您的系统提示中删除 Roo Code 用于编写 MCP 服务器的指令，而不会删除与操作它们相关的上下文。这可以减少令牌使用量。此项默认开启。
 
-**Prerequisite:** Ensure the **[Enable MCP Server Creation](#enabling-or-disabling-mcp-server-creation)** setting is checked ON in the MCP settings panel. If this is disabled, Roo will not have the necessary instructions to build a server.
+1. 点击 Roo Code 窗格顶部导航栏中的 <Codicon name="server" /> 图标
+2. 选中/取消选中 `启用 MCP 服务器创建`
 
-**How to Initiate:**
-
-1.  **Make a Request:** Clearly ask Roo for the new tool or capability. For example:
-    *   "Create an MCP tool that gets the current price of Bitcoin."
-    *   "I need a tool that connects to my company's internal user database via its API."
-    *   "Build an MCP server to interact with the GitHub Gist API."
-
-2.  **Roo's Process (Simplified):** Once you make the request (and the setting is enabled), Roo will:
-    *   Fetch internal instructions for server creation.
-    *   Scaffold a basic server project (usually TypeScript) in the default MCP directory (e.g., `~/Documents/Cline/MCP` on macOS) unless you specify otherwise.
-    *   Write the code to implement the requested tool, including handling necessary API calls.
-    *   **Handle Secrets:** If the tool requires API keys or other credentials, Roo will ask you for them using the [`ask_followup_question`](/advanced-usage/available-tools/ask-followup-question) tool to ensure they are configured securely as environment variables for the server.
-    *   **Configure:** Automatically add the new server's configuration to your global `mcp_settings.json` or project `.roo/mcp.json` file.
-    *   **Activate:** Attempt to connect to the newly configured server so its tools are immediately available.
-
-3.  **Outcome:** If successful, Roo will confirm the creation, and the new server and its tools will appear in your MCP server list, ready for use.
-
-This feature allows you to tailor Roo's capabilities by having it build the specific integrations you need directly from your requests. For a deeper look into the internal mechanics, see the [Tool Calling Mechanism](/advanced-usage/available-tools/tool-use-overview#tool-calling-mechanism).
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-3.png" alt="启用 MCP 服务器创建切换" width="400" />
 
 ---
 
-## Managing Individual MCP Servers
+## 如何使用 Roo 创建 MCP 服务器
 
-   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-8.png" alt="Example of a configuration pane for a MCP Server" width="400" />
+如果您需要一个现有 MCP 服务器无法提供的特定工具或功能，您可以请求 Roo Code 为您构建一个新的。
 
-Each MCP server has its own configuration panel where you can modify settings, manage tools, and control its operation. To access these settings:
+**先决条件：** 确保在 MCP 设置面板中已勾选 **[启用 MCP 服务器创建](#enabling-or-disabling-mcp-server-creation)** 设置。如果禁用此项，Roo 将没有构建服务器所需的指令。
 
-1. Click the <Codicon name="server" /> icon in the top navigation of the Roo Code pane
-2. Locate the MCP server you want to manage in the list
-   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-4.png" alt="List of MCP Servers" width="400" />
+**如何启动：**
 
-### Deleting a Server
+1.  **发出请求：** 明确向 Roo 请求新的工具或功能。例如：
+    *   “创建一个 MCP 工具，获取比特币的当前价格。”
+    *   “我需要一个工具，通过其 API 连接到我公司的内部用户数据库。”
+    *   “构建一个 MCP 服务器来与 GitHub Gist API 交互。”
 
-1. Press the <Codicon name="trash" /> next to the MCP server you would like to delete
-2. Press the `Delete` button on the confirmation box
+2.  **Roo 的流程（简化版）：** 一旦您发出请求（并且设置已启用），Roo 将：
+    *   获取服务器创建的内部指令。
+    *   在默认的 MCP 目录（例如，在 macOS 上为 `~/Documents/Cline/MCP`）中搭建一个基本的服务器项目（通常是 TypeScript），除非您另有指定。
+    *   编写代码以实现所请求的工具，包括处理必要的 API 调用。
+    *   **处理机密：** 如果工具需要 API 密钥或其他凭据，Roo 将使用 [`ask_followup_question`](/advanced-usage/available-tools/ask-followup-question) 工具向您索要，以确保它们作为服务器的环境变量被安全配置。
+    *   **配置：** 自动将新服务器的配置添加到您的全局 `mcp_settings.json` 或项目 `.roo/mcp.json` 文件中。
+    *   **激活：** 尝试连接到新配置的服务器，以便其工具立即可用。
 
-  <img src="/img/using-mcp-in-roo/using-mcp-in-roo-5.png" alt="Delete confirmation box" width="400" />
+3.  **结果：** 如果成功，Roo 将确认创建，新的服务器及其工具将出现在您的 MCP 服务器列表中，随时可用。
 
-### Restarting a Server
-
-1. Press the <Codicon name="refresh" /> button next to the MCP server you would like to restart
-
-### Enabling or Disabling a Server
-
-1. Press the <Codicon name="activate" /> toggle switch next to the MCP server to enable/disable it
-
-### Network Timeout
-
-To set the maximum time to wait for a response after a tool call to the MCP server:
-
-1. Click the `Network Timeout` pulldown at the bottom of the individual MCP server's config box and change the time. Default is 1 minute but it can be set between 30 seconds and 5 minutes.
-
-<img src="/img/using-mcp-in-roo/using-mcp-in-roo-6.png" alt="Network Timeout pulldown" width="400" />
-
-### Auto Approve Tools
-
-MCP tool auto-approval works on a per-tool basis and is disabled by default. To configure auto-approval:
-
-1. First enable the global "Use MCP servers" auto-approval option in [auto-approving-actions](/features/auto-approving-actions)
-2. In the MCP server settings, locate the specific tool you want to auto-approve
-3. Check the `Always allow` checkbox next to the tool name
-
-<img src="/img/using-mcp-in-roo/using-mcp-in-roo-7.png" alt="Always allow checkbox for MCP tools" width="120" />
-
-When enabled, Roo Code will automatically approve this specific tool without prompting. Note that the global "Use MCP servers" setting takes precedence - if it's disabled, no MCP tools will be auto-approved.
+此功能允许您通过让 Roo 直接根据您的请求构建所需的特定集成来定制 Roo 的功能。要更深入地了解内部机制，请参阅[工具调用机制](/advanced-usage/available-tools/tool-use-overview#tool-calling-mechanism)。
 
 ---
 
-## Finding and Installing MCP Servers
+## 管理单个 MCP 服务器
 
-Roo Code does not come with any pre-installed MCP servers. You'll need to find and install them separately.
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-8.png" alt="MCP 服务器配置窗格示例" width="400" />
 
-* **Community Repositories:** Check for community-maintained lists of MCP servers on GitHub
-* **Ask Roo:** You can ask Roo Code to help you find or even create MCP servers (when "[Enable MCP Server Creation](#enabling-or-disabling-mcp-server-creation)" is enabled)
-* **Build Your Own:** Create custom MCP servers using the SDK to extend Roo Code with your own tools
+每个 MCP 服务器都有自己的配置面板，您可以在其中修改设置、管理工具和控制其操作。要访问这些设置：
 
-For full SDK documentation, visit the [MCP GitHub repository](https://github.com/modelcontextprotocol/).
+1. 点击 Roo Code 窗格顶部导航栏中的 <Codicon name="server" /> 图标
+2. 在列表中找到您要管理的 MCP 服务器
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-4.png" alt="MCP 服务器列表" width="400" />
 
----
+### 删除服务器
 
-## Using MCP Tools in Your Workflow
+1. 按下您要删除的 MCP 服务器旁边的 <Codicon name="trash" />
+2. 在确认框中按下 `删除` 按钮
 
-After configuring an MCP server, Roo automatically detects its available tools and resources. Effectively leveraging these tools involves understanding the core interaction steps and, crucially, how Roo interprets the tools you provide.
+   <img src="/img/using-mcp-in-roo/using-mcp-in-roo-5.png" alt="删除确认框" width="400" />
 
-### Core Workflow Steps
+### 重启服务器
 
-Your interaction with MCP tools typically follows this sequence:
+1. 按下您要重启的 MCP 服务器旁边的 <Codicon name="refresh" /> 按钮
 
-#### 1. Initiate a Task
-Begin by typing your request in the Roo Code chat interface.
+### 启用或禁用服务器
 
-#### 2. Tool Identification by Roo
-Roo analyzes your request to determine if an available MCP tool can assist. This stage is highly dependent on the quality of your MCP tool definitions.
+1. 按下 MCP 服务器旁边的 <Codicon name="activate" /> 切换开关以启用/禁用它
 
-##### The Critical Role of Descriptions
-Roo's ability to:
-*   Identify the *correct* tool for the job,
-*   Understand how to structure the necessary parameters, and
-*   Avoid misinterpreting a tool's capabilities,
-all hinge on clear, concise, and informative descriptions for both the tools themselves and their parameters. Vague or missing information, especially for parameters, can significantly hinder Roo's ability to select or use a tool effectively.
+### 网络超时
 
-For instance, a request like "Analyze the performance of my API" might lead Roo to consider an MCP tool designed for API endpoint testing. Whether Roo successfully identifies and utilizes this tool as intended is directly influenced by the quality of its description.
+要设置在对 MCP 服务器进行工具调用后等待响应的最长时间：
 
-##### Best Practices for Defining MCP Tools
-To ensure Roo can leverage your MCP tools efficiently, consider the following when defining them in your server:
+1. 点击单个 MCP 服务器配置框底部的 `网络超时` 下拉菜单并更改时间。默认为 1 分钟，但可以设置在 30 秒到 5 分钟之间。
 
-*   **Tool Name:** Choose a descriptive and unambiguous name that clearly indicates the tool's primary function.
-*   **Tool Description:** Provide a comprehensive summary of what the tool does, its purpose, and any important context or prerequisites for its use. Explain the outcome or result of using the tool.
-*   **Parameter Descriptions:** This is critical. For each parameter:
-    *   Clearly state its purpose and what kind of data it expects (e.g., "User ID for lookup," "File path to process," "Search query string").
-    *   Specify any formatting requirements, constraints, or an example of a valid value if applicable.
-    *   Indicate if the parameter is optional or required (though the MCP schema usually handles this, a note can be helpful).
-*   **Clarity for the AI:** Write descriptions as if you are explaining the tool to another developer (or an AI). The more context Roo has, the better it can integrate the tool into its problem-solving workflows. If a tool is intended to be used in a specific sequence or in conjunction with other tools, mentioning this can also be beneficial.
-*   **Augment with Custom Instructions:** Beyond the descriptions embedded in the MCP server, you can further guide Roo's usage of specific MCP tools by providing [Custom Instructions](/features/custom-instructions). This allows you to define preferred approaches, outline complex workflows involving multiple tools, or specify when a particular MCP tool should be prioritized or avoided.
+<img src="/img/using-mcp-in-roo/using-mcp-in-roo-6.png" alt="网络超时下拉菜单" width="400" />
 
-#### 3. Tool Invocation
-If Roo, guided by the tool descriptions, identifies a suitable tool, it will propose its use. You then approve this (unless [auto-approval](#auto-approve-tools) is configured for trusted tools).
+### 自动批准工具
 
-### Maximizing Synergy with MCP Servers
-By investing effort in crafting detailed descriptions and potentially augmenting them with custom instructions, you significantly improve the synergy between Roo Code and your MCP servers. This unlocks their full potential for more reliable and efficient task completion.
+MCP 工具自动批准功能是按工具设置的，默认情况下是禁用的。要配置自动批准：
+
+1. 首先在 [自动批准操作](/features/auto-approving-actions) 中启用全局“使用 MCP 服务器”自动批准选项
+2. 在 MCP 服务器设置中，找到您要自动批准的特定工具
+3. 选中工具名称旁边的 `始终允许` 复选框
+
+<img src="/img/using-mcp-in-roo/using-mcp-in-roo-7.png" alt="MCP 工具的始终允许复选框" width="120" />
+
+启用后，Roo Code 将自动批准此特定工具而不会提示。请注意，全局“使用 MCP 服务器”设置优先——如果禁用它，则不会自动批准任何 MCP 工具。
 
 ---
 
-## Troubleshooting MCP Servers
+## 查找和安装 MCP 服务器
 
-Common issues and solutions:
+Roo Code 不附带任何预安装的 MCP 服务器。您需要单独查找和安装它们。
 
-* **Server Not Responding:** Check if the server process is running and verify network connectivity
-* **Permission Errors:** Ensure proper API keys and credentials are configured in your `mcp_settings.json` (for global settings) or `.roo/mcp.json` (for project settings).
-* **Tool Not Available:** Confirm the server is properly implementing the tool and it's not disabled in settings
-* **Slow Performance:** Try adjusting the network timeout value for the specific MCP server
+* **社区存储库：** 在 GitHub 上查找社区维护的 MCP 服务器列表
+* **询问 Roo：** 您可以请求 Roo Code 帮助您查找甚至创建 MCP 服务器（当“[启用 MCP 服务器创建](#enabling-or-disabling-mcp-server-creation)”启用时）
+* **自己构建：** 使用 SDK 创建自定义 MCP 服务器，以使用您自己的工具扩展 Roo Code
+
+有关完整的 SDK 文档，请访问 [MCP GitHub 存储库](https://github.com/modelcontextprotocol/)。
 
 ---
 
-## Platform-Specific MCP Configuration Examples
+## 在您的工作流程中使用 MCP 工具
 
-### Windows Configuration Example
+配置 MCP 服务器后，Roo 会自动检测其可用的工具和资源。有效利用这些工具涉及了解核心交互步骤，以及至关重要的是，Roo 如何解释您提供的工具。
 
-When setting up MCP servers on Windows, you'll need to use the Windows Command Prompt (`cmd`) to execute commands. Here's an example of configuring a Puppeteer MCP server on Windows:
+### 核心工作流程步骤
+
+您与 MCP 工具的交互通常遵循以下顺序：
+
+#### 1. 启动任务
+在 Roo Code 聊天界面中输入您的请求。
+
+#### 2. Roo 的工具识别
+Roo 分析您的请求，以确定是否有可用的 MCP 工具可以提供帮助。此阶段在很大程度上取决于您的 MCP 工具定义的质量。
+
+##### 描述的关键作用
+Roo 的能力：
+*   为工作识别*正确*的工具，
+*   理解如何构造必要的参数，以及
+*   避免误解工具的功能，
+都取决于为工具本身及其参数提供清晰、简洁和信息丰富的描述。模糊或缺失的信息，特别是对于参数，会严重妨碍 Roo 有效选择或使用工具的能力。
+
+例如，像“分析我的 API 的性能”这样的请求可能会引导 Roo 考虑一个为 API 端点测试设计的 MCP 工具。Roo 是否能成功识别并按预期利用此工具，直接受到其描述质量的影响。
+
+##### 定义 MCP 工具的最佳实践
+为确保 Roo 能高效利用您的 MCP 工具，在您的服务器中定义它们时请考虑以下几点：
+
+*   **工具名称：** 选择一个描述性强且明确的名称，清楚地表明工具的主要功能。
+*   **工具描述：** 提供一个全面的摘要，说明工具的作用、目的以及使用它的任何重要上下文或先决条件。解释使用该工具的结果。
+*   **参数描述：** 这至关重要。对于每个参数：
+    *   清楚地说明其目的以及它期望什么样的数据（例如，“用于查找的用户 ID”、“要处理的文件路径”、“搜索查询字符串”）。
+    *   指定任何格式要求、约束或有效值的示例（如果适用）。
+    *   指明参数是可选的还是必需的（尽管 MCP 模式通常会处理这个问题，但备注可能会有所帮助）。
+*   **为 AI 提供清晰度：** 像向另一位开发人员（或 AI）解释工具一样编写描述。Roo 拥有的上下文越多，它就越能将工具集成到其解决问题的工作流程中。如果一个工具旨在以特定顺序或与其他工具结合使用，提及这一点也可能是有益的。
+*   **通过自定义指令增强：** 除了嵌入在 MCP 服务器中的描述之外，您还可以通过提供[自定义指令](/features/custom-instructions)来进一步指导 Roo 对特定 MCP 工具的使用。这使您可以定义首选方法，概述涉及多个工具的复杂工作流程，或指定何时应优先考虑或避免某个特定的 MCP 工具。
+
+#### 3. 工具调用
+如果 Roo 在工具描述的指导下识别出合适的工具，它将提议使用该工具。然后您批准此操作（除非为受信任的工具配置了[自动批准](#auto-approve-tools)）。
+
+### 最大化与 MCP 服务器的协同作用
+通过努力撰写详细的描述并可能通过自定义指令对其进行增强，您可以显著提高 Roo Code 与 MCP 服务器之间的协同作用。这释放了它们在更可靠、更高效地完成任务方面的全部潜力。
+
+---
+
+## 解决 MCP 服务器问题
+
+常见问题和解决方案：
+
+* **服务器无响应：** 检查服务器进程是否正在运行并验证网络连接
+* **权限错误：** 确保在您的 `mcp_settings.json`（用于全局设置）或 `.roo/mcp.json`（用于项目设置）中配置了正确的 API 密钥和凭据。
+* **工具不可用：** 确认服务器正确实现了该工具，并且在设置中未被禁用
+* **性能缓慢：** 尝试调整特定 MCP 服务器的网络超时值
+
+---
+
+## 特定平台的 MCP 配置示例
+
+### Windows 配置示例
+
+在 Windows 上设置 MCP 服务器时，您需要使用 Windows 命令提示符 (`cmd`) 来执行命令。以下是在 Windows 上配置 Puppeteer MCP 服务器的示例：
 
 ```json
 {
@@ -409,16 +409,16 @@ When setting up MCP servers on Windows, you'll need to use the Windows Command P
 }
 ```
 
-This Windows-specific configuration:
-- Uses the `cmd` command to access the Windows Command Prompt
-- Uses `/c` to tell cmd to execute the command and then terminate
-- Uses `npx` to run the package without installing it permanently
-- The `-y` flag automatically answers "yes" to any prompts during installation
-- Runs the `@modelcontextprotocol/server-puppeteer` package which provides browser automation capabilities
+这个特定于 Windows 的配置：
+- 使用 `cmd` 命令访问 Windows 命令提示符
+- 使用 `/c` 告诉 cmd 执行命令然后终止
+- 使用 `npx` 运行包而无需永久安装
+- `-y` 标志在安装过程中自动对任何提示回答“是”
+- 运行 `@modelcontextprotocol/server-puppeteer` 包，该包提供浏览器自动化功能
 
-### macOS and Linux Configuration Example
+### macOS 和 Linux 配置示例
 
-When setting up MCP servers on macOS or Linux, you can use a simpler configuration since you don't need the Windows Command Prompt. Here's an example of configuring a Puppeteer MCP server on macOS or Linux:
+在 macOS 或 Linux 上设置 MCP 服务器时，您可以使用更简单的配置，因为您不需要 Windows 命令提示符。以下是在 macOS 或 Linux 上配置 Puppeteer MCP 服务器的示例：
 
 ```json
 {
@@ -434,22 +434,22 @@ When setting up MCP servers on macOS or Linux, you can use a simpler configurati
 }
 ```
 
-This configuration:
-- Directly uses `npx` without needing a shell wrapper
-- Uses the `-y` flag to automatically answer "yes" to any prompts during installation
-- Runs the `@modelcontextprotocol/server-puppeteer` package which provides browser automation capabilities
+此配置：
+- 直接使用 `npx` 而无需 shell 包装器
+- 使用 `-y` 标志在安装过程中自动对任何提示回答“是”
+- 运行 `@modelcontextprotocol/server-puppeteer` 包，该包提供浏览器自动化功能
 
-The same approach can be used for other MCP servers on Windows, adjusting the package name as needed for different server types.
+同样的方法可以用于 Windows 上的其他 MCP 服务器，根据不同的服务器类型调整包名。
 
 ---
 
-## Runtime Version Manager Configuration
+## 运行时版本管理器配置
 
-When working with multiple versions of programming languages or runtimes, you may use version managers like [asdf](https://asdf-vm.com/) or [mise](https://mise.jdx.dev/) (formerly rtx). These tools help manage multiple runtime versions on a single system. Here's how to configure MCP servers to work with these version managers:
+在使用多种版本的编程语言或运行时时，您可能会使用像 [asdf](https://asdf-vm.com/) 或 [mise](https://mise.jdx.dev/) (以前的 rtx) 这样的版本管理器。这些工具有助于在单个系统上管理多个运行时版本。以下是如何配置 MCP 服务器以与这些版本管理器一起工作：
 
-### mise Configuration Example
+### mise 配置示例
 
-[mise](https://mise.jdx.dev/) is a fast, modern runtime version manager that can be used to specify which version of Node.js, Python, or other runtimes to use for your MCP server:
+[mise](https://mise.jdx.dev/) 是一个快速、现代的运行时版本管理器，可用于指定为您的 MCP 服务器使用哪个版本的 Node.js、Python 或其他运行时：
 
 ```json
 {
@@ -472,17 +472,17 @@ When working with multiple versions of programming languages or runtimes, you ma
 }
 ```
 
-This configuration:
-- Uses the `mise` command to manage runtime versions
-- The `x` subcommand executes a command with the configured runtime version
-- The `--` separates mise arguments from the command to run
-- Runs `node` with the specific version configured in your mise settings
-- Points to the MCP server JavaScript file
-- Automatically allows the "search" and "batch_execute" tools
+此配置：
+- 使用 `mise` 命令管理运行时版本
+- `x` 子命令使用配置的运行时版本执行命令
+- `--` 将 mise 参数与要运行的命令分开
+- 使用您 mise 设置中配置的特定版本运行 `node`
+- 指向 MCP 服务器 JavaScript 文件
+- 自动允许“search”和“batch_execute”工具
 
-### asdf Configuration Example
+### asdf 配置示例
 
-[asdf](https://asdf-vm.com/) is a popular tool for managing multiple runtime versions. Here's how to configure an MCP server to use a specific Node.js version managed by asdf:
+[asdf](https://asdf-vm.com/) 是一个用于管理多个运行时版本的流行工具。以下是如何配置 MCP 服务器以使用由 asdf 管理的特定 Node.js 版本：
 
 ```json
 {
@@ -502,9 +502,9 @@ This configuration:
 }
 ```
 
-This configuration:
-- Directly references the Node.js executable from the asdf installations directory
-- Sets the `ASDF_NODE_VERSION` environment variable to ensure consistent version use
-- Points to the MCP server JavaScript file
+此配置：
+- 直接引用 asdf 安装目录中的 Node.js 可执行文件
+- 设置 `ASDF_NODE_VERSION` 环境变量以确保一致的版本使用
+- 指向 MCP 服务器 JavaScript 文件
 
-Using version managers ensures that your MCP servers run with the correct runtime version, regardless of the system's default version, providing consistency across different environments and preventing version conflicts.
+使用版本管理器可确保您的 MCP 服务器使用正确的运行时版本运行，无论系统的默认版本如何，从而在不同环境中提供一致性并防止版本冲突。

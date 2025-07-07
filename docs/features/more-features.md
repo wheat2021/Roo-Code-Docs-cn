@@ -1,49 +1,49 @@
 ---
-sidebar_label: Additional Features
+sidebar_label: 其他功能
 ---
 
 
-# Additional Features
+# 其他功能
 
-This page describes additional features in Roo Code that enhance your development workflow.
-
----
-
-## Suggested Responses
-
-Roo Code provides suggested responses to questions, saving you time typing. These suggestions appear as buttons below the chat input box after you ask a question. Click a suggestion to quickly use it as your next prompt.
-
-This feature aims to streamline your workflow by anticipating your potential follow-up questions and providing one-click access to relevant prompts.
+本页介绍了 Roo Code 中的其他功能，这些功能可以增强您的开发工作流程。
 
 ---
 
-## Text to Speech
+## 建议回复
 
-Roo Code includes a Text-to-Speech (TTS) feature that reads out the AI responses, allowing you to listen to the information instead of reading it. This can be helpful for accessibility, learning, or simply for a change of pace.
+Roo Code 会针对问题提供建议回复，以节省您的打字时间。在您提问后，这些建议会以按钮的形式出现在聊天输入框下方。单击建议即可快速将其用作您的下一个提示。
 
-To use Text-to-Speech, simply enable it in the Roo Code settings. Once enabled, a speaker icon will appear next to each AI response in the chat. Click the icon to start listening.
+此功能旨在通过预测您可能提出的后续问题并提供对相关提示的一键式访问来简化您的工作流程。
 
 ---
 
-## Global Language Support
+## 文本转语音
 
-Roo Code supports 14 languages, making it accessible to a wider range of users globally. You can now use Roo Code in:
+Roo Code 包含文本转语音 (TTS) 功能，可以朗读 AI 的回复，让您可以听取信息而不是阅读。这对于无障碍、学习或仅仅是换个方式都很有帮助。
 
-- Simplified Chinese
-- Traditional Chinese
-- Spanish
-- Hindi
-- French
-- Portuguese
-- German
-- Japanese
-- Korean
-- Italian
-- Turkish
-- Vietnamese
-- Polish
-- Catalan
+要使用文本转语音，只需在 Roo Code 设置中启用它。启用后，聊天中每个 AI 回复旁边都会出现一个扬声器图标。单击该图标即可开始收听。
 
-To change your language, go to **Advanced Settings > Language** in the Roo Code settings panel.
+---
 
-This global update ensures a smoother and more inclusive coding experience for users around the world.
+## 全球语言支持
+
+Roo Code 支持 14 种语言，让全球更广泛的用户都能使用。您现在可以在以下语言环境中使用 Roo Code：
+
+- 简体中文
+- 繁体中文
+- 西班牙语
+- 印地语
+- 法语
+- 葡萄牙语
+- 德语
+- 日语
+- 韩语
+- 意大利语
+- 土耳其语
+- 越南语
+- 波兰语
+- 加泰罗尼亚语
+
+要更改语言，请在 Roo Code 设置面板中转到 **高级设置 > 语言**。
+
+这项全球更新确保了世界各地的用户都能获得更流畅、更具包容性的编码体验。

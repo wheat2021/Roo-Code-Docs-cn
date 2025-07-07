@@ -1,131 +1,131 @@
 import Codicon from '@site/src/components/Codicon';
 
-# Codebase Indexing
+# 代码库索引
 
-**⚠️ Experimental Feature:** This feature is under active development and may change significantly in future releases.
+**⚠️ 实验性功能：** 此功能正处于积极开发阶段，未来版本中可能会有重大变更。
 
-Codebase Indexing enables semantic code search across your entire project using AI embeddings. Instead of searching for exact text matches, it understands the *meaning* of your queries, helping Roo Code find relevant code even when you don't know specific function names or file locations.
+代码库索引功能通过 AI 嵌入（embeddings）技术，实现了在整个项目中进行语义化代码搜索。它不再是简单的文本精确匹配，而是能够理解您查询的*含义*，帮助 Roo Code 找到相关代码，即使您不知道具体的函数名称或文件位置。
 
-<img src="/img/codebase-indexing/codebase-indexing.png" alt="Codebase Indexing Settings" width="800" />
-
----
-
-## What It Does
-
-When enabled, the indexing system:
-
-1. **Parses your code** using Tree-sitter to identify semantic blocks (functions, classes, methods)
-2. **Creates embeddings** of each code block using AI models
-3. **Stores vectors** in a Qdrant database for fast similarity search
-4. **Provides the [`codebase_search`](/advanced-usage/available-tools/codebase-search) tool** to Roo for intelligent code discovery
-
-This enables natural language queries like "user authentication logic" or "database connection handling" to find relevant code across your entire project.
+<img src="/img/codebase-indexing/codebase-indexing.png" alt="代码库索引设置" width="800" />
 
 ---
 
-## Key Benefits
+## 功能介绍
 
-- **Semantic Search**: Find code by meaning, not just keywords
-- **Enhanced AI Understanding**: Roo can better comprehend and work with your codebase
-- **Cross-Project Discovery**: Search across all files, not just what's open
-- **Pattern Recognition**: Locate similar implementations and code patterns
+启用后，索引系统会：
 
----
+1.  **解析您的代码**：使用 Tree-sitter 识别语义块（如函数、类、方法）。
+2.  **创建嵌入**：使用 AI 模型为每个代码块创建嵌入。
+3.  **存储向量**：将向量存储在 Qdrant 数据库中，以实现快速的相似性搜索。
+4.  **提供 [`codebase_search`](/advanced-usage/available-tools/codebase-search) 工具**：供 Roo 进行智能代码发现。
 
-## Setup Requirements
-
-### Embedding Provider
-
-Choose one of these options for generating embeddings:
-
-**OpenAI (Recommended)**
-- Requires OpenAI API key
-- Supports all OpenAI embedding models
-- Default: `text-embedding-3-small`
-- Processes up to 100,000 tokens per batch
-
-**Ollama (Local)**
-- Requires local Ollama installation
-- No API costs or internet dependency
-- Supports any Ollama-compatible embedding model
-- Requires Ollama base URL configuration
-
-**OpenAI Compatible**
-- Works with any OpenAI-compatible API endpoint
-- Supports providers like Google Gemini, Azure OpenAI, and others
-- Requires base URL and API key configuration
-- Uses OpenAI-style request/response format
-
-### Setting Up Ollama for Embeddings
-
-1. **Install Ollama**
-   - **macOS**: `brew install ollama` or download from [ollama.com](https://ollama.com)
-   - **Linux**: `curl -fsSL https://ollama.com/install.sh | sh`
-   - **Windows**: Download installer from [ollama.com](https://ollama.com)
-
-2. **Start Ollama Service**
-   ```bash
-   ollama serve
-   ```
-   This starts Ollama on `http://localhost:11434` (default port)
-
-3. **Install Embedding Model**
-   ```bash
-   ollama pull nomic-embed-text
-   ```
-   This downloads the recommended embedding model (~274MB)
-
-4. **Verify Installation**
-   ```bash
-   ollama list
-   ```
-   You should see `nomic-embed-text` in the list
-
-5. **Configure in Roo Code**
-   - Set Ollama Base URL: `http://localhost:11434`
-   - Select Model: `nomic-embed-text`
-
-### Setting Up OpenAI Compatible Providers
-
-OpenAI Compatible providers use the same API format as OpenAI but with different endpoints. This includes Google Gemini, Azure OpenAI, and other compatible services.
-
-**Example: Google Gemini**
-
-1. **Get API Key**
-   - Visit [Google AI Studio](https://aistudio.google.com/)
-   - Create or select a project
-   - Generate an API key
-
-2. **Configure in Roo Code**
-   - **Provider**: Select "OpenAI Compatible"
-   - **Base URL**: `https://generativelanguage.googleapis.com/v1beta/openai/`
-   - **API Key**: Your Google AI Studio API key
-   - **Model**: `text-embedding-004`
-   - **Embedding Dimension**: `768`
-
-**Other Compatible Providers:**
-- **Azure OpenAI**: `https://your-resource.openai.azure.com/openai/deployments/your-deployment/`
-- **Local OpenAI-compatible servers**: Custom endpoints running compatible APIs
-
-### Vector Database
-
-**Qdrant** is required for storing and searching embeddings:
-- **Local**: `http://localhost:6333` (recommended for testing)
-- **Cloud**: Qdrant Cloud or self-hosted instance
-- **Authentication**: Optional API key for secured deployments
+这使得您可以使用自然语言进行查询，例如“用户认证逻辑”或“数据库连接处理”，从而在整个项目中找到相关代码。
 
 ---
 
-## Setting Up Qdrant
+## 主要优势
 
-### Quick Local Setup
+-   **语义搜索**：按含义而非关键词查找代码。
+-   **增强 AI 理解能力**：Roo 能更好地理解和处理您的代码库。
+-   **跨项目发现**：在所有文件中搜索，而不仅仅是当前打开的文件。
+-   **模式识别**：定位相似的实现和代码模式。
 
-**Using Docker:**
+---
+
+## 设置要求
+
+### 嵌入服务提供商
+
+选择以下任一选项来生成嵌入：
+
+**OpenAI (推荐)**
+-   需要 OpenAI API 密钥。
+-   支持所有 OpenAI 嵌入模型。
+-   默认模型：`text-embedding-3-small`。
+-   每批次最多可处理 100,000 个 token。
+
+**Ollama (本地)**
+-   需要本地安装 Ollama。
+-   无 API 费用或网络依赖。
+-   支持任何与 Ollama 兼容的嵌入模型。
+-   需要配置 Ollama 的基础 URL。
+
+**OpenAI 兼容**
+-   适用于任何与 OpenAI 兼容的 API 端点。
+-   支持 Google Gemini、Azure OpenAI 等提供商。
+-   需要配置基础 URL 和 API 密钥。
+-   使用 OpenAI 风格的请求/响应格式。
+
+### 为嵌入设置 Ollama
+
+1.  **安装 Ollama**
+    -   **macOS**：`brew install ollama` 或从 [ollama.com](https://ollama.com) 下载。
+    -   **Linux**：`curl -fsSL https://ollama.com/install.sh | sh`。
+    -   **Windows**：从 [ollama.com](https://ollama.com) 下载安装程序。
+
+2.  **启动 Ollama 服务**
+    ```bash
+    ollama serve
+    ```
+    这将在 `http://localhost:11434` (默认端口) 启动 Ollama。
+
+3.  **安装嵌入模型**
+    ```bash
+    ollama pull nomic-embed-text
+    ```
+    这将下载推荐的嵌入模型 (约 274MB)。
+
+4.  **验证安装**
+    ```bash
+    ollama list
+    ```
+    您应该能在列表中看到 `nomic-embed-text`。
+
+5.  **在 Roo Code 中配置**
+    -   设置 Ollama 基础 URL：`http://localhost:11434`。
+    -   选择模型：`nomic-embed-text`。
+
+### 设置 OpenAI 兼容的提供商
+
+OpenAI 兼容的提供商使用与 OpenAI 相同的 API 格式，但端点不同。这包括 Google Gemini、Azure OpenAI 和其他兼容服务。
+
+**示例：Google Gemini**
+
+1.  **获取 API 密钥**
+    -   访问 [Google AI Studio](https://aistudio.google.com/)。
+    -   创建或选择一个项目。
+    -   生成一个 API 密钥。
+
+2.  **在 Roo Code 中配置**
+    -   **提供商**：选择“OpenAI Compatible”。
+    -   **基础 URL**：`https://generativelanguage.googleapis.com/v1beta/openai/`。
+    -   **API 密钥**：您的 Google AI Studio API 密钥。
+    -   **模型**：`text-embedding-004`。
+    -   **嵌入维度**：`768`。
+
+**其他兼容提供商：**
+-   **Azure OpenAI**：`https://your-resource.openai.azure.com/openai/deployments/your-deployment/`
+-   **本地 OpenAI 兼容服务器**：运行兼容 API 的自定义端点。
+
+### 向量数据库
+
+需要使用 **Qdrant** 来存储和搜索嵌入：
+-   **本地**：`http://localhost:6333` (推荐用于测试)。
+-   **云端**：Qdrant Cloud 或自托管实例。
+-   **身份验证**：为安全部署提供可选的 API 密钥。
+
+---
+
+## 设置 Qdrant
+
+### 快速本地设置
+
+**使用 Docker：**
 ```bash
 docker run -p 6333:6333 qdrant/qdrant
 ```
 
-**Using Docker Compose:**
+**使用 Docker Compose：**
 ```yaml
 version: '3.8'
 services:
@@ -139,174 +139,174 @@ volumes:
   qdrant_storage:
 ```
 
-### Production Deployment
+### 生产部署
 
-For team or production use:
-- [Qdrant Cloud](https://cloud.qdrant.io/) - Managed service
-- Self-hosted on AWS, GCP, or Azure
-- Local server with network access for team sharing
-
----
-
-## Configuration
-
-1. Open Roo Code settings (<Codicon name="gear" /> icon)
-2. Navigate to **Experimental** section
-3. Enable **"Enable Codebase Indexing"**
-4. Configure your embedding provider:
-   - **OpenAI**: Enter API key and select model
-   - **Ollama**: Enter base URL and select model
-   - **OpenAI Compatible**: Enter base URL, API key, and select model
-5. Set Qdrant URL and optional API key
-6. Click **Save** to start initial indexing
+对于团队或生产环境使用：
+-   [Qdrant Cloud](https://cloud.qdrant.io/) - 托管服务。
+-   在 AWS、GCP 或 Azure 上自托管。
+-   具有网络访问权限的本地服务器，供团队共享。
 
 ---
 
-## Understanding Index Status
+## 配置
 
-The interface shows real-time status with color indicators:
-
-- **Standby** (Gray): Not running, awaiting configuration
-- **Indexing** (Yellow): Currently processing files
-- **Indexed** (Green): Up-to-date and ready for searches
-- **Error** (Red): Failed state requiring attention
-
----
-
-## How Files Are Processed
-
-### Smart Code Parsing
-- **Tree-sitter Integration**: Uses AST parsing to identify semantic code blocks
-- **Language Support**: All languages supported by Tree-sitter
-- **Fallback**: Line-based chunking for unsupported file types
-- **Block Sizing**: 
-  - Minimum: 100 characters
-  - Maximum: 1,000 characters
-  - Splits large functions intelligently
-
-### Automatic File Filtering
-The indexer automatically excludes:
-- Binary files and images
-- Large files (&gt;1MB)
-- Git repositories (`.git` folders)
-- Dependencies (`node_modules`, `vendor`, etc.)
-- Files matching `.gitignore` and `.rooignore` patterns
-
-### Incremental Updates
-- **File Watching**: Monitors workspace for changes
-- **Smart Updates**: Only reprocesses modified files
-- **Hash-based Caching**: Avoids reprocessing unchanged content
-- **Branch Switching**: Automatically handles Git branch changes
-
----
-## Search Score Threshold
-
-Control the relevance of semantic search results by adjusting the minimum similarity score.
-
-### Key Features
-- **Fine-Tune Relevancy**: Adjust the threshold to balance between the number of results and their precision.
-- **Intuitive Slider Control**: Easily set your preferred threshold with a simple slider.
-- **Real-Time Feedback**: See the exact threshold value as you adjust it.
-- **Smart Priority System**: Your setting overrides model-specific defaults, giving you full control.
-
-### Use Case
-
-**Before**: The similarity threshold for semantic search was a fixed value that depended on the embedding model being used. This meant you had no control over the relevance of your search results.
-
-**Now**: You can directly control the search sensitivity to match your needs.
-- **Low Threshold (e.g., 0.15)**: Returns more results, which is useful for broad exploration but may include less relevant code.
-- **High Threshold (e.g., 0.65)**: Returns fewer, more precise matches, ideal for targeted searches.
-
-### How it Works
-
-The "Search Score Threshold" setting determines the minimum similarity score required for a code snippet to be included in semantic search results. When you perform a search, Roo compares your query with the indexed code and only shows results that meet or exceed your chosen threshold.
-
-This setting gives you the power to customize the search behavior based on your specific task.
-
-### Configuration
-
-You can configure this feature in the settings:
-
-1. **Navigate to Settings**: Open the Roo Code settings in your editor.
-2. **Find Code Indexing**: Go to the "Code Indexing" section.
-3. **Expand Advanced Configuration**: Click on "Advanced Configuration" to reveal more options.
-4. **Adjust the Slider**:
-   - **Setting**: `Search Score Threshold`
-   - **Description**: Use the slider to set a value between 0.0 and 1.0. The value is displayed in real-time.
-   - **Default**: `0.4`. A reset button is available to restore this default.
-
-### FAQ
-
-**"What's the difference between a low and high score?"**
-- A **low score** (e.g., 0.2) is like a broad, "fuzzy" search. You'll get more hits, but some might be only loosely related.
-- A **high score** (e.g., 0.8) is like a strict, precise search. You'll get fewer hits, but they will be highly relevant to your query.
-
-## Best Practices
-
-### Model Selection
-
-**For OpenAI:**
-- **`text-embedding-3-small`**: Best balance of performance and cost
-- **`text-embedding-3-large`**: Higher accuracy, 5x more expensive
-- **`text-embedding-ada-002`**: Legacy model, lower cost
-
-**For Ollama:**
-- **`mxbai-embed-large`**: The largest and highest-quality embedding model. 
-- **`nomic-embed-text`**: Best balance of performance and embedding quality.
-- **`all-minilm`**: Compact model with lower quality but faster performance.
-
-### Security Considerations
-- **API Keys**: Stored securely in VS Code's encrypted storage
-- **Code Privacy**: Only small code snippets sent for embedding (not full files)
-- **Local Processing**: All parsing happens locally
-- **Qdrant Security**: Use authentication for production deployments
+1.  打开 Roo Code 设置 (<Codicon name="gear" /> 图标)。
+2.  导航到 **Experimental** (实验性) 部分。
+3.  启用 **"Enable Codebase Indexing"** (启用代码库索引)。
+4.  配置您的嵌入服务提供商：
+    -   **OpenAI**：输入 API 密钥并选择模型。
+    -   **Ollama**：输入基础 URL 并选择模型。
+    -   **OpenAI Compatible**：输入基础 URL、API 密钥并选择模型。
+5.  设置 Qdrant URL 和可选的 API 密钥。
+6.  点击 **Save** (保存) 以开始初始索引。
 
 ---
 
-## Current Limitations
+## 理解索引状态
 
-- **File Size**: 1MB maximum per file
-- **Markdown**: Not currently supported due to parsing complexity
-- **Single Workspace**: One workspace at a time
-- **Dependencies**: Requires external services (embedding provider + Qdrant)
-- **Language Coverage**: Limited to Tree-sitter supported languages
+界面通过颜色指示器显示实时状态：
 
----
-
-## Using the Search Feature
-
-Once indexed, Roo can use the [`codebase_search`](/advanced-usage/available-tools/codebase-search) tool to find relevant code:
-
-**Example Queries:**
-- "How is user authentication handled?"
-- "Database connection setup"
-- "Error handling patterns"
-- "API endpoint definitions"
-
-The tool provides Roo with:
-- Relevant code snippets
-- File paths and line numbers
-- Similarity scores
-- Contextual information
+-   **Standby** (灰色)：待机，等待配置。
+-   **Indexing** (黄色)：正在处理文件。
+-   **Indexed** (绿色)：已是最新状态，可供搜索。
+-   **Error** (红色)：失败状态，需要处理。
 
 ---
 
-## Privacy & Security
+## 文件处理方式
 
-- **Code stays local**: Only small code snippets sent for embedding
-- **Embeddings are numeric**: Not human-readable representations
-- **Secure storage**: API keys encrypted in VS Code storage
-- **Local option**: Use Ollama for completely local processing
-- **Access control**: Respects existing file permissions
+### 智能代码解析
+-   **Tree-sitter 集成**：使用 AST 解析来识别语义代码块。
+-   **语言支持**：支持所有 Tree-sitter 支持的语言。
+-   **后备方案**：对不支持的文件类型进行基于行的分块。
+-   **块大小**：
+    -   最小：100 个字符。
+    -   最大：1,000 个字符。
+    -   智能地拆分大型函数。
+
+### 自动文件过滤
+索引器会自动排除：
+-   二进制文件和图片。
+-   大文件 (>1MB)。
+-   Git 仓库 (`.git` 文件夹)。
+-   依赖项 (`node_modules`, `vendor` 等)。
+-   匹配 `.gitignore` 和 `.rooignore` 模式的文件。
+
+### 增量更新
+-   **文件监视**：监视工作区中的更改。
+-   **智能更新**：仅重新处理已修改的文件。
+-   **基于哈希的缓存**：避免重复处理未更改的内容。
+-   **分支切换**：自动处理 Git 分支的更改。
+
+---
+## 搜索分数阈值
+
+通过调整最小相似度分数来控制语义搜索结果的相关性。
+
+### 主要特性
+-   **微调相关性**：调整阈值以平衡结果数量和精度。
+-   **直观的滑块控制**：使用简单的滑块轻松设置您的首选阈值。
+-   **实时反馈**：在调整时即时看到确切的阈值。
+-   **智能优先级系统**：您的设置将覆盖模型特定的默认值，让您完全掌控。
+
+### 使用场景
+
+**之前**：语义搜索的相似度阈值是一个固定值，取决于所使用的嵌入模型。这意味着您无法控制搜索结果的相关性。
+
+**现在**：您可以直接控制搜索的灵敏度以满足您的需求。
+-   **低阈值 (例如 0.15)**：返回更多结果，适用于广泛探索，但可能包含相关性较低的代码。
+-   **高阈值 (例如 0.65)**：返回更少、更精确的匹配项，适用于有针对性的搜索。
+
+### 工作原理
+
+“搜索分数阈值”设置决定了代码片段要被包含在语义搜索结果中所需的最低相似度分数。当您执行搜索时，Roo 会将您的查询与索引的代码进行比较，并仅显示达到或超过您所选阈值的结果。
+
+此设置使您能够根据具体任务自定义搜索行为。
+
+### 配置
+
+您可以在设置中配置此功能：
+
+1.  **导航到设置**：在您的编辑器中打开 Roo Code 设置。
+2.  **找到代码索引**：转到“Code Indexing”部分。
+3.  **展开高级配置**：点击“Advanced Configuration”以显示更多选项。
+4.  **调整滑块**：
+    -   **设置**：`Search Score Threshold` (搜索分数阈值)
+    -   **描述**：使用滑块设置一个 0.0 到 1.0 之间的值。该值会实时显示。
+    -   **默认值**：`0.4`。有一个重置按钮可用于恢复此默认值。
+
+### 常见问题解答
+
+**“低分和高分有什么区别？”**
+-   **低分** (例如 0.2) 就像一个广泛的“模糊”搜索。您会得到更多匹配项，但有些可能只是松散相关。
+-   **高分** (例如 0.8) 就像一个严格、精确的搜索。您会得到更少的匹配项，但它们与您的查询高度相关。
+
+## 最佳实践
+
+### 模型选择
+
+**对于 OpenAI：**
+-   **`text-embedding-3-small`**：性能和成本的最佳平衡。
+-   **`text-embedding-3-large`**：准确性更高，但价格贵 5 倍。
+-   **`text-embedding-ada-002`**：旧版模型，成本较低。
+
+**对于 Ollama：**
+-   **`mxbai-embed-large`**：最大、质量最高的嵌入模型。
+-   **`nomic-embed-text`**：性能和嵌入质量的最佳平衡。
+-   **`all-minilm`**：紧凑型模型，质量较低但性能更快。
+
+### 安全注意事项
+-   **API 密钥**：安全地存储在 VS Code 的加密存储中。
+-   **代码隐私**：仅发送小的代码片段进行嵌入（而非整个文件）。
+-   **本地处理**：所有解析都在本地进行。
+-   **Qdrant 安全**：在生产部署中使用身份验证。
 
 ---
 
-## Future Enhancements
+## 当前限制
 
-Planned improvements:
-- Additional embedding providers
-- Improved markdown and documentation support
-- Multi-workspace indexing
-- Enhanced filtering and configuration options
-- Team sharing capabilities
-- Integration with VS Code's native search
+-   **文件大小**：每个文件最大 1MB。
+-   **Markdown**：由于解析复杂性，目前不支持。
+-   **单个工作区**：一次只能处理一个工作区。
+-   **依赖项**：需要外部服务（嵌入提供商 + Qdrant）。
+-   **语言覆盖范围**：仅限于 Tree-sitter 支持的语言。
+
+---
+
+## 使用搜索功能
+
+索引完成后，Roo 可以使用 [`codebase_search`](/advanced-usage/available-tools/codebase-search) 工具查找相关代码：
+
+**查询示例：**
+- “用户认证是如何处理的？”
+- “数据库连接设置”
+- “错误处理模式”
+- “API 端点定义”
+
+该工具为 Roo 提供：
+-   相关的代码片段
+-   文件路径和行号
+-   相似度分数
+-   上下文信息
+
+---
+
+## 隐私与安全
+
+-   **代码保留在本地**：仅发送小的代码片段进行嵌入。
+-   **嵌入是数字化的**：不是人类可读的表示形式。
+-   **安全存储**：API 密钥在 VS Code 存储中加密。
+-   **本地选项**：使用 Ollama 进行完全本地处理。
+-   **访问控制**：尊重现有的文件权限。
+
+---
+
+## 未来增强
+
+计划中的改进：
+-   增加更多的嵌入服务提供商。
+-   改进对 Markdown 和文档的支持。
+-   多工作区索引。
+-   增强的过滤和配置选项。
+-   团队共享功能。
+-   与 VS Code 的原生搜索集成。

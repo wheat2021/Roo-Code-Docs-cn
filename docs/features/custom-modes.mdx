@@ -1,6 +1,6 @@
-# Customizing Modes
+# 自定义模式
 
-Roo Code allows you to create **custom modes** to tailor Roo's behavior to specific tasks or workflows. Custom modes can be either **global** (available across all projects) or **project-specific** (defined within a single project).
+Roo Code 允许您创建**自定义模式**，以根据特定任务或工作流程定制 Roo 的行为。自定义模式可以是**全局的**（在所有项目中可用）或**项目特定的**（在单个项目中定义）。
 
 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
   <iframe
@@ -15,554 +15,555 @@ Roo Code allows you to create **custom modes** to tailor Roo's behavior to speci
     frameBorder="0"
     allow="autoplay; encrypted-media"
     allowFullScreen
-    title="Custom Modes Overview Video"
+    title="自定义模式概述视频"
   ></iframe>
 </div>
 
 <br />
 
-:::tip Sticky Models for Efficient Workflow
-Each mode—including custom ones—features **Sticky Models**. This means Roo Code automatically remembers and selects the last model you used with a particular mode. This lets you assign different preferred models to different tasks without constant reconfiguration, as Roo switches between models when you change modes.
+:::tip 高效工作流的粘性模型
+每个模式（包括自定义模式）都具有**粘性模型**功能。这意味着 Roo Code 会自动记住并选择您上次与特定模式一起使用的模型。这使您可以为不同的任务分配不同的首选模型，而无需不断重新配置，因为当您更改模式时，Roo 会在模型之间切换。
 :::
 
 ---
 
-## Why Use Custom Modes?
+## 为什么要使用自定义模式？
 
-*   **Specialization:** Create modes optimized for specific tasks, like "Documentation Writer," "Test Engineer," or "Refactoring Expert."
-*   **Safety:** Restrict a mode's access to sensitive files or commands. For example, a "Review Mode" could be limited to read-only operations.
-*   **Experimentation:** Safely experiment with different prompts and configurations without affecting other modes.
-*   **Team Collaboration:** Share custom modes with your team to standardize workflows.
+*   **专业化：** 创建针对特定任务优化的模式，例如“文档编写者”、“测试工程师”或“重构专家”。
+*   **安全性：** 限制模式对敏感文件或命令的访问。例如，“审阅模式”可以仅限于只读操作。
+*   **实验：** 安全地试验不同的提示和配置，而不会影响其他模式。
+*   **团队协作：** 与您的团队共享自定义模式以标准化工作流程。
 
-<img src="/img/custom-modes/custom-modes-3.png" alt="Overview of custom modes interface" width="500" />
+<img src="/img/custom-modes/custom-modes-3.png" alt="自定义模式界面概述" width="500" />
 
-    *Roo Code's interface for creating and managing custom modes.*
-
----
-
-## What's Included in a Custom Mode?
-
-Custom modes are defined by several key properties. Understanding these concepts will help you tailor Roo's behavior effectively.
-
-| UI Field / YAML Property                 | Conceptual Description                                                                                                                                                                                                                                                                                                                                                                                       |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Slug (`slug`)                            | A **unique internal identifier** for the mode. It's used by Roo Code to reference the mode, especially for associating [mode-specific instruction files](#mode-specific-instructions-via-filesdirectories).                                                                                                                                                                                                   |
-| Name (`name`)                            | The **display name** for the mode as it appears in the Roo Code user interface. This should be human-readable and descriptive.                                                                                                                                                                                                                                                                               |
-| Description (`description`)              | A **short, user-friendly summary** of the mode's purpose displayed in the mode selector UI.<br />- This text appears below the mode's name in the redesigned mode selector, offering users a quick understanding of the mode's function.<br />- Keep this concise and focused on what the mode does for the user.                                                                                              |
-| Role Definition (`roleDefinition`)       | Defines the **core identity and expertise** of the mode. This text is placed at the beginning of the system prompt.<br />- Its primary function is to define Roo's personality and behavior when this mode is active.<br />- With the introduction of the `description` field, the `roleDefinition` should provide a detailed description of the mode's identity, while the `description` field handles the short summary for the UI.<br />- The `whenToUse` property now takes precedence for summarization in automated contexts like task orchestration. |
-| Available Tools (`groups`)               | Defines the **allowed toolsets and file access permissions** for the mode.<br />- In the UI, this corresponds to selecting which general categories of tools (like reading files, editing files, browsing, or executing commands) the mode can use.<br />- The UI shows which files can be edited in the 'Allowed files' section under each mode.<br />- File type restrictions for the "edit" group are typically managed via manual YAML/JSON configuration or by asking Roo to set them up, as detailed in the [Property Details for `groups`](#groups). |
-| When to Use (optional) (`whenToUse`)     | (Optional) Provides **guidance for Roo's automated decision-making**, particularly for mode selection and task orchestration.<br />- This text is used by Roo, particularly the [`🪃 Orchestrator`](/basic-usage/using-modes#orchestrator-mode-aka-boomerang-mode) mode, for [orchestrating tasks](/features/boomerang-tasks) (e.g., via the [`new_task`](/advanced-usage/available-tools/new-task) tool).<br />- It also helps Roo decide which mode is appropriate when [switching modes](/basic-usage/using-modes#switching-between-modes) (e.g., via the [`switch_mode`](/advanced-usage/available-tools/switch-mode) tool).<br />- This field is **not displayed in the mode selector UI** - that's handled by the `description` field. |
-| Custom Instructions (optional) (`customInstructions`) | **Specific behavioral guidelines** or rules for the mode.<br />- These instructions are added near the end of the system prompt to further refine Roo's behavior beyond the `roleDefinition`.<br />- This can be provided directly in the configuration or via separate instruction files.                                                                                                                               |
-
----
-## Import/Export Modes
-
-Easily share, back up, and template your custom modes. This feature lets you export any mode—and its associated rules—into a single, portable YAML file that you can import into any project.
-
-### Key Features
-- **Shareable Setups**: Package a mode and its rules into one file to easily share with your team.
-- **Easy Backups**: Save your custom mode configurations so you never lose them.
-- **Project Templates**: Create standardized mode templates for different types of projects.
-- **Simple Migration**: Move modes between your global settings and specific projects effortlessly.
+    *Roo Code 用于创建和管理自定义模式的界面。*
 
 ---
 
-### Use Case
+## 自定义模式包含哪些内容？
 
-**Before**: Manually recreating custom modes and copying `.roo/rules-{slug}/` folders for each new project or team member. This was tedious and error-prone.
+自定义模式由几个关键属性定义。理解这些概念将帮助您有效地定制 Roo 的行为。
 
-**With this feature**: A single click exports a mode and all its rules to a YAML file. Another click imports it, setting everything up automatically.
+| UI 字段 / YAML 属性                 | 概念描述                                                                                                                                                                                                                                                                                                                                                                                       |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Slug (`slug`)                            | 模式的**唯一内部标识符**。Roo Code 使用它来引用模式，特别是用于关联[特定于模式的指令文件](#通过文件目录提供特定于模式的指令)。                                                                                                                                                                                                   |
+| 名称 (`name`)                            | 模式在 Roo Code 用户界面中显示的**显示名称**。这应该是人类可读且具有描述性的。                                                                                                                                                                                                                                                                               |
+| 描述 (`description`)              | 在模式选择器 UI 中显示的模式用途的**简短、用户友好的摘要**。<br />- 此文本显示在重新设计的模式选择器中模式名称的下方，让用户快速了解模式的功能。<br />- 保持此内容简洁，并专注于模式为用户提供的功能。                                                                                              |
+| 角色定义 (`roleDefinition`)       | 定义模式的**核心身份和专业知识**。此文本放置在系统提示的开头。<br />- 其主要功能是定义此模式激活时 Roo 的个性和行为。<br />- 随着 `description` 字段的引入，`roleDefinition` 应提供模式身份的详细描述，而 `description` 字段则负责 UI 的简短摘要。<br />- `whenToUse` 属性现在在自动化上下文（如任务编排）中优先用于摘要。 |
+| 可用工具 (`groups`)               | 定义模式的**允许的工具集和文件访问权限**。<br />- 在 UI 中，这对应于选择模式可以使用的常规工具类别（如读取文件、编辑文件、浏览或执行命令）。<br />- UI 在每个模式下的“允许的文件”部分显示可以编辑哪些文件。<br />- “编辑”组的文件类型限制通常通过手动 YAML/JSON 配置或要求 Roo 进行设置来管理，详见 [`groups` 的属性详情](#groups)。 |
+| 何时使用 (可选) (`whenToUse`)     | (可选) 为 Roo 的**自动化决策提供指导**，特别是在模式选择和任务编排方面。<br />- Roo（特别是 [`🪃 编排器`](/basic-usage/using-modes#orchestrator-mode-aka-boomerang-mode) 模式）使用此文本来[编排任务](/features/boomerang-tasks)（例如，通过 [`new_task`](/advanced-usage/available-tools/new-task) 工具）。<br />- 它还帮助 Roo 在[切换模式](/basic-usage/using-modes#switching-between-modes)时决定哪个模式是合适的（例如，通过 [`switch_mode`](/advanced-usage/available-tools/switch-mode) 工具）。<br />- 此字段**不会显示在模式选择器 UI 中** - 该功能由 `description` 字段处理。 |
+| 自定义指令 (可选) (`customInstructions`) | 模式的**特定行为指南**或规则。<br />- 这些指令被添加到系统提示的末尾，以在 `roleDefinition` 之外进一步细化 Roo 的行为。<br />- 这可以直接在配置中提供，也可以通过单独的指令文件提供。                                                                                                                               |
 
-### How it Works
+---
+## 导入/导出模式
 
-The import/export functionality is managed from the **Modes** view.
+轻松共享、备份和模板化您的自定义模式。此功能允许您将任何模式及其相关规则导出到一个可移植的 YAML 文件中，您可以将其导入任何项目。
 
-![Mode Export and Import Buttons](/img/custom-modes/custom-modes-5.png)
-
-#### Exporting a Mode
-1.  Navigate to the **Modes** view.
-2.  Select the mode you wish to export.
-3.  Click the **Export Mode** button (the download icon).
-4.  Choose a location to save the `.yaml` file.
-
-Roo packages the mode's configuration and any rules found in the project's `.roo/rules-{slug}/` directory into the YAML file.
-
-#### Importing a Mode
-1.  Click the **Import Mode** button (the upload icon) in the **Modes** view.
-2.  Select the mode's YAML file.
-3.  Choose the import level in the dialog that appears:
-    ![Import Level Dialog](/img/custom-modes/custom-modes-6.png)
-    -   **Project**: The mode is available only in the current workspace. It's added to the `.roomodes` file, and its rules are saved to the `.roo/rules-{slug}/` directory within the project.
-    -   **Global**: The mode is available in all your projects. It's added to your global settings, and its rules are stored in your system's global Roo configuration directory (e.g., `~/.roo/rules-{slug}/`).
+### 主要功能
+- **可共享的设置**：将模式及其规则打包到一个文件中，以便轻松与您的团队共享。
+- **轻松备份**：保存您的自定义模式配置，以免丢失。
+- **项目模板**：为不同类型的项目创建标准化的模式模板。
+- **简单迁移**：轻松地在您的全局设置和特定项目之间移动模式。
 
 ---
 
-### Exported YAML file format:
+### 用例
+
+**之前**：为每个新项目或团队成员手动重新创建自定义模式并复制 `.roo/rules-{slug}/` 文件夹。这既繁琐又容易出错。
+
+**使用此功能后**：单击一下即可将模式及其所有规则导出到 YAML 文件。再单击一下即可导入，自动完成所有设置。
+
+### 工作原理
+
+导入/导出功能在**模式**视图中管理。
+
+![模式导出和导入按钮](/img/custom-modes/custom-modes-5.png)
+
+#### 导出模式
+1.  导航到**模式**视图。
+2.  选择您要导出的模式。
+3.  单击**导出模式**按钮（下载图标）。
+4.  选择一个位置来保存 `.yaml` 文件。
+
+Roo 将模式的配置以及在项目的 `.roo/rules-{slug}/` 目录中找到的任何规则打包到 YAML 文件中。
+
+#### 导入模式
+1.  在**模式**视图中单击**导入模式**按钮（上传图标）。
+2.  选择模式的 YAML 文件。
+3.  在出现的对话框中选择导入级别：
+    ![导入级别对话框](/img/custom-modes/custom-modes-6.png)
+    -   **项目**：该模式仅在当前工作区中可用。它被添加到 `.roomodes` 文件中，其规则保存到项目内的 `.roo/rules-{slug}/` 目录中。
+    -   **全局**：该模式在您的所有项目中都可用。它被添加到您的全局设置中，其规则存储在您系统的全局 Roo 配置目录中（例如 `~/.roo/rules-{slug}/`）。
+
+---
+
+### 导出的 YAML 文件格式：
 
 ```yaml
 customModes:
   - slug: "my-custom-mode"
-    name: "My Custom Mode"
-    roleDefinition: "You are a helpful assistant."
+    name: "我的自定义模式"
+    roleDefinition: "你是一个乐于助人的助手。"
     groups: ["read", "edit"]
     rulesFiles:
       - relativePath: "rules-my-custom-mode/rules.md"
-        content: "These are the rules for my custom mode."
+        content: "这些是我的自定义模式的规则。"
 ```
 
 ---
 
-### FAQ
+### 常见问题解答
 
-**"What happens if I import a mode that has the same 'slug' as an existing one?"**
-- The existing mode will be overwritten with the configuration from the imported file.
+**“如果我导入的模式与现有模式具有相同的‘slug’，会发生什么？”**
+- 现有模式将被导入文件中的配置覆盖。
 
-**"What's the main difference between a Global and Project import?"**
-- **Global** modes are available across all your VS Code projects. **Project** modes are specific to the workspace where they are imported and are stored in a `.roomodes` file at the root of your project.
+**“全局导入和项目导入之间的主要区别是什么？”**
+- **全局**模式可在您的所有 VS Code 项目中使用。**项目**模式特定于导入它们的工作区，并存储在项目根目录的 `.roomodes` 文件中。
 
-**"Can I export built-in modes like Code or Architect?"**
-- Yes. If you have customized a built-in mode (e.g., by changing its instructions), you can export it to save your customizations.
+**“我可以导出像 Code 或 Architect 这样的内置模式吗？”**
+- 可以。如果您自定义了内置模式（例如，通过更改其指令），您可以导出它以保存您的自定义设置。
 
-**"What if I import a mode with rules at the Global level?"**
-- The rules are still preserved. They are stored in a global `rules-{slug}` folder in your user home directory (e.g., `~/.roo/rules-my-custom-mode/`) instead of the project-specific `.roo` folder.
+**“如果我在全局级别导入带有规则的模式会怎样？”**
+- 规则仍然被保留。它们存储在您的用户主目录中的全局 `rules-{slug}` 文件夹中（例如 `~/.roo/rules-my-custom-mode/`），而不是项目特定的 `.roo` 文件夹中。
 
 ---
 
-## Methods for Creating and Configuring Custom Modes
+## 创建和配置自定义模式的方法
 
-You can create and configure custom modes in several ways:
+您可以通过多种方式创建和配置自定义模式：
 
-### 1. Ask Roo! (Recommended)
+### 1. 问 Roo！ (推荐)
 
-You can quickly create a basic custom mode by asking Roo Code to do it for you. For example:
+您可以通过要求 Roo Code 为您创建一个基本的自定义模式来快速创建它。例如：
 ```
-Create a new mode called "Documentation Writer". It should only be able to read files and write Markdown files.
+创建一个名为“文档编写者”的新模式。它应该只能读取文件和写入 Markdown 文件。
 ```
-Roo Code will guide you through the process, prompting for necessary information for the properties described in the [What's Included in a Custom Mode?](#whats-included-in-a-custom-mode) table. Roo will create the mode using the preferred YAML format. For fine-tuning or making specific adjustments later, you can use the Prompts tab or manual configuration.
+Roo Code 将指导您完成整个过程，提示您输入[自定义模式包含哪些内容？](#自定义模式包含哪些内容)表格中描述的属性所需的信息。Roo 将使用首选的 YAML 格式创建模式。为了进行微调或稍后进行特定调整，您可以使用“提示”选项卡或手动配置。
 
-### 2. Using the Prompts Tab
+### 2. 使用“提示”选项卡
 
-1.  **Open Prompts Tab:** Click the <Codicon name="notebook" /> icon in the Roo Code top menu bar.
-2.  **Create New Mode:** Click the <Codicon name="add" /> button to the right of the Modes heading.
-3.  **Fill in Fields:**
+1.  **打开“提示”选项卡：** 单击 Roo Code 顶部菜单栏中的 <Codicon name="notebook" /> 图标。
+2.  **创建新模式：** 单击“模式”标题右侧的 <Codicon name="add" /> 按钮。
+3.  **填写字段：**
 
-<img src="/img/custom-modes/custom-modes-4.png" alt="Custom mode creation interface in the Prompts tab" width="600" />
+<img src="/img/custom-modes/custom-modes-4.png" alt="“提示”选项卡中的自定义模式创建界面" width="600" />
 
-    *The custom mode creation interface showing fields for name, slug, description, save location, role definition, available tools, custom instructions.*
+    *自定义模式创建界面，显示名称、slug、描述、保存位置、角色定义、可用工具、自定义指令的字段。*
 
-    The interface provides fields for `Name`, `Slug`, `Description`, `Save Location`, `Role Definition`, `When to Use (optional)`, `Available Tools`, and `Custom Instructions`. After filling these, click the "Create Mode" button. Roo Code will save the new mode in YAML format.
+    该界面提供了 `名称`、`Slug`、`描述`、`保存位置`、`角色定义`、`何时使用 (可选)`、`可用工具` 和 `自定义指令` 的字段。填写完毕后，单击“创建模式”按钮。Roo Code 将以 YAML 格式保存新模式。
 
-*Refer to the [What's Included in a Custom Mode?](#whats-included-in-a-custom-mode) table for conceptual explanations of each property. File type restrictions for the "edit" tool group can be added by asking Roo or through manual YAML/JSON configuration.*
+*有关每个属性的概念性解释，请参阅[自定义模式包含哪些内容？](#自定义模式包含哪些内容)表格。可以通过要求 Roo 或通过手动 YAML/JSON 配置来添加“编辑”工具组的文件类型限制。*
 
-### 3. Manual Configuration (YAML & JSON)
+### 3. 手动配置 (YAML 和 JSON)
 
-You can directly edit the configuration files to create or modify custom modes. This method offers the most control over all properties. Roo Code now supports both YAML (preferred) and JSON formats.
+您可以直接编辑配置文件来创建或修改自定义模式。此方法对所有属性提供了最大的控制权。Roo Code 现在支持 YAML（首选）和 JSON 格式。
 
-*   **Global Modes:** Edit the `custom_modes.yaml` (preferred) or `custom_modes.json` file. Access it via **Prompts Tab** > <Codicon name="settings-gear" /> (Settings Menu icon next to "Global Prompts") > "Edit Global Modes".
-*   **Project Modes:** Edit the `.roomodes` file (which can be YAML or JSON) in your project root. Access it via **Prompts Tab** > <Codicon name="settings-gear" /> (Settings Menu icon next to "Project Prompts") > "Edit Project Modes".
+*   **全局模式：** 编辑 `custom_modes.yaml`（首选）或 `custom_modes.json` 文件。通过 **提示选项卡** > <Codicon name="settings-gear" />（“全局提示”旁边的设置菜单图标）> “编辑全局模式”来访问它。
+*   **项目模式：** 编辑项目根目录中的 `.roomodes` 文件（可以是 YAML 或 JSON）。通过 **提示选项卡** > <Codicon name="settings-gear" />（“项目提示”旁边的设置菜单图标）> “编辑项目模式”来访问它。
 
-These files define an array/list of custom modes.
+这些文件定义了一个自定义模式的数组/列表。
 
-**YAML Example (`custom_modes.yaml` or `.roomodes`):**
+**YAML 示例 (`custom_modes.yaml` 或 `.roomodes`):**
 ```yaml
 customModes:
   - slug: docs-writer
-    name: 📝 Documentation Writer
-    description: A specialized mode for writing and editing technical documentation.
-    roleDefinition: You are a technical writer specializing in clear documentation.
-    whenToUse: Use this mode for writing and editing documentation.
-    customInstructions: Focus on clarity and completeness in documentation.
+    name: 📝 文档编写者
+    description: 用于编写和编辑技术文档的专用模式。
+    roleDefinition: 你是一位擅长撰写清晰文档的技术作家。
+    whenToUse: 使用此模式编写和编辑文档。
+    customInstructions: 在文档中注重清晰性和完整性。
     groups:
       - read
-      - - edit # This group allows editing specific files
-        - fileRegex: \.(md|mdx)$ # Regex for Markdown files
-          description: Markdown files only
+      - - edit # 此组允许编辑特定文件
+        - fileRegex: \.(md|mdx)$ # Markdown 文件的正则表达式
+          description: 仅限 Markdown 文件
       - browser
   - slug: another-mode
-    name: Another Mode
-    # ... other properties
+    name: 另一个模式
+    # ... 其他属性
 ```
 
-**JSON Alternative (`custom_modes.json` or `.roomodes`):**
+**JSON 替代方案 (`custom_modes.json` 或 `.roomodes`):**
 ```json
 {
   "customModes": [
     {
       "slug": "docs-writer",
-      "name": "📝 Documentation Writer",
-      "description": "A specialized mode for writing and editing technical documentation.",
-      "roleDefinition": "You are a technical writer specializing in clear documentation.",
-      "whenToUse": "Use this mode for writing and editing documentation.",
-      "customInstructions": "Focus on clarity and completeness in documentation.",
+      "name": "📝 文档编写者",
+      "description": "用于编写和编辑技术文档的专用模式。",
+      "roleDefinition": "你是一位擅长撰写清晰文档的技术作家。",
+      "whenToUse": "使用此模式编写和编辑文档。",
+      "customInstructions": "在文档中注重清晰性和完整性。",
       "groups": [
         "read",
-        ["edit", { "fileRegex": "\\.(md|mdx)$", "description": "Markdown files only" }],
+        ["edit", { "fileRegex": "\\.(md|mdx)$", "description": "仅限 Markdown 文件" }],
         "browser"
       ]
     },
     {
       "slug": "another-mode",
-      "name": "Another Mode"
+      "name": "另一个模式"
     }
   ]
 }
 ```
 
-### YAML/JSON Property Details
+### YAML/JSON 属性详情
 
 ##### `slug`
-*   **Purpose:** A unique identifier for the mode.
-*   **Format:** Use lowercase letters, numbers, and hyphens.
-*   **Usage:** Used internally and in file/directory names for mode-specific rules (e.g., `.roo/rules-{slug}/`).
-*   **Recommendation:** Keep it short and descriptive.
-*   *YAML Example:* `slug: docs-writer`
-*   *JSON Example:* `"slug": "docs-writer"`
+*   **用途：** 模式的唯一标识符。
+*   **格式：** 使用小写字母、数字和连字符。
+*   **用法：** 内部使用，并用于特定于模式的规则的文件/目录名（例如 `.roo/rules-{slug}/`）。
+*   **建议：** 保持简短且具有描述性。
+*   *YAML 示例:* `slug: docs-writer`
+*   *JSON 示例:* `"slug": "docs-writer"`
 
 ##### `name`
-*   **Purpose:** The display name shown in the Roo Code UI.
-*   **Format:** Can include spaces and proper capitalization.
-*   *YAML Example:* `name: 📝 Documentation Writer`
-*   *JSON Example:* `"name": "Documentation Writer"`
+*   **用途：** 在 Roo Code UI 中显示的名称。
+*   **格式：** 可以包含空格和正确的大小写。
+*   *YAML 示例:* `name: 📝 文档编写者`
+*   *JSON 示例:* `"name": "文档编写者"`
 
 ##### `description`
-*   **Purpose:** A short, user-friendly summary displayed below the mode name in the mode selector UI.
-*   **Format:** Keep this concise and focused on what the mode does for the user.
-*   **UI Display:** This text appears in the redesigned mode selector, offering users a quick understanding of the mode's function.
-*   *YAML Example:* `description: A specialized mode for writing and editing technical documentation.`
-*   *JSON Example:* `"description": "A specialized mode for writing and editing technical documentation."`
+*   **用途：** 在模式选择器 UI 中模式名称下方显示的简短、用户友好的摘要。
+*   **格式：** 保持此内容简洁，并专注于模式为用户提供的功能。
+*   **UI 显示：** 此文本出现在重新设计的模式选择器中，让用户快速了解模式的功能。
+*   *YAML 示例:* `description: 用于编写和编辑技术文档的专用模式。`
+*   *JSON 示例:* `"description": "用于编写和编辑技术文档的专用模式。"`
 
 ##### `roleDefinition`
-*   **Purpose:** Detailed description of the mode's role, expertise, and personality.
-*   **Placement:** This text is placed at the beginning of the system prompt when the mode is active.
-*   **Updated Role:** With the introduction of the `description` field, the `roleDefinition` should provide a detailed description of the mode's identity, while the `description` field handles the short summary for the UI. The `whenToUse` property now takes precedence for summarization in automated contexts.
-*   *YAML Example (multi-line):*
+*   **用途：** 模式的角色、专业知识和个性的详细描述。
+*   **位置：** 当模式激活时，此文本放置在系统提示的开头。
+*   **更新的角色：** 随着 `description` 字段的引入，`roleDefinition` 应提供模式身份的详细描述，而 `description` 字段则负责 UI 的简短摘要。`whenToUse` 属性现在在自动化上下文中优先用于摘要。
+*   *YAML 示例 (多行):*
      ```yaml
      roleDefinition: >-
-       You are a test engineer with expertise in:
-       - Writing comprehensive test suites
-       - Test-driven development
+       你是一名测试工程师，擅长：
+       - 编写全面的测试套件
+       - 测试驱动开发
      ```
-*   *JSON Example:* `"roleDefinition": "You are a technical writer specializing in clear documentation."`
+*   *JSON 示例:* `"roleDefinition": "你是一位擅长撰写清晰文档的技术作家。"`
 
 ##### `groups`
-*   **Purpose:** Array/list defining which tool groups the mode can access and any file restrictions.
-*   **Available Tool Groups (Strings):** `"read"`, `"edit"`, `"browser"`, `"command"`, `"mcp"`.
-*   **File Restrictions for "edit" group:**
-    *   To apply file restrictions, the "edit" entry becomes a list (YAML) or array (JSON) where the first element is `"edit"` and the second is a map/object defining the restrictions.
-    *   `fileRegex`: A regular expression string to control which files the mode can edit.
-        *   In YAML, typically use single backslashes for regex special characters (e.g., `\.md$`).
-        *   In JSON, backslashes must be double-escaped (e.g., `\\.md$`).
-    *   `description`: An optional string describing the restriction.
-    *   For more complex patterns, see [Understanding Regex in Custom Modes](#understanding-regex-in-custom-modes).
-*   *YAML Example:*
+*   **用途：** 定义模式可以访问哪些工具组以及任何文件限制的数组/列表。
+*   **可用工具组 (字符串):** `"read"`, `"edit"`, `"browser"`, `"command"`, `"mcp"`。
+*   **“edit” 组的文件限制：**
+    *   要应用文件限制，“edit”条目将成为一个列表 (YAML) 或数组 (JSON)，其中第一个元素是 `"edit"`，第二个是定义限制的映射/对象。
+    *   `fileRegex`：一个正则表达式字符串，用于控制模式可以编辑哪些文件。
+        *   在 YAML 中，通常对正则表达式特殊字符使用单个反斜杠（例如 `\.md$`）。
+        *   在 JSON 中，反斜杠必须双重转义（例如 `\\.md$`）。
+    *   `description`：一个可选的描述限制的字符串。
+    *   有关更复杂的模式，请参阅[理解自定义模式中的正则表达式](#理解自定义模式中的正则表达式)。
+*   *YAML 示例:*
     ```yaml
     groups:
       - read
-      - - edit # Start of "edit" tool with restrictions
-        - fileRegex: \.(js|ts)$ # Restriction map for JS/TS files
-          description: JS/TS files only
+      - - edit # “edit”工具的开始，带有​​限制
+        - fileRegex: \.(js|ts)$ # JS/TS 文件的限制映射
+          description: 仅限 JS/TS 文件
       - command
     ```
-*   *JSON Example:*
+*   *JSON 示例:*
     ```json
     "groups": [
       "read",
-      ["edit", { "fileRegex": "\\.(js|ts)$", "description": "JS/TS files only" }],
+      ["edit", { "fileRegex": "\\.(js|ts)$", "description": "仅限 JS/TS 文件" }],
       "command"
     ]
     ```
 
 ##### `whenToUse`
-*   **Purpose:** (Optional) Provides guidance for Roo's automated decision-making, particularly for mode selection and task orchestration.
-*   **Format:** A string describing ideal scenarios or task types for this mode.
-*   **Usage:** This field is used by Roo for automated decisions and is **not displayed in the mode selector UI** - that's handled by the `description` field. If populated, Roo uses this description for orchestration and mode switching; otherwise, the first sentence of `roleDefinition` is used.
-*   *YAML Example:* `whenToUse: This mode is best for refactoring Python code.`
-*   *JSON Example:* `"whenToUse": "This mode is best for refactoring Python code."`
+*   **用途：** (可选) 为 Roo 的自动化决策提供指导，特别是在模式选择和任务编排方面。
+*   **格式：** 一个描述此模式的理想场景或任务类型的字符串。
+*   **用法：** Roo 使用此字段进行自动化决策，并且**不会显示在模式选择器 UI 中** - 该功能由 `description` 字段处理。如果填充了此字段，Roo 将使用此描述进行编排和模式切换；否则，将使用 `roleDefinition` 的第一句话。
+*   *YAML 示例:* `whenToUse: 此模式最适合重构 Python 代码。`
+*   *JSON 示例:* `"whenToUse": "此模式最适合重构 Python 代码。"`
 
 ##### `customInstructions`
-*   **Purpose:** A string containing additional behavioral guidelines for the mode.
-*   **Placement:** This text is added near the end of the system prompt.
-*   **Supplementing:** Can be supplemented by [Mode-Specific Instructions via Files/Directories](#mode-specific-instructions-via-filesdirectories).
-*   *YAML Example (multi-line):*
+*   **用途：** 包含模式附加行为指南的字符串。
+*   **位置：** 此文本添加在系统提示的末尾附近。
+*   **补充：** 可以通过[通过文件/目录提供特定于模式的指令](#通过文件目录提供特定于模式的指令)进行补充。
+*   *YAML 示例 (多行):*
     ```yaml
     customInstructions: |-
-      When writing tests:
-      - Use describe/it blocks
-      - Include meaningful descriptions
+      编写测试时：
+      - 使用 describe/it 块
+      - 包括有意义的描述
     ```
-*   *JSON Example:* `"customInstructions": "Focus on explaining concepts and providing examples."`
+*   *JSON 示例:* `"customInstructions": "专注于解释概念并提供示例。"`
 
-### Benefits of YAML Format
+### YAML 格式的优势
 
-YAML is now the preferred format for defining custom modes due to several advantages over JSON:
+YAML 现在是定义自定义模式的首选格式，因为它比 JSON 有几个优势：
 
-*   **Readability:** YAML's indentation-based structure is often easier for humans to read and understand complex configurations.
-*   **Comments:** YAML allows for comments (lines starting with `#`), making it possible to annotate your mode definitions.
+*   **可读性：** YAML 基于缩进的结构通常更易于人类阅读和理解复杂的配置。
+*   **注释：** YAML 允许注释（以 `#` 开头的行），从而可以为您的模式定义添加注释。
     ```yaml
     customModes:
       - slug: security-review
-        name: 🔒 Security Reviewer
-        # This mode is restricted to read-only access
-        roleDefinition: You are a security specialist reviewing code for vulnerabilities.
-        whenToUse: Use for security reviews and vulnerability assessments.
-        # Only allow reading files, no editing permissions
+        name: 🔒 安全审查员
+        # 此模式仅限于只读访问
+        roleDefinition: 你是一名安全专家，负责审查代码中的漏洞。
+        whenToUse: 用于安全审查和漏洞评估。
+        # 只允许读取文件，没有编辑权限
         groups:
           - read
           - browser
     ```
-*   **Multi-line Strings:** YAML provides cleaner syntax for multi-line strings (e.g., for `roleDefinition` or `customInstructions`) using `|` (literal block) or `>` (folded block).
+*   **多行字符串：** YAML 为多行字符串（例如 `roleDefinition` 或 `customInstructions`）提供了更简洁的语法，使用 `|`（文字块）或 `>`（折叠块）。
     ```yaml
+
     customModes:
       - slug: test-engineer
-        name: 🧪 Test Engineer
+        name: 🧪 测试工程师
         roleDefinition: >-
-          You are a test engineer with expertise in:
-          - Writing comprehensive test suites
-          - Test-driven development
-          - Integration testing
-          - Performance testing
+          你是一名测试工程师，擅长：
+          - 编写全面的测试套件
+          - 测试驱动开发
+          - 集成测试
+          - 性能测试
         customInstructions: |-
-          When writing tests:
-          - Use describe/it blocks
-          - Include meaningful descriptions
-          - Test edge cases
-          - Ensure proper coverage
-        # ... other properties
+          编写测试时：
+          - 使用 describe/it 块
+          - 包括有意义的描述
+          - 测试边缘情况
+          - 确保适当的覆盖范围
+        # ... 其他属性
     ```
-*   **Less Punctuation:** YAML generally requires less punctuation (like commas and braces) compared to JSON, reducing syntax errors.
-*   **Editor Support:** Most modern code editors provide excellent syntax highlighting and validation for YAML files, further enhancing readability and reducing errors.
+*   **更少的标点符号：** 与 JSON 相比，YAML 通常需要更少的标点符号（如逗号和花括号），从而减少了语法错误。
+*   **编辑器支持：** 大多数现代代码编辑器为 YAML 文件提供了出色的语法高亮和验证功能，进一步提高了可读性并减少了错误。
 
-While JSON is still fully supported, new modes created via the UI or by asking Roo will default to YAML.
+虽然 JSON 仍然完全受支持，但通过 UI 或要求 Roo 创建的新模式将默认为 YAML。
 
-#### Tips for Working with YAML
+#### 使用 YAML 的技巧
 
-When editing YAML manually, keep these points in mind:
+手动编辑 YAML 时，请记住以下几点：
 
-*   **Indentation is Key:** YAML uses indentation (spaces, not tabs) to define structure. Incorrect indentation is the most common source of errors. Ensure consistent spacing for nested elements.
-*   **Colons for Key-Value Pairs:** Keys must be followed by a colon and a space (e.g., `slug: my-mode`).
-*   **Hyphens for List Items:** List items start with a hyphen and a space (e.g., `- read`).
-*   **Validate Your YAML:** If you encounter issues, use an online YAML validator or your editor's built-in validation to check for syntax errors.
+*   **缩进是关键：** YAML 使用缩进（空格，而不是制表符）来定义结构。不正确的缩进是错误的最常见来源。确保嵌套元素使用一致的间距。
+*   **键值对使用冒号：** 键后面必须跟一个冒号和一个空格（例如 `slug: my-mode`）。
+*   **列表项使用连字符：** 列表项以连字符和空格开头（例如 `- read`）。
+*   **验证您的 YAML：** 如果遇到问题，请使用在线 YAML 验证器或编辑器的内置验证功能来检查语法错误。
 
-### Migration to YAML Format
+### 迁移到 YAML 格式
 
-*   **Global Modes:** The migration from `custom_modes.json` to `custom_modes.yaml` happens automatically **for global modes** when Roo Code starts up, under these conditions:
-    1.  Roo Code starts up.
-    2.  A `custom_modes.json` file exists.
-    3.  No `custom_modes.yaml` file exists yet.
-    The migration process reads the existing JSON file, converts it to YAML format, creates a new `custom_modes.yaml` file, and preserves the original JSON file (e.g., by renaming it) for rollback purposes. If `custom_modes.yaml` already exists, it will be used, and no automatic migration of `custom_modes.json` will occur.
+*   **全局模式：** 从 `custom_modes.json` 到 `custom_modes.yaml` 的迁移在 Roo Code 启动时**对全局模式**自动进行，条件如下：
+    1.  Roo Code 启动。
+    2.  存在 `custom_modes.json` 文件。
+    3.  尚不存在 `custom_modes.yaml` 文件。
+    迁移过程会读取现有的 JSON 文件，将其转换为 YAML 格式，创建一个新的 `custom_modes.yaml` 文件，并保留原始 JSON 文件（例如，通过重命名）以用于回滚。如果 `custom_modes.yaml` 已存在，则将使用它，并且不会自动迁移 `custom_modes.json`。
 
-*   **Project Modes (`.roomodes`):**
-    *   **No automatic startup migration:** Unlike global modes, project-specific `.roomodes` files are not automatically converted from JSON to YAML simply when Roo Code starts.
-    *   **Format Detection:** Roo Code can read `.roomodes` files in either YAML or JSON format. Roo Code automatically detects the format of `.roomodes` files by attempting to parse them as YAML first.
-    *   **Conversion on UI Edit:** If you edit a project-specific mode through the Roo Code UI (e.g., via the Prompts Tab), and the existing `.roomodes` file is in JSON format, Roo Code will save the changes in YAML format. This effectively converts the file to YAML. The original JSON content will be overwritten with YAML.
-    *   **Manual Conversion:** If you want to convert an existing `.roomodes` JSON file to YAML without making UI edits, you'll need to do this manually. You can:
-        1.  Open your existing JSON `.roomodes` file.
-        2.  Convert its content to YAML (you can ask Roo to help with this, or use an online converter).
-        3.  Replace the content of your `.roomodes` file with the new YAML content, or rename the old file (e.g., `.roomodes.json.bak`) and save the new content into a file named `.roomodes`.
-        Ensure the resulting YAML is valid.
+*   **项目模式 (`.roomodes`):**
+    *   **无自动启动迁移：** 与全局模式不同，特定于项目的 `.roomodes` 文件不会在 Roo Code 启动时自动从 JSON 转换为 YAML。
+    *   **格式检测：** Roo Code 可以读取 YAML 或 JSON 格式的 `.roomodes` 文件。Roo Code 通过首先尝试将它们解析为 YAML 来自动检测 `.roomodes` 文件的格式。
+    *   **UI 编辑时转换：** 如果您通过 Roo Code UI（例如，通过“提示”选项卡）编辑特定于项目的模式，并且现有的 `.roomodes` 文件是 JSON 格式，Roo Code 将以 YAML 格式保存更改。这实际上会将文件转换为 YAML。原始 JSON 内容将被 YAML 覆盖。
+    *   **手动转换：** 如果您想在不进行 UI 编辑的情况下将现有的 `.roomodes` JSON 文件转换为 YAML，则需要手动执行此操作。您可以：
+        1.  打开您现有的 JSON `.roomodes` 文件。
+        2.  将其内容转换为 YAML（您可以要求 Roo 帮助，或使用在线转换器）。
+        3.  用新的 YAML 内容替换 `.roomodes` 文件的内容，或重命名旧文件（例如 `.roomodes.json.bak`）并将新内容保存到名为 `.roomodes` 的文件中。
+        确保生成的 YAML 有效。
 
 :::tip
-For manual conversions of `.roomodes` files, you can use online JSON to YAML converters or ask Roo to help reformat a specific mode configuration from JSON to YAML. Always validate your YAML before saving.
+对于 `.roomodes` 文件的手动转换，您可以使用在线 JSON 到 YAML 转换器或要求 Roo 帮助将特定模式配置从 JSON 重新格式化为 YAML。在保存之前，请务必验证您的 YAML。
 :::
 ---
 
-## Mode-Specific Instructions via Files/Directories
+## 通过文件/目录提供特定于模式的指令
 
-:::info Mode-Specific Instruction File Locations
-You can provide instructions for custom modes using dedicated files or directories within your workspace. This allows for better organization and version control compared to only using the `customInstructions` property.
+:::info 特定于模式的指令文件位置
+您可以使用工作区内的专用文件或目录为自定义模式提供指令。与仅使用 `customInstructions` 属性相比，这可以实现更好的组织和版本控制。
 
-**Preferred Method: Directory (`.roo/rules-{mode-slug}/`)**
+**首选方法：目录 (`.roo/rules-{mode-slug}/`)**
 ```
 .
 ├── .roo/
-│   └── rules-docs-writer/  # Example for mode slug "docs-writer"
+│   └── rules-docs-writer/  # 模式 slug "docs-writer" 的示例
 │       ├── 01-style-guide.md
 │       └── 02-formatting.txt
-└── ... (other project files)
+└── ... (其他项目文件)
 ```
 
-**Fallback Method: Single File (`.roorules-{mode-slug}`)**
+**后备方法：单个文件 (`.roorules-{mode-slug}`)**
 ```
 .
-├── .roorules-docs-writer  # Example for mode slug "docs-writer"
-└── ... (other project files)
+├── .roorules-docs-writer  # 模式 slug "docs-writer" 的示例
+└── ... (其他项目文件)
 ```
-The directory method takes precedence if it exists and contains files.
+如果目录方法存在且包含文件，则优先使用该方法。
 :::
 
-In addition to the `customInstructions` property, you can provide mode-specific instructions via files in your workspace. This is particularly useful for:
+除了 `customInstructions` 属性外，您还可以通过工作区中的文件提供特定于模式的指令。这对于以下情况特别有用：
 
-*   Organizing lengthy or complex instructions into multiple, manageable files.
-*   Managing instructions easily with version control.
-*   Allowing non-technical team members to modify instructions without editing YAML/JSON.
+*   将冗长或复杂的指令组织成多个可管理的文件。
+*   使用版本控制轻松管理指令。
+*   允许非技术团队成员在不编辑 YAML/JSON 的情况下修改指令。
 
-There are two ways Roo Code loads these instructions, with a clear preference for the newer directory-based method:
+Roo Code 有两种加载这些指令的方式，并明确偏好较新的基于目录的方法：
 
-**1. Preferred Method: Directory-Based Instructions (`.roo/rules-{mode-slug}/`)**
+**1. 首选方法：基于目录的指令 (`.roo/rules-{mode-slug}/`)**
 
-*   **Structure:** Create a directory named `.roo/rules-{mode-slug}/` in your workspace root. Replace `{mode-slug}` with your mode's slug (e.g., `.roo/rules-docs-writer/`).
-*   **Content:** Place one or more files (e.g., `.md`, `.txt`) containing your instructions inside this directory. You can organize instructions further using subdirectories. Files within the `.roo/rules-{mode-slug}/` directory are read recursively and appended in alphabetical order based on filename.
-*   **Loading:** All instruction files found within this directory structure will be loaded and applied to the specified mode.
+*   **结构：** 在您的工作区根目录中创建一个名为 `.roo/rules-{mode-slug}/` 的目录。将 `{mode-slug}` 替换为您的模式的 slug（例如 `.roo/rules-docs-writer/`）。
+*   **内容：** 在此目录中放置一个或多个包含您的指令的文件（例如 `.md`、`.txt`）。您可以使用子目录进一步组织指令。`.roo/rules-{mode-slug}/` 目录中的文件会根据文件名按字母顺序递归读取和附加。
+*   **加载：** 在此目录结构中找到的所有指令文件都将被加载并应用于指定的模式。
 
-**2. Fallback (Backward Compatibility): File-Based Instructions (`.roorules-{mode-slug}`)**
+**2. 后备（向后兼容）：基于文件的指令 (`.roorules-{mode-slug}`)**
 
-*   **Structure:** If the `.roo/rules-{mode-slug}/` directory **does not exist or is empty**, Roo Code will look for a single file named `.roorules-{mode-slug}` in your workspace root (e.g., `.roorules-docs-writer`).
-*   **Loading:** If found, the content of this single file will be loaded as instructions for the mode.
+*   **结构：** 如果 `.roo/rules-{mode-slug}/` 目录**不存在或是空的**，Roo Code 将在您的工作区根目录中查找名为 `.roorules-{mode-slug}` 的单个文件（例如 `.roorules-docs-writer`）。
+*   **加载：** 如果找到，此单个文件的内容将被加载为该模式的指令。
 
-**Precedence:**
+**优先级：**
 
-*   The **directory-based method (`.roo/rules-{mode-slug}/`) takes precedence**. If this directory exists and contains files, any corresponding root-level `.roorules-{mode-slug}` file will be **ignored** for that mode.
-*   This ensures that projects migrated to the new directory structure behave predictably, while older projects using the single-file method remain compatible.
+*   **基于目录的方法 (`.roo/rules-{mode-slug}/`) 优先**。如果此目录存在且包含文件，则该模式的任何相应的根级 `.roorules-{mode-slug}` 文件将被**忽略**。
+*   这确保了迁移到新目录结构的项目行为可预测，而使用单文件方法的旧项目仍然兼容。
 
-**Combining with `customInstructions`:**
+**与 `customInstructions` 结合使用：**
 
-*   Instructions loaded from either the directory or the fallback file are combined with the `customInstructions` property defined in the mode's configuration.
-*   Typically, the content from the files/directories is appended after the content from the `customInstructions` property.
-
----
-
-## Configuration Precedence
-
-Mode configurations are applied in this order:
-
-1. Project-level mode configurations (from `.roomodes` - YAML or JSON)
-2. Global mode configurations (from `custom_modes.yaml`, then `custom_modes.json` if YAML not found)
-3. Default mode configurations
-
-This means that project-specific configurations will override global configurations, which in turn override default configurations. For instance, if you have a global 'code' mode and a project-specific 'code' mode in `.roomodes`, the project version will be used when working in that project. You can override any default mode by including a mode with the same slug in your global or project-specific configuration.
-
-*   **Note on Instruction Files:** Within the loading of mode-specific instructions from the filesystem, the directory `.roo/rules-{mode-slug}/` takes precedence over the single file `.roorules-{mode-slug}` found in the workspace root.
+*   从目录或后备文件加载的指令与模式配置中定义的 `customInstructions` 属性相结合。
+*   通常，来自文件/目录的内容会附加在 `customInstructions` 属性的内容之后。
 
 ---
 
-## Overriding Default Modes
+## 配置优先级
 
-You can override Roo Code's built-in modes (like `💻 Code`, `🪲 Debug`, `❓ Ask`, `🏗️ Architect`, `🪃 Orchestrator`) with customized versions. This is done by creating a custom mode with the same slug as a default mode (e.g., `code`, `debug`).
+模式配置按以下顺序应用：
 
-### Overriding Modes Globally
+1. 项目级模式配置（来自 `.roomodes` - YAML 或 JSON）
+2. 全局模式配置（来自 `custom_modes.yaml`，如果未找到 YAML，则来自 `custom_modes.json`）
+3. 默认模式配置
 
-To customize a default mode across all your projects:
+这意味着特定于项目的配置将覆盖全局配置，而全局配置又会覆盖默认配置。例如，如果您有一个全局“code”模式和一个在 `.roomodes` 中的特定于项目的“code”模式，则在该项目中工作时将使用项目版本。您可以通过在全局或特定于项目的配置中包含具有相同 slug 的模式来覆盖任何默认模式。
 
-1. **Open Prompts Tab:** Click the <Codicon name="notebook" /> icon.
-2. **Access Settings Menu:** Click the <Codicon name="settings-gear" /> icon next to "Global Prompts".
-3. **Edit Global Modes:** Select "Edit Global Modes" to edit `custom_modes.yaml` (or `custom_modes.json`).
-4. **Add Your Override:**
+*   **关于指令文件的说明：** 在从文件系统加载特定于模式的指令时，目录 `.roo/rules-{mode-slug}/` 优先于在工作区根目录中找到的单个文件 `.roorules-{mode-slug}`。
 
-**YAML Example:**
+---
+
+## 覆盖默认模式
+
+您可以将 Roo Code 的内置模式（如 `💻 Code`、`🪲 Debug`、`❓ Ask`、`🏗️ Architect`、`🪃 Orchestrator`）替换为自定义版本。这是通过创建一个与默认模式具有相同 slug 的自定义模式来完成的（例如 `code`、`debug`）。
+
+### 全局覆盖模式
+
+要跨所有项目自定义默认模式：
+
+1. **打开“提示”选项卡：** 单击 <Codicon name="notebook" /> 图标。
+2. **访问设置菜单：** 单击“全局提示”旁边的 <Codicon name="settings-gear" /> 图标。
+3. **编辑全局模式：** 选择“编辑全局模式”以编辑 `custom_modes.yaml`（或 `custom_modes.json`）。
+4. **添加您的覆盖：**
+
+**YAML 示例：**
 ```yaml
 customModes:
-  - slug: code # Matches the default 'code' mode slug
-    name: 💻 Code (Global Override) # Custom display name
-    roleDefinition: You are a software engineer with global-specific constraints.
-    whenToUse: This globally overridden code mode is for JS/TS tasks.
-    customInstructions: Focus on project-specific JS/TS development.
+  - slug: code # 匹配默认的 'code' 模式 slug
+    name: 💻 Code (全局覆盖) # 自定义显示名称
+    roleDefinition: 你是一名具有全局特定约束的软件工程师。
+    whenToUse: 这个全局覆盖的代码模式用于 JS/TS 任务。
+    customInstructions: 专注于特定于项目的 JS/TS 开发。
     groups:
       - read
       - - edit
         - fileRegex: \.(js|ts)$
-          description: JS/TS files only
+          description: 仅限 JS/TS 文件
 ```
 
-**JSON Alternative:**
+**JSON 替代方案：**
 ```json
 {
   "customModes": [{
     "slug": "code",
-    "name": "💻 Code (Global Override)",
-    "roleDefinition": "You are a software engineer with global-specific constraints",
-    "whenToUse": "This globally overridden code mode is for JS/TS tasks.",
-    "customInstructions": "Focus on project-specific JS/TS development",
+    "name": "💻 Code (全局覆盖)",
+    "roleDefinition": "你是一名具有全局特定约束的软件工程师",
+    "whenToUse": "这个全局覆盖的代码模式用于 JS/TS 任务。",
+    "customInstructions": "专注于特定于项目的 JS/TS 开发",
     "groups": [
       "read",
-      ["edit", { "fileRegex": "\\.(js|ts)$", "description": "JS/TS files only" }]
+      ["edit", { "fileRegex": "\\.(js|ts)$", "description": "仅限 JS/TS 文件" }]
     ]
   }]
 }
 ```
-This example replaces the default `💻 Code` mode with a version restricted to JavaScript and TypeScript files.
+此示例将默认的 `💻 Code` 模式替换为仅限于 JavaScript 和 TypeScript 文件的版本。
 
-### Project-Specific Mode Override
+### 特定于项目的模式覆盖
 
-To override a default mode for just one project:
+要仅为一个项目覆盖默认模式：
 
-1. **Open Prompts Tab:** Click the <Codicon name="notebook" /> icon.
-2. **Access Settings Menu:** Click the <Codicon name="settings-gear" /> icon next to "Project Prompts".
-3. **Edit Project Modes:** Select "Edit Project Modes" to edit the `.roomodes` file (YAML or JSON).
-4. **Add Your Override:**
+1. **打开“提示”选项卡：** 单击 <Codicon name="notebook" /> 图标。
+2. **访问设置菜单：** 单击“项目提示”旁边的 <Codicon name="settings-gear" /> 图标。
+3. **编辑项目模式：** 选择“编辑项目模式”以编辑 `.roomodes` 文件（YAML 或 JSON）。
+4. **添加您的覆盖：**
 
-**YAML Example:**
+**YAML 示例：**
 ```yaml
 customModes:
-  - slug: code # Matches the default 'code' mode slug
-    name: 💻 Code (Project-Specific) # Custom display name
-    roleDefinition: You are a software engineer with project-specific constraints for this project.
-    whenToUse: This project-specific code mode is for Python tasks within this project.
-    customInstructions: Adhere to PEP8 and use type hints.
+  - slug: code # 匹配默认的 'code' 模式 slug
+    name: 💻 Code (项目特定) # 自定义显示名称
+    roleDefinition: 你是一名具有此项目特定约束的软件工程师。
+    whenToUse: 这个项目特定的代码模式用于此项目中的 Python 任务。
+    customInstructions: 遵守 PEP8 并使用类型提示。
     groups:
       - read
       - - edit
         - fileRegex: \.py$
-          description: Python files only
+          description: 仅限 Python 文件
       - command
 ```
 
-**JSON Alternative:**
+**JSON 替代方案：**
 ```json
 {
   "customModes": [{
     "slug": "code",
-    "name": "💻 Code (Project-Specific)",
-    "roleDefinition": "You are a software engineer with project-specific constraints for this project.",
-    "whenToUse": "This project-specific code mode is for Python tasks within this project.",
-    "customInstructions": "Adhere to PEP8 and use type hints.",
+    "name": "💻 Code (项目特定)",
+    "roleDefinition": "你是一名具有此项目特定约束的软件工程师。",
+    "whenToUse": "这个项目特定的代码模式用于此项目中的 Python 任务。",
+    "customInstructions": "遵守 PEP8 并使用类型提示。",
     "groups": [
       "read",
-      ["edit", { "fileRegex": "\\.py$", "description": "Python files only" }],
+      ["edit", { "fileRegex": "\\.py$", "description": "仅限 Python 文件" }],
       "command"
     ]
   }]
 }
 ```
-Project-specific overrides take precedence over global overrides.
+特定于项目的覆盖优先于全局覆盖。
 
-### Common Use Cases for Overriding Default Modes
-* **Restricting file access:** Limit a mode to specific file types.
-* **Specializing behavior:** Customize expertise for your tech stack.
-* **Adding custom instructions:** Integrate project standards.
-* **Changing available tools:** Remove tools to prevent unwanted operations.
+### 覆盖默认模式的常见用例
+* **限制文件访问：** 将模式限制为特定文件类型。
+* **专业化行为：** 为您的技术栈定制专业知识。
+* **添加自定义指令：** 集成项目标准。
+* **更改可用工具：** 删除工具以防止不必要的操作。
 
 :::tip
-When overriding default modes, test carefully. Consider backing up configurations before major changes.
+覆盖默认模式时，请仔细测试。在进行重大更改之前，请考虑备份配置。
 :::
 
 ---
 
-## Understanding Regex in Custom Modes
+## 理解自定义模式中的正则表达式
 
-Regular expressions (`fileRegex`) offer fine-grained control over file editing permissions.
+正则表达式 (`fileRegex`) 提供了对文件编辑权限的精细控制。
 
 :::tip
-**Let Roo Build Your Regex Patterns**
+**让 Roo 构建您的正则表达式模式**
 
-Instead of writing complex regex manually, ask Roo:
+与其手动编写复杂的正则表达式，不如问 Roo：
 ```
-Create a regex pattern that matches JavaScript files but excludes test files
+创建一个匹配 JavaScript 文件但排除测试文件的正则表达式模式
 ```
-Roo will generate the pattern. Remember to adapt it for YAML (usually single backslashes) or JSON (double backslashes).
+Roo 将生成该模式。请记住将其调整为 YAML（通常是单个反斜杠）或 JSON（双反斜杠）。
 :::
 
-When you specify `fileRegex`, you're creating a pattern that file paths must match.
+当您指定 `fileRegex` 时，您正在创建一个文件路径必须匹配的模式。
 
-**Important Rules for `fileRegex`:**
-*   **Escaping in JSON:** In JSON strings, backslashes (`\`) must be double-escaped (e.g., `\\.md$`).
-*   **Escaping in YAML:** In unquoted or single-quoted YAML strings, a single backslash is usually sufficient for regex special characters (e.g., `\.md$`).
-*   **Path Matching:** Patterns match against the full relative file path from your workspace root (e.g., `src/components/button.js`).
-*   **Case Sensitivity:** Regex patterns are case-sensitive by default.
+**`fileRegex` 的重要规则：**
+*   **在 JSON 中转义：** 在 JSON 字符串中，反斜杠 (`\`) 必须双重转义（例如 `\\.md$`）。
+*   **在 YAML 中转义：** 在未加引号或单引号的 YAML 字符串中，单个反斜杠通常足以表示正则表达式特殊字符（例如 `\.md$`）。
+*   **路径匹配：** 模式与工作区根目录的完整相对文件路径匹配（例如 `src/components/button.js`）。
+*   **大小写敏感：** 默认情况下，正则表达式模式是大小写敏感的。
 
-**Common Pattern Examples:**
-In the table below, the 'Pattern (Conceptual / YAML-like)' column shows patterns as they would appear in YAML. For JSON, remember to double-escape backslashes.
+**常见模式示例：**
+在下表中，“模式（概念性/类 YAML）”列显示了模式在 YAML 中的显示方式。对于 JSON，请记住双重转义反斜杠。
 
-| Pattern (Conceptual / YAML-like) | JSON `fileRegex` Value          | Matches                                   | Doesn't Match                         |
+| 模式 (概念性 / 类 YAML) | JSON `fileRegex` 值          | 匹配                                   | 不匹配                         |
 | -------------------------------- | ------------------------------- | ----------------------------------------- | ------------------------------------- |
 | `\.md$`                          | `"\\.md$"`                      | `readme.md`, `docs/guide.md`              | `script.js`, `readme.md.bak`          |
 | `^src/.*`                        | `"^src/.*"`                     | `src/app.js`, `src/components/button.tsx` | `lib/utils.js`, `test/src/mock.js`    |
@@ -571,24 +572,24 @@ In the table below, the 'Pattern (Conceptual / YAML-like)' column shows patterns
 | `^(?!.*(test\|spec))\.(js\|ts)$`  | `"^(?!.*(test\|spec))\\.(js\|ts)$"` | `app.js`, `utils.ts`                      | `app.test.js`, `utils.spec.js`, `app.jsx` |
 
 
-**Key Regex Building Blocks:**
-*   `\.`: Matches a literal dot. (YAML: `\.`, JSON: `\\.`)
-*   `$`: Matches the end of the string.
-*   `^`: Matches the beginning of the string.
-*   `.*`: Matches any character (except newline) zero or more times.
-*   `(a|b)`: Matches either "a" or "b". (e.g., `\.(js|ts)$`)
-*   `(?!...)`: Negative lookahead.
+**关键正则表达式构建块：**
+*   `\.`: 匹配一个字面上的点。 (YAML: `\.`, JSON: `\\.`)
+*   `$`: 匹配字符串的结尾。
+*   `^`: 匹配字符串的开头。
+*   `.*`: 匹配任何字符（换行符除外）零次或多次。
+*   `(a|b)`: 匹配 "a" 或 "b"。 (例如 `\.(js|ts)$`)
+*   `(?!...)`: 负向先行断言。
 
-**Testing Your Patterns:**
-1.  Test on sample file paths. Online regex testers are helpful.
-2.  Remember the escaping rules for JSON vs. YAML.
-3.  Start simple and build complexity.
+**测试您的模式：**
+1.  在示例文件路径上进行测试。在线正则表达式测试器很有帮助。
+2.  记住 JSON 与 YAML 的转义规则。
+3.  从简单开始，逐步增加复杂性。
 
-:::info Error Handling
-When a mode attempts to edit a file that doesn't match its `fileRegex` pattern, you'll see a `FileRestrictionError` with details about which patterns are allowed.
+:::info 错误处理
+当一个模式尝试编辑一个与其 `fileRegex` 模式不匹配的文件时，您会看到一个 `FileRestrictionError`，其中包含有关允许哪些模式的详细信息。
 :::
 
 ---
 
-## Community Gallery
-Ready to explore more? Check out the [Custom Modes Gallery](/community/#custom-modes-gallery) section on the main community page to discover and share custom modes created by the community!
+## 社区画廊
+准备好探索更多了吗？查看主社区页面上的[自定义模式画廊](/community/#custom-modes-gallery)部分，发现并分享社区创建的自定义模式！

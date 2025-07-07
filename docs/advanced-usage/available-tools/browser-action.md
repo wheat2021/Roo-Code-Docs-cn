@@ -1,139 +1,139 @@
 # browser_action
 
-The `browser_action` tool enables web automation and interaction via a Puppeteer-controlled browser. It allows Roo to launch browsers, navigate to websites, click elements, type text, and scroll pages with visual feedback through screenshots.
+`browser_action` 工具通过一个由 Puppeteer 控制的浏览器来实现网页自动化和交互。它允许 Roo 启动浏览器、导航到网站、点击元素、输入文本以及滚动页面，并通过屏幕截图提供可视化反馈。
 
 ---
 
-## Parameters
+## 参数
 
-The tool accepts these parameters:
+该工具接受以下参数：
 
-- `action` (required): The action to perform:
-  * `launch`: Start a new browser session at a URL
-  * `click`: Click at specific x,y coordinates
-  * `type`: Type text via the keyboard
-  * `scroll_down`: Scroll down one page height
-  * `scroll_up`: Scroll up one page height
-  * `close`: End the browser session
-- `url` (optional): The URL to navigate to when using the `launch` action
-- `coordinate` (optional): The x,y coordinates for the `click` action (e.g., "450,300")
-- `text` (optional): The text to type when using the `type` action
-
----
-
-## What It Does
-
-This tool creates an automated browser session that Roo can control to navigate websites, interact with elements, and perform tasks that require browser automation. Each action provides a screenshot of the current state, enabling visual verification of the process.
+- `action` (必需): 要执行的操作：
+  * `launch`: 在指定 URL 启动一个新的浏览器会话
+  * `click`: 在特定的 x,y 坐标处点击
+  * `type`: 通过键盘输入文本
+  * `scroll_down`: 向下滚动一个页面的高度
+  * `scroll_up`: 向上滚动一个页面的高度
+  * `close`: 结束浏览器会话
+- `url` (可选): 使用 `launch` 操作时要导航到的 URL
+- `coordinate` (可选): `click` 操作的 x,y 坐标 (例如, "450,300")
+- `text` (可选): 使用 `type` 操作时要输入的文本
 
 ---
 
-## When is it used?
+## 功能
 
-- When Roo needs to interact with web applications or websites
-- When testing user interfaces or web functionality
-- When capturing screenshots of web pages
-- When demonstrating web workflows visually
+该工具创建一个 Roo 可以控制的自动化浏览器会话，用于导航网站、与元素交互以及执行需要浏览器自动化的任务。每个操作都会提供当前状态的屏幕截图，从而实现过程的可视化验证。
 
 ---
 
-## Key Features
+## 使用场景
 
-- Provides visual feedback with screenshots after each action and captures console logs
-- Supports complete workflows from launching to page interaction to closing
-- Enables precise interactions via coordinates, keyboard input, and scrolling
-- Maintains consistent browser sessions with intelligent page loading detection
-- Operates in two modes: local (isolated Puppeteer instance) or remote (connects to existing Chrome)
-- Handles errors gracefully with automatic session cleanup and detailed messages
-- Optimizes visual output with support for various formats and quality settings
-- Tracks interaction state with position indicators and action history
+- 当 Roo 需要与 Web 应用程序或网站进行交互时
+- 当测试用户界面或 Web 功能时
+- 当捕获网页的屏幕截图时
+- 当直观地演示 Web 工作流程时
 
 ---
 
-## Browser Modes
+## 主要特性
 
-The tool operates in two distinct modes:
-
-### Local Browser Mode (Default)
-- Downloads and manages a local Chromium instance through Puppeteer
-- Creates a fresh browser environment with each launch
-- No access to existing user profiles, cookies, or extensions
-- Consistent, predictable behavior in a sandboxed environment
-- Completely closes the browser when the session ends
-
-### Remote Browser Mode
-- Connects to an existing Chrome/Chromium instance running with remote debugging enabled
-- Can access existing browser state, cookies, and potentially extensions
-- Faster startup as it reuses an existing browser process
-- Supports connecting to browsers in Docker containers or on remote machines
-- Only disconnects (doesn't close) from the browser when session ends
-- Requires Chrome to be running with remote debugging port open (typically port 9222)
+- 在每次操作后通过屏幕截图提供可视化反馈，并捕获控制台日志
+- 支持从启动、页面交互到关闭的完整工作流程
+- 通过坐标、键盘输入和滚动实现精确交互
+- 通过智能页面加载检测维持一致的浏览器会话
+- 以两种模式运行：本地模式（独立的 Puppeteer 实例）或远程模式（连接到现有的 Chrome）
+- 通过自动会话清理和详细消息优雅地处理错误
+- 支持多种格式和质量设置，优化视觉输出
+- 通过位置指示器和操作历史记录跟踪交互状态
 
 ---
 
-## Limitations
+## 浏览器模式
 
-- While the browser is active, only `browser_action` tool can be used
-- Browser coordinates are viewport-relative, not page-relative
-- Click actions must target visible elements within the viewport
-- Browser sessions must be explicitly closed before using other tools
-- Browser window has configurable dimensions (default 900x600)
-- Cannot directly interact with browser DevTools
-- Browser sessions are temporary and not persistent across Roo restarts
-- Works only with Chrome/Chromium browsers, not Firefox or Safari
-- Local mode has no access to existing cookies; remote mode requires Chrome with debugging enabled
+该工具以两种不同的模式运行：
 
----
+### 本地浏览器模式 (默认)
+- 通过 Puppeteer 下载并管理一个本地的 Chromium 实例
+- 每次启动时创建一个全新的浏览器环境
+- 无法访问现有的用户配置文件、Cookie 或扩展程序
+- 在沙盒环境中行为一致且可预测
+- 会话结束时完全关闭浏览器
 
-## How It Works
-
-When the `browser_action` tool is invoked, it follows this process:
-
-1. **Action Validation and Browser Management**:
-   - Validates the required parameters for the requested action
-   - For `launch`: Initializes a browser session (either local Puppeteer instance or remote Chrome)
-   - For interaction actions: Uses the existing browser session
-   - For `close`: Terminates or disconnects from the browser appropriately
-
-2. **Page Interaction and Stability**:
-   - Ensures pages are fully loaded using DOM stability detection via `waitTillHTMLStable` algorithm
-   - Executes requested actions (navigation, clicking, typing, scrolling) with proper timing
-   - Monitors network activity after clicks and waits for navigation when necessary
-
-3. **Visual Feedback**:
-   - Captures optimized screenshots using WebP format (with PNG fallback)
-   - Records browser console logs for debugging purposes
-   - Tracks mouse position and maintains paginated history of actions
-
-4. **Session Management**:
-   - Maintains browser state across multiple actions
-   - Handles errors and automatically cleans up resources
-   - Enforces proper workflow sequence (launch → interactions → close)
+### 远程浏览器模式
+- 连接到一个已启用远程调试的现有 Chrome/Chromium 实例
+- 可以访问现有的浏览器状态、Cookie 和潜在的扩展程序
+- 启动速度更快，因为它重用现有的浏览器进程
+- 支持连接到 Docker 容器中或远程计算机上的浏览器
+- 会话结束时仅断开连接（不关闭）浏览器
+- 需要 Chrome 在启用远程调试端口（通常是 9222 端口）的情况下运行
 
 ---
 
-## Workflow Sequence
+## 限制
 
-Browser interactions must follow this specific sequence:
-
-1. **Session Initialization**: All browser workflows must start with a `launch` action
-2. **Interaction Phase**: Multiple `click`, `type`, and scroll actions can be performed
-3. **Session Termination**: All browser workflows must end with a `close` action
-4. **Tool Switching**: After closing the browser, other tools can be used
-
----
-
-## Examples When Used
-
-- When creating a web form submission process, Roo launches a browser, navigates to the form, fills out fields with the `type` action, and clicks submit.
-- When testing a responsive website, Roo navigates to the site and uses scroll actions to examine different sections.
-- When capturing screenshots of a web application, Roo navigates through different pages and takes screenshots at each step.
-- When demonstrating an e-commerce checkout flow, Roo simulates the entire process from product selection to payment confirmation.
+- 当浏览器处于活动状态时，只能使用 `browser_action` 工具
+- 浏览器坐标是相对于视口的，而不是相对于页面的
+- 点击操作必须针对视口内的可见元素
+- 在使用其他工具之前，必须明确关闭浏览器会话
+- 浏览器窗口具有可配置的尺寸（默认为 900x600）
+- 无法直接与浏览器开发者工具交互
+- 浏览器会话是临时的，在 Roo 重启后不会保留
+- 仅适用于 Chrome/Chromium 浏览器，不适用于 Firefox 或 Safari
+- 本地模式无法访问现有 Cookie；远程模式需要启用调试功能的 Chrome
 
 ---
 
-## Usage Examples
+## 工作原理
 
-Launching a browser and navigating to a website:
+当调用 `browser_action` 工具时，它会遵循以下流程：
+
+1.  **操作验证和浏览器管理**:
+    *   验证所请求操作的必需参数
+    *   对于 `launch`：初始化一个浏览器会话（本地 Puppeteer 实例或远程 Chrome）
+    *   对于交互操作：使用现有的浏览器会话
+    *   对于 `close`：适当地终止或断开与浏览器的连接
+
+2.  **页面交互和稳定性**:
+    *   通过 `waitTillHTMLStable` 算法使用 DOM 稳定性检测，确保页面完全加载
+    *   以适当的时机执行请求的操作（导航、点击、输入、滚动）
+    *   在点击后监控网络活动，并在必要时等待导航
+
+3.  **可视化反馈**:
+    *   使用 WebP 格式（备用 PNG）捕获优化的屏幕截图
+    *   记录浏览器控制台日志以供调试
+    *   跟踪鼠标位置并维护分页的操作历史记录
+
+4.  **会话管理**:
+    *   在多个操作之间维护浏览器状态
+    *   处理错误并自动清理资源
+    *   强制执行正确的工作流程顺序（launch → interactions → close）
+
+---
+
+## 工作流程顺序
+
+浏览器交互必须遵循以下特定顺序：
+
+1.  **会话初始化**: 所有浏览器工作流程必须以 `launch` 操作开始
+2.  **交互阶段**: 可以执行多个 `click`、`type` 和滚动操作
+3.  **会话终止**: 所有浏览器工作流程必须以 `close` 操作结束
+4.  **工具切换**: 关闭浏览器后，可以使用其他工具
+
+---
+
+## 使用示例
+
+- 在创建 Web 表单提交流程时，Roo 启动浏览器，导航到表单，使用 `type` 操作填写字段，然后点击提交。
+- 在测试响应式网站时，Roo 导航到该网站并使用滚动操作检查不同部分。
+- 在捕获 Web 应用程序的屏幕截图时，Roo 浏览不同页面并在每一步截取屏幕截图。
+- 在演示电子商务结账流程时，Roo 模拟从产品选择到付款确认的整个过程。
+
+---
+
+## 用法示例
+
+启动浏览器并导航到网站：
 ```
 <browser_action>
 <action>launch</action>
@@ -141,7 +141,7 @@ Launching a browser and navigating to a website:
 </browser_action>
 ```
 
-Clicking at specific coordinates (e.g., a button):
+在特定坐标（例如，一个按钮）处点击：
 ```
 <browser_action>
 <action>click</action>
@@ -149,7 +149,7 @@ Clicking at specific coordinates (e.g., a button):
 </browser_action>
 ```
 
-Typing text into a focused input field:
+在聚焦的输入字段中输入文本：
 ```
 <browser_action>
 <action>type</action>
@@ -157,16 +157,15 @@ Typing text into a focused input field:
 </browser_action>
 ```
 
-Scrolling down to see more content:
+向下滚动以查看更多内容：
 ```
 <browser_action>
 <action>scroll_down</action>
 </browser_action>
 ```
 
-Closing the browser session:
+关闭浏览器会话：
 ```
 <browser_action>
 <action>close</action>
 </browser_action>
-```

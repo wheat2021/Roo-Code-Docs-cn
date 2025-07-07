@@ -1,52 +1,52 @@
-# Working with Large Projects
+# 使用大型项目
 
-Roo Code can be used with projects of any size, but large projects require some extra care to manage context effectively. Here are some tips for working with large codebases:
-
----
-
-## Understanding Context Limits
-
-Roo Code uses large language models (LLMs) that have a limited "context window."  This is the maximum amount of text (measured in tokens) that the model can process at once.  If the context is too large, the model may not be able to understand your request or generate accurate responses.
-
-The context window includes:
-
-*   The system prompt (instructions for Roo Code).
-*   The conversation history.
-*   The content of any files you mention using `@`.
-*   The output of any commands or tools Roo Code uses.
+Roo Code 可用于任何规模的项目，但大型项目需要格外注意以有效管理上下文。以下是一些在大型代码库中工作的技巧：
 
 ---
 
-## Strategies for Managing Context
+## 理解上下文限制
 
-1.  **Be Specific:**  When referring to files or code, use specific file paths and function names.  Avoid vague references like "the main file."
+Roo Code 使用的大型语言模型（LLM）具有有限的“上下文窗口”。这是模型一次可以处理的最大文本量（以 token 为单位）。如果上下文太大，模型可能无法理解您的请求或生成准确的响应。
 
-2.  **Use Context Mentions Effectively:** Use `@/path/to/file.ts` to include specific files. Use `@problems` to include current errors and warnings.  Use `@` followed by a commit hash to reference specific Git commits.
+上下文窗口包括：
 
-3.  **Break Down Tasks:** Divide large tasks into smaller, more manageable sub-tasks.  This helps keep the context focused.
-
-4.  **Summarize:**  If you need to refer to a large amount of code, consider summarizing the relevant parts in your prompt instead of including the entire code.
-
-5.  **Prioritize Recent History:** Roo Code automatically truncates older messages in the conversation history to stay within the context window. Be mindful of this, and re-include important context if needed.
-
-6.  **Use Prompt Caching (if available):** Some API providers like Anthropic, OpenAI, OpenRouter and Requesty support "prompt caching". This caches your prompts for use in future tasks and helps reduce the cost and latency of requests.
+*   系统提示（给 Roo Code 的指令）。
+*   对话历史。
+*   您使用 `@` 提及的任何文件的内容。
+*   Roo Code 使用的任何命令或工具的输出。
 
 ---
 
-## Example: Refactoring a Large File
+## 管理上下文的策略
 
-Let's say you need to refactor a large TypeScript file (`src/components/MyComponent.tsx`).  Here's a possible approach:
+1.  **具体化**：在引用文件或代码时，请使用具体的文件路径和函数名。避免使用“主文件”之类的模糊引用。
 
-1.  **Initial Overview:**
+2.  **有效使用上下文提及**：使用 `@/path/to/file.ts` 来包含特定文件。使用 `@problems` 来包含当前的错误和警告。使用 `@` 后跟一个提交哈希值来引用特定的 Git 提交。
+
+3.  **分解任务**：将大型任务分解为更小、更易于管理的子任务。这有助于保持上下文的集中。
+
+4.  **进行总结**：如果您需要引用大量代码，可以考虑在提示中总结相关部分，而不是包含全部代码。
+
+5.  **优先考虑最近的历史记录**：Roo Code 会自动截断对话历史中较早的消息，以保持在上下文窗口内。请注意这一点，并在需要时重新包含重要的上下文。
+
+6.  **使用提示缓存（如果可用）**：一些 API 提供商（如 Anthropic、OpenAI、OpenRouter 和 Requesty）支持“提示缓存”。这会缓存您的提示以供将来的任务使用，并有助于降低请求的成本和延迟。
+
+---
+
+## 示例：重构大型文件
+
+假设您需要重构一个大型 TypeScript 文件 (`src/components/MyComponent.tsx`)。以下是一种可能的方法：
+
+1.  **初步概览**：
     ```
-    @/src/components/MyComponent.tsx List the functions and classes in this file.
+    @/src/components/MyComponent.tsx 列出此文件中的函数和类。
     ```
 
-2.  **Target Specific Functions:**
+2.  **针对特定函数**：
     ```
-    @/src/components/MyComponent.tsx Refactor the `processData` function to use `async/await` instead of Promises.
+    @/src/components/MyComponent.tsx 将 `processData` 函数重构为使用 `async/await` 而不是 Promises。
     ```
 
-3.  **Iterative Changes:**  Make small, incremental changes, reviewing and approving each step.
+3.  **迭代更改**：进行小的、增量的更改，审查并批准每一步。
 
-By breaking down the task and providing specific context, you can work effectively with large files even with a limited context window.
+通过分解任务并提供特定的上下文，即使上下文窗口有限，您也可以有效地处理大型文件。

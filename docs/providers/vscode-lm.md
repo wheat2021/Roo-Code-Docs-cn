@@ -1,32 +1,32 @@
 ---
-sidebar_label: VS Code Language Model API
+sidebar_label: VS Code 语言模型 API
 ---
 
-# Using VS Code Language Model API With Roo Code
+# 在 Roo Code 中使用 VS Code 语言模型 API
 
-Roo Code includes *experimental* support for the [VS Code Language Model API](https://code.visualstudio.com/api/extension-guides/language-model). This API allows extensions to provide access to language models directly within VS Code.  This means you can potentially use models from:
+Roo Code 包含对 [VS Code 语言模型 API](https://code.visualstudio.com/api/extension-guides/language-model) 的*实验性*支持。该 API 允许扩展直接在 VS Code 中提供对语言模型的访问。这意味着您可能可以使用来自以下来源的模型：
 
-*   **GitHub Copilot:** If you have a Copilot subscription and the extension installed.
-*   **Other VS Code Extensions:** Any extension that implements the Language Model API.
+*   **GitHub Copilot：** 如果您拥有 Copilot 订阅并已安装该扩展。
+*   **其他 VS Code 扩展：** 任何实现语言模型 API 的扩展。
 
-**Important:** This integration is highly experimental and may not work as expected.  It is dependent on other extensions correctly implementing the VS Code Language Model API.
-
----
-
-## Prerequisites
-
-*   **VS Code:**  The Language Model API is available through VS Code (and is not currently supported by Cursor).
-*   **A Language Model Provider Extension:**  You need an extension that provides a language model.  Examples include:
-    *   **GitHub Copilot:**  If you have a Copilot subscription, the GitHub Copilot and GitHub Copilot Chat extensions can provide models.
-    *   **Other Extensions:**  Search the VS Code Marketplace for extensions that mention "Language Model API" or "lm".  There may be other experimental extensions available.
+**重要提示：** 此集成为高度实验性功能，可能无法按预期工作。它依赖于其他扩展正确实现 VS Code 语言模型 API。
 
 ---
 
-## Configuration
+## 先决条件
 
-1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
-2.  **Select Provider:** Choose "VS Code LM API" from the "API Provider" dropdown.
-3.  **Select Model:**  The "Language Model" dropdown will (eventually) list available models. The format is `vendor/family`. For example, if you have Copilot, you might see options like:
+*   **VS Code：** 语言模型 API 通过 VS Code 提供（Cursor 目前不支持）。
+*   **语言模型提供程序扩展：** 您需要一个提供语言模型的扩展。示例包括：
+    *   **GitHub Copilot：** 如果您拥有 Copilot 订阅，GitHub Copilot 和 GitHub Copilot Chat 扩展可以提供模型。
+    *   **其他扩展：** 在 VS Code 应用市场中搜索提及“Language Model API”或“lm”的扩展。可能还有其他可用的实验性扩展。
+
+---
+
+## 配置
+
+1.  **打开 Roo Code 设置：** 点击 Roo Code 面板中的齿轮图标 (<Codicon name="gear" />)。
+2.  **选择提供商：** 从“API 提供商”下拉菜单中选择“VS Code LM API”。
+3.  **选择模型：** “语言模型”下拉菜单将（最终）列出可用的模型。格式为 `供应商/系列`。例如，如果您有 Copilot，您可能会看到如下选项：
     *   `copilot - claude-3.5-sonnet`
     *   `copilot - o3-mini`
     *   `copilot - o1-ga`
@@ -34,21 +34,21 @@ Roo Code includes *experimental* support for the [VS Code Language Model API](ht
 
 ---
 
-## Limitations
+## 限制
 
-*   **Experimental API:**  The VS Code Language Model API is still under development.  Expect changes and potential instability.
-*   **Extension Dependent:**  This feature relies entirely on other extensions providing models.  Roo Code cannot directly control which models are available.
-*   **Limited Functionality:**  The VS Code Language Model API may not support all the features of other API providers (e.g., image input, streaming, detailed usage information).
-*   **No Direct Cost Control:**  You are subject to the pricing and terms of the extension providing the model.  Roo Code cannot directly track or limit costs.
-*   **GitHub Copilot Rate Limits:** When using the VS Code LM API with GitHub Copilot, be aware that GitHub may impose rate limits on Copilot usage. These limits are controlled by GitHub, not Roo Code.
+*   **实验性 API：** VS Code 语言模型 API 仍处于开发阶段。预计会有变化和潜在的不稳定性。
+*   **依赖扩展：** 此功能完全依赖于其他扩展提供模型。Roo Code 无法直接控制哪些模型可用。
+*   **功能有限：** VS Code 语言模型 API 可能不支持其他 API 提供商的所有功能（例如，图像输入、流式传输、详细使用信息）。
+*   **无直接成本控制：** 您需要遵守提供模型的扩展的定价和条款。Roo Code 无法直接跟踪或限制成本。
+*   **GitHub Copilot 速率限制：** 当通过 VS Code LM API 使用 GitHub Copilot 时，请注意 GitHub 可能会对 Copilot 的使用施加速率限制。这些限制由 GitHub 控制，而非 Roo Code。
 
 
 ---
 
-## Troubleshooting
+## 故障排除
 
-*   **No Models Appear:**
-    *   Ensure you have VS Code installed.
-    *   Ensure you have a language model provider extension installed and enabled (e.g., GitHub Copilot, GitHub Copilot Chat).
-    *   If using Copilot, make sure that you have sent a Copilot Chat message using the model you would like to use.
-*   **Unexpected Behavior:**  If you encounter unexpected behavior, it's likely an issue with the underlying Language Model API or the provider extension.  Consider reporting the issue to the provider extension's developers.
+*   **没有模型出现：**
+    *   确保您已安装 VS Code。
+    *   确保您已安装并启用语言模型提供程序扩展（例如，GitHub Copilot、GitHub Copilot Chat）。
+    *   如果使用 Copilot，请确保您已使用您想用的模型发送了一条 Copilot Chat 消息。
+*   **意外行为：** 如果遇到意外行为，很可能是底层语言模型 API 或提供程序扩展的问题。请考虑向提供程序扩展的开发者报告问题。

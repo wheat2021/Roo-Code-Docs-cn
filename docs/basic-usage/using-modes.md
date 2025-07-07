@@ -1,121 +1,127 @@
-# Using Modes
+---
+id: using-modes
+title: 使用模式
+sidebar_label: 使用模式
+---
 
-Modes in Roo Code are specialized personas that tailor the assistant's behavior to your current task. Each mode offers different capabilities, expertise, and access levels to help you accomplish specific goals.
+# 使用模式
 
-:::info Sticky Models & Mode Persistence
-Each mode remembers your last-used model. When switching modes, Roo automatically selects that model—no manual selection needed. Assign different models to different modes (e.g., Gemini 2.5 Preview for `🏗️ Architect` mode, Claude Sonnet 3.7 for `💻 Code` mode) and Roo will switch models automatically when you change modes.
+Roo Code 中的模式是专门的角色，可根据您当前的任务调整助手的行为。每种模式都提供不同的功能、专业知识和访问级别，以帮助您实现特定目标。
 
-Additionally, your selected mode persists between sessions—Roo remembers which mode you were using when you return.
+:::info 固定模型和模式持久性
+每种模式都会记住您上次使用的模型。切换模式时，Roo 会自动选择该模型，无需手动选择。为不同的模式分配不同的模型（例如，为 `🏗️ Architect` 模式分配 Gemini 2.5 Preview，为 `💻 Code` 模式分配 Claude Sonnet 3.7），当您更改模式时，Roo 会自动切换模型。
+
+此外，您选择的模式会在会话之间保持不变——当您返回时，Roo 会记住您正在使用的模式。
 :::
 
 ---
 
-## Why Use Different Modes?
+## 为什么要使用不同的模式？
 
-- **Task specialization:** Get precisely the type of assistance you need for your current task
-- **Safety controls:** Prevent unintended file modifications when focusing on planning or learning
-- **Focused interactions:** Receive responses optimized for your current activity
-- **Workflow optimization:** Seamlessly transition between planning, implementing, debugging, and learning
+- **任务专业化：** 为您当前的任务获得精确的帮助
+- **安全控制：** 在专注于规划或学习时防止意外的文件修改
+- **专注的互动：** 接收针对您当前活动的优化响应
+- **工作流程优化：** 在规划、实施、调试和学习之间无缝过渡
 
 ---
 
-## Switching Between Modes
+## 在模式之间切换
 
-Four ways to switch modes:
+有四种切换模式的方法：
 
-1. **Dropdown menu:** Click the selector to the left of the chat input
-   
-   <img src="/img/using-modes/using-modes.png" alt="Using the dropdown menu to switch modes" width="400" />
+1.  **下拉菜单：** 单击聊天输入框左侧的选择器
 
-2. **Slash command:** Type `/architect`, `/ask`, `/debug`, `/code`, or `/orchestrator` at the beginning of your message. This will switch to that mode and clear the input field.
-   
-   <img src="/img/using-modes/using-modes-1.png" alt="Using slash commands to switch modes" width="400" />
+    <img src="/img/using-modes/using-modes.png" alt="使用下拉菜单切换模式" width="400" />
 
-3. **Toggle command/Keyboard shortcut:** Use the keyboard shortcut below, applicable to your operating system. Each press cycles through the available modes in sequence, wrapping back to the first mode after reaching the end.
-       
-    | Operating System | Shortcut |
-    |------------------|----------|
+2.  **斜杠命令：** 在消息开头键入 `/architect`、`/ask`、`/debug`、`/code` 或 `/orchestrator`。这将切换到该模式并清除输入字段。
+
+    <img src="/img/using-modes/using-modes-1.png" alt="使用斜杠命令切换模式" width="400" />
+
+3.  **切换命令/键盘快捷键：** 使用适用于您操作系统的以下键盘快捷键。每次按下都会按顺序循环切换可用模式，到达末尾后会回到第一个模式。
+
+    | 操作系统 | 快捷键 |
+    | :--- | :--- |
     | macOS | ⌘ + . |
     | Windows | Ctrl + . |
     | Linux | Ctrl + . |
 
-4. **Accept suggestions:** Click on mode switch suggestions that Roo offers when appropriate
-   
-    <img src="/img/using-modes/using-modes-2.png" alt="Accepting a mode switch suggestion from Roo" width="400" />
+4.  **接受建议：** 在适当时单击 Roo 提供的模式切换建议
+
+    <img src="/img/using-modes/using-modes-2.png" alt="接受 Roo 的模式切换建议" width="400" />
 
 ---
 
-## Built-in Modes
+## 内置模式
 
-### Code Mode (Default)
+### 代码模式（默认）
 
-| Aspect | Details |
-|--------|---------|
-| **Name** | `💻 Code` |
-| **Description** | A skilled software engineer with expertise in programming languages, design patterns, and best practices |
-| **Tool Access** | Full access to all tool groups: `read`, `edit`, `browser`, `command`, `mcp` |
-| **Ideal For** | Writing code, implementing features, debugging, and general development |
-| **Special Features** | No tool restrictions—full flexibility for all coding tasks |
+| 方面 | 详情 |
+| :--- | :--- |
+| **名称** | `💻 Code` |
+| **描述** | 一位熟练的软件工程师，在编程语言、设计模式和最佳实践方面拥有专业知识 |
+| **工具访问权限** | 完全访问所有工具组：`read`、`edit`、`browser`、`command`、`mcp` |
+| **最适用于** | 编写代码、实现功能、调试和一般开发 |
+| **特殊功能** | 没有工具限制——为所有编码任务提供完全的灵活性 |
 
-### Ask Mode
+### 提问模式
 
-| Aspect | Details |
-|--------|---------|
-| **Name** | `❓ Ask` |
-| **Description** | A knowledgeable technical assistant focused on providing thorough and complete answers. It's less inclined to switch to implementing code unless explicitly requested and may use diagrams for clarification. |
-| **Tool Access** | Limited access: `read`, `browser`, `mcp` only (cannot edit files or run commands) |
-| **Ideal For** | Code explanation, concept exploration, and technical learning |
-| **Special Features** | Optimized for detailed, informative responses, often using diagrams for clarity, without modifying your project. |
+| 方面 | 详情 |
+| :--- | :--- |
+| **名称** | `❓ Ask` |
+| **描述** | 一位知识渊博的技术助理，专注于提供全面完整的答案。除非明确要求，否则它不太倾向于切换到实现代码，并可能使用图表进行澄清。 |
+| **工具访问权限** | 有限访问：仅限 `read`、`browser`、`mcp`（无法编辑文件或运行命令） |
+| **最适用于** | 代码解释、概念探索和技术学习 |
+| **特殊功能** | 优化了详细、信息丰富的响应，通常使用图表以求清晰，而不会修改您的项目。 |
 
-### Architect Mode
+### 架构师模式
 
-| Aspect | Details |
-|--------|---------|
-| **Name** | `🏗️ Architect` |
-| **Description** | An experienced technical leader and planner who helps design systems and create implementation plans |
-| **Tool Access** | Access to `read`, `browser`, `mcp`, and restricted `edit` (markdown files only) |
-| **Ideal For** | System design, high-level planning, and architecture discussions |
-| **Special Features** | Follows a structured approach from information gathering to detailed planning |
+| 方面 | 详情 |
+| :--- | :--- |
+| **名称** | `🏗️ Architect` |
+| **描述** | 一位经验丰富的技术负责人和规划师，帮助设计系统和创建实施计划 |
+| **工具访问权限** | 访问 `read`、`browser`、`mcp` 和受限的 `edit`（仅限 markdown 文件） |
+| **最适用于** | 系统设计、高级规划和架构讨论 |
+| **特殊功能** | 遵循从信息收集到详细规划的结构化方法 |
 
-### Debug Mode
+### 调试模式
 
-| Aspect | Details |
-|--------|---------|
-| **Name** | `🪲 Debug` |
-| **Description** | An expert problem solver specializing in systematic troubleshooting and diagnostics |
-| **Tool Access** | Full access to all tool groups: `read`, `edit`, `browser`, `command`, `mcp` |
-| **Ideal For** | Tracking down bugs, diagnosing errors, and resolving complex issues |
-| **Special Features** | Uses a methodical approach of analyzing, narrowing possibilities, and fixing issues. Includes custom instructions to reflect, distill possibilities, add logs, and confirm before fixing. |
+| 方面 | 详情 |
+| :--- | :--- |
+| **名称** | `🪲 Debug` |
+| **描述** | 一位专家级问题解决者，专门从事系统性故障排除和诊断 |
+| **工具访问权限** | 完全访问所有工具组：`read`、`edit`、`browser`、`command`、`mcp` |
+| **最适用于** | 追踪错误、诊断错误和解决复杂问题 |
+| **特殊功能** | 使用分析、缩小可能性和修复问题的系统方法。包括自定义指令以进行反思、提炼可能性、添加日志并在修复前确认。 |
 
-### Orchestrator Mode (aka Boomerang Mode)
+### 编排器模式（又名回旋镖模式）
 
-| Aspect | Details |
-|--------|---------|
-| **Name** | `🪃 Orchestrator` |
-| **Description** | A strategic workflow orchestrator (aka Boomerang Mode) that breaks down complex tasks and delegates them to specialized modes. Learn more about [Boomerang Tasks](/features/boomerang-tasks). |
-| **Tool Access** | No direct tool access (uses `new_task` tool to delegate work to other modes) |
-| **Ideal For** | Managing multi-step projects, coordinating work across different modes, and automating complex workflows |
-| **Special Features** | Uses the [`new_task`](/advanced-usage/available-tools/new-task) tool to delegate subtasks to other modes. |
-
----
-
-## Additional Modes
-
-Additional specialized modes may be available depending on your Roo Code configuration, including Test, Design Engineer, Release Engineer, Translate, Issue Fixer, Issue Writer, Integration Tester, PR Reviewer, and Docs Extractor modes. Check your mode selector for the complete list available in your installation.
+| 方面 | 详情 |
+| :--- | :--- |
+| **名称** | `🪃 Orchestrator` |
+| **描述** | 一位战略性工作流编排器（又名回旋镖模式），可将复杂任务分解并委派给专门的模式。了解更多关于[回旋镖任务](/features/boomerang-tasks)。 |
+| **工具访问权限** | 无直接工具访问权限（使用 `new_task` 工具将工作委派给其他模式） |
+| **最适用于** | 管理多步骤项目、协调不同模式的工作以及自动化复杂的工作流 |
+| **特殊功能** | 使用 [`new_task`](/advanced-usage/available-tools/new-task) 工具将子任务委派给其他模式。 |
 
 ---
 
-## Customizing Modes
+## 其他模式
 
-Tailor Roo Code's behavior by customizing existing modes or creating new specialized assistants. Define tool access, file permissions, and behavior instructions to enforce team standards or create purpose-specific assistants. See [Custom Modes documentation](/features/custom-modes) for setup instructions.
+根据您的 Roo Code 配置，可能还提供其他专门的模式，包括测试、设计工程师、发布工程师、翻译、问题修复者、问题编写者、集成测试员、PR 审阅者和文档提取器模式。请检查您的模式选择器以获取您安装中可用的完整列表。
 
-### Understanding Tool Groups
+---
 
-Each tool group provides specific capabilities:
-- **`read`**: File reading, listing, and searching capabilities
-- **`edit`**: File modification and creation capabilities
-- **`browser`**: Web browsing and search capabilities
-- **`command`**: Terminal command execution
-- **`mcp`**: Model Context Protocol server interactions
+## 自定义模式
 
-For detailed information about available tools, see the [Available Tools documentation](/advanced-usage/available-tools/tool-use-overview).
+通过自定义现有模式或创建新的专门助手来调整 Roo Code 的行为。定义工具访问权限、文件权限和行为指令，以强制执行团队标准或创建特定用途的助手。有关设置说明，请参阅[自定义模式文档](/features/custom-modes)。
+
+### 理解工具组
+
+每个工具组提供特定的功能：
+- **`read`**: 文件读取、列表和搜索功能
+- **`edit`**: 文件修改和创建功能
+- **`browser`**: 网页浏览和搜索功能
+- **`command`**: 终端命令执行
+- **`mcp`**: 模型上下文协议（MCP）服务器交互
+
+有关可用工具的详细信息，请参阅[可用工具文档](/advanced-usage/available-tools/tool-use-overview)。

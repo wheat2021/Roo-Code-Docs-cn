@@ -1,45 +1,45 @@
 import KangarooIcon from '@site/src/components/KangarooIcon';
 
-# The Chat Interface
+# 聊天界面
 
-The Roo Code chat interface is your primary way of interacting with it. It's located in the Roo Code panel, which you can open by clicking the Roo Code icon (<KangarooIcon />) in the VS Code Activity Bar.
-
----
-
-## Components of the Chat Interface
-
-The chat interface consists of the following main elements:
-
-1. **Chat History:** This area displays the conversation history between you and Roo Code.  It shows your requests, Roo Code's responses, and any actions taken (like file edits or command executions).
-
-2. **Input Field:** This is where you type your tasks and questions for Roo Code.  You can use plain English to communicate.
-
-3. **Action Buttons:** These buttons appear above the input field and allow you to approve or reject Roo Code's proposed actions.  The available buttons change depending on the context.
-
-4. **Send Button:** This looks like a small plane and it's located to the far right of the input field. This sends messages to Roo after you've typed them.
-
-5. **Plus Button:** The plus button is located at the top in the header, and it resets the current session.
-
-6. **Settings Button:** The settings button is a gear, and it's used for opening the settings to customize features or behavior.
-
-7. **Mode Selector:** The mode selector is a dropdown located to the left of the chat input field. It is used for selecting which mode Roo should use for your tasks.
-
-<img src="/img/the-chat-interface/the-chat-interface-1.png" alt="Chat interface components labeled with numbered callouts" width="900" />
-
-*Numbered interface elements showing the key components of the Roo Code chat interface.*
+Roo Code 聊天界面是您与之交互的主要方式。它位于 Roo Code 面板中，您可以通过单击 VS Code 活动栏中的 Roo Code 图标 (<KangarooIcon />) 来打开它。
 
 ---
 
-## Interacting with Messages
+## 聊天界面的组成部分
 
-* **Clickable Links:** File paths, URLs, and other mentions in the chat history are clickable.  Clicking a file path will open the file in the editor.  Clicking a URL will open it in your default browser.
-* **Copying Text:** You can copy text from the chat history by selecting it and using the standard copy command (Ctrl/Cmd + C).  Some elements, like code blocks, have a dedicated "Copy" button.
-* **Expanding and Collapsing**: Click on a message to expand or collapse it.
+聊天界面包含以下主要元素：
+
+1.  **聊天记录：** 此区域显示您与 Roo Code 之间的对话历史。它会展示您的请求、Roo Code 的回复以及所采取的任何操作（例如文件编辑或命令执行）。
+
+2.  **输入框：** 您可以在这里输入要分配给 Roo Code 的任务和问题。您可以使用自然语言进行交流。
+
+3.  **操作按钮：** 这些按钮显示在输入框上方，允许您批准或拒绝 Roo Code 提议的操作。可用的按钮会根据上下文而变化。
+
+4.  **发送按钮：** 它看起来像一架小飞机，位于输入框的最右侧。在您输入消息后，此按钮会将其发送给 Roo。
+
+5.  **加号按钮：** 加号按钮位于顶部的标题栏中，用于重置当前会话。
+
+6.  **设置按钮：** 设置按钮是一个齿轮图标，用于打开设置以自定义功能或行为。
+
+7.  **模式选择器：** 模式选择器是一个位于聊天输入框左侧的下拉菜单。它用于选择 Roo 应为您的任务使用的模式。
+
+<img src="/img/the-chat-interface/the-chat-interface-1.png" alt="聊天界面各组件带有编号标注" width="900" />
+
+*带有编号的界面元素展示了 Roo Code 聊天界面的关键组成部分。*
 
 ---
 
-## Status Indicators
+## 与消息交互
 
-* **Loading Spinner:**  When Roo Code is processing a request, you'll see a loading spinner.
-* **Error Messages:**  If an error occurs, a red error message will be displayed.
-* **Success Messages:** Green messages indicate successful completion of actions.
+*   **可点击链接：** 聊天记录中的文件路径、URL 和其他提及内容都是可点击的。点击文件路径将在编辑器中打开该文件。点击 URL 将在您的默认浏览器中打开它。
+*   **复制文本：** 您可以通过选择文本并使用标准复制命令 (Ctrl/Cmd + C) 来复制聊天记录中的文本。某些元素（如代码块）有专门的“复制”按钮。
+*   **展开和折叠**：点击消息以展开或折叠它。
+
+---
+
+## 状态指示器
+
+*   **加载中：** 当 Roo Code 正在处理请求时，您会看到一个加载指示器。
+*   **错误消息：** 如果发生错误，将显示红色的错误消息。
+*   **成功消息：** 绿色的消息表示操作成功完成。

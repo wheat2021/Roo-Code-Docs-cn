@@ -1,115 +1,115 @@
 # write_to_file
 
-The `write_to_file` tool creates new files or completely replaces existing file content with an interactive approval process. It provides a diff view for reviewing changes before they're applied.
+`write_to_file` 工具通过一个交互式审批流程来创建新文件或完全替换现有文件内容。它提供一个差异视图，用于在应用更改前进行审查。
 
 ---
 
-## Parameters
+## 参数
 
-The tool accepts these parameters:
+该工具接受以下参数：
 
-- `path` (required): The path of the file to write to, relative to the current working directory
-- `content` (required): The complete content to write to the file
-- `line_count` (required): The number of lines in the file, including empty lines
-
----
-
-## What It Does
-
-This tool writes content to a specified file, either creating a new file if it doesn't exist or completely overwriting an existing file. All changes require explicit user approval through a diff view interface, where users can review and even edit the proposed changes before they're applied.
+- `path` (必需): 要写入的文件的路径，相对于当前工作目录。
+- `content` (必需): 要写入文件的完整内容。
+- `line_count` (必需): 文件中的行数，包括空行。
 
 ---
 
-## When is it used?
+## 功能说明
 
-- When Roo needs to create a new file from scratch
-- When Roo needs to completely rewrite an existing file
-- When creating multiple files for a new project
-- When generating configuration files, documentation, or source code
-- When you need to review changes before they're applied
+此工具将内容写入指定文件，如果文件不存在则创建新文件，如果文件已存在则完全覆盖。所有更改都需要通过差异视图界面进行明确的用户批准，用户可以在应用更改前审查甚至编辑提议的更改。
 
 ---
 
-## Key Features
+## 使用场景
 
-- Interactive Approval: Shows changes in a diff view requiring explicit approval before applying
-- User Edit Support: Allows editing the proposed content before final approval
-- Safety Measures: Detects code omission, validates paths, and prevents truncated content
-- Editor Integration: Opens a diff view that scrolls to the first difference automatically
-- Content Preprocessing: Handles artifacts from different AI models to ensure clean content
-- Access Control: Validates against `.rooignore` restrictions before making changes
-- Parent Directories: May handle directory creation through system dependencies
-- Complete Replacement: Provides a fully transformed file in a single operation
+- 当 Roo 需要从头开始创建新文件时
+- 当 Roo 需要完全重写现有文件时
+- 为新项目创建多个文件时
+- 生成配置文件、文档或源代码时
+- 当您需要在应用更改前审查它们时
 
 ---
 
-## Limitations
+## 主要特性
 
-- Not suitable for existing files: Much slower and less efficient than `apply_diff` for modifying existing files
-- Performance with large files: Operation becomes significantly slower with larger files
-- Complete overwrite: Replaces entire file content, cannot preserve original content
-- Line count required: Needs accurate line count to detect potential content truncation
-- Review overhead: The approval process adds extra steps compared to direct edits
-- Interactive only: Cannot be used in automated workflows that require non-interactive execution
-
----
-
-## How It Works
-
-When the `write_to_file` tool is invoked, it follows this process:
-
-1. **Parameter Validation**: Validates the required parameters and permissions
-   - Checks that `path`, `content`, and `line_count` are provided
-   - If `line_count` is missing/invalid, reverts any diff view changes and returns an error suggesting alternative tools (`apply_diff`, `insert_content`, etc.) if modifying an existing file.
-   - Validates the file is allowed (not restricted by `.rooignore`)
-   - Ensures the path is within the workspace boundaries
-   - Tracks consecutive mistake counts for missing parameters
-   - Shows specific error messages for each validation failure
-
-2. **Content Preprocessing**:
-   - Removes code block markers that might be added by AI models
-   - Handles escaped HTML entities (specifically for non-Claude models)
-   - Strips line numbers if accidentally included in content
-   - Performs model-specific processing for different AI providers
-
-3. **Diff View Generation**:
-   - Opens a diff view in the editor showing the proposed changes
-   - Adds a 300ms delay to ensure UI responsiveness
-   - Scrolls automatically to the first difference
-   - Highlights changes for easy review
-
-4. **User Approval Process**:
-   - Waits for explicit user approval to proceed
-   - Allows users to edit the content in the diff view
-   - Captures any user edits for the final content
-   - Provides option to reject changes entirely
-   - Detects and incorporates user modifications into the final result
-
-5. **Safety Validation**:
-   - Detects potential content truncation by comparing with provided line count
-   - Shows warnings if content appears incomplete
-   - Validates file path and access permissions
-   - Specifically checks if files are outside the workspace with `isOutsideWorkspace` flag
-
-6. **File Writing**:
-   - Writes the approved content (with any user edits) to the file
-   - Provides confirmation of successful write
-   - Resets the consecutive mistakes counter on success
+- 交互式批准：在差异视图中显示更改，需要明确批准才能应用。
+- 支持用户编辑：允许在最终批准前编辑提议的内容。
+- 安全措施：检测代码遗漏、验证路径并防止内容截断。
+- 编辑器集成：打开一个差异视图，并自动滚动到第一个差异处。
+- 内容预处理：处理来自不同 AI 模型的产物，以确保内容干净。
+- 访问控制：在进行更改前根据 `.rooignore` 的限制进行验证。
+- 父目录：可能通过系统依赖项处理目录创建。
+- 完全替换：在单次操作中提供一个完全转换后的文件。
 
 ---
 
-## Examples When Used
+## 限制
 
-- When creating a new project, Roo generates multiple files but lets you review each before committing changes.
-- When setting up configuration files, Roo shows the proposed configuration in a diff view for approval.
-- When generating documentation, Roo creates markdown files but lets you make final adjustments in the diff view.
-- When developing a prototype, Roo shows complete source files in a diff view where you can fine-tune before saving.
+- 不适用于现有文件：修改现有文件时，比 `apply_diff` 慢得多，效率也低得多。
+- 处理大文件时的性能：文件越大，操作速度会明显变慢。
+- 完全覆盖：替换整个文件内容，无法保留原始内容。
+- 需要行数：需要准确的行数来检测潜在的内容截断。
+- 审查开销：与直接编辑相比，审批过程增加了额外的步骤。
+- 仅限交互式：不能用于需要非交互式执行的自动化工作流。
 
 ---
 
-## Usage Examples
+## 工作原理
 
-Creating a new JSON configuration file:
+当调用 `write_to_file` 工具时，它会遵循以下流程：
+
+1.  **参数验证**：验证必需的参数和权限。
+    -   检查是否提供了 `path`、`content` 和 `line_count`。
+    -   如果 `line_count` 缺失/无效，在修改现有文件时，会撤销任何差异视图的更改并返回一个错误，建议使用替代工具（如 `apply_diff`、`insert_content` 等）。
+    -   验证文件是否被允许（未被 `.rooignore` 限制）。
+    -   确保路径在工作区边界内。
+    -   跟踪缺失参数的连续错误次数。
+    -   为每个验证失败显示具体的错误消息。
+
+2.  **内容预处理**：
+    -   移除 AI 模型可能添加的代码块标记。
+    -   处理转义的 HTML 实体（特别针对非 Claude 模型）。
+    -   如果内容中意外包含了行号，则将其剥离。
+    -   为不同的 AI 提供商执行特定于模型的处理。
+
+3.  **生成差异视图**：
+    -   在编辑器中打开一个差异视图，显示提议的更改。
+    -   增加 300 毫秒的延迟以确保 UI 响应性。
+    -   自动滚动到第一个差异处。
+    -   高亮显示更改以便于审查。
+
+4.  **用户审批流程**：
+    -   等待用户明确批准才能继续。
+    -   允许用户在差异视图中编辑内容。
+    -   捕获任何用户编辑以用于最终内容。
+    -   提供完全拒绝更改的选项。
+    -   检测并整合用户的修改到最终结果中。
+
+5.  **安全验证**：
+    -   通过与提供的行数进行比较，检测潜在的内容截断。
+    -   如果内容看起来不完整，则显示警告。
+    -   验证文件路径和访问权限。
+    -   使用 `isOutsideWorkspace` 标志专门检查文件是否在工作区之外。
+
+6.  **文件写入**：
+    -   将批准的内容（包括任何用户编辑）写入文件。
+    -   提供写入成功的确认信息。
+    -   成功后重置连续错误计数器。
+
+---
+
+## 使用示例
+
+-   创建新项目时，Roo 会生成多个文件，但允许您在提交更改前审查每一个文件。
+-   设置配置文件时，Roo 会在差异视图中显示提议的配置以供批准。
+-   生成文档时，Roo 会创建 Markdown 文件，但允许您在差异视图中进行最终调整。
+-   开发原型时，Roo 会在差异视图中显示完整的源文件，您可以在保存前进行微调。
+
+---
+
+## 用法示例
+
+创建一个新的 JSON 配置文件：
 ```
 <write_to_file>
 <path>config/settings.json</path>
@@ -128,59 +128,3 @@ Creating a new JSON configuration file:
   },
   "version": "1.0.0"
 }
-</content>
-<line_count>14</line_count>
-</write_to_file>
-```
-
-Creating a simple HTML file:
-```
-<write_to_file>
-<path>src/index.html</path>
-<content>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Application</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div id="app"></div>
-  <script src="app.js"></script>
-</body>
-</html>
-</content>
-<line_count>13</line_count>
-</write_to_file>
-```
-
-Creating a JavaScript module:
-```
-<write_to_file>
-<path>src/utils/helpers.js</path>
-<content>
-/**
- * Utility functions for the application
- */
-
-export function formatDate(date) {
-  return new Date(date).toLocaleDateString();
-}
-
-export function calculateTotal(items) {
-  return items.reduce((sum, item) => sum + item.price, 0);
-}
-
-export function debounce(func, delay) {
-  let timeout;
-  return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), delay);
-  };
-}
-</content>
-<line_count>18</line_count>
-</write_to_file>
-```

@@ -1,18 +1,18 @@
-# Maestro Project by shariqriazz
+# Maestro 项目 by shariqriazz
 
-[View Project on GitHub](https://github.com/shariqriazz/maestro)
+[在 GitHub 上查看项目](https://github.com/shariqriazz/maestro)
 
-The Maestro Project provides a comprehensive system of highly specialized Roo modes designed to work together as an integrated development team. Orchestrated by the central **Maestro** mode, this system manages the entire software development lifecycle by delegating tasks to modes with deep expertise in specific domains such as planning, design, frontend/backend development, database management, DevOps, testing, and documentation.
+Maestro 项目提供了一个由高度专业化的 Roo 模式组成的综合系统，这些模式旨在作为一个集成开发团队协同工作。在中央 **Maestro** 模式的协调下，该系统通过将任务委派给在规划、设计、前端/后端开发、数据库管理、DevOps、测试和文档等特定领域拥有深厚专业知识的模式来管理整个软件开发生命周期。
 
 ---
 
-## Key Concepts
+## 核心概念
 
-- **Central Orchestration**: The Maestro mode analyzes user requests, decomposes tasks, and delegates them to the most appropriate specialized mode.
-- **Specialized Modes**: A collection of over 30 modes, each an expert in a narrow field (e.g., Visionary for architecture, ReactMaster for React development, SqlMaster for SQL databases).
-- **Structured Workflow**: Employs defined protocols for task delegation, context management, progress tracking, quality assurance, and inter-mode collaboration.
-- **Interaction Modes**: Offers different interaction styles (e.g., `YOLO MVP`, `Follow Production`) to control the autonomy and thoroughness of the specialized modes.
-- **Extensible System**: Designed to be extended with new specialized modes as needed.
-- **Prerequisites**: Relies on the [Maestro Mode Repository](https://github.com/shariqriazz/maestro) and potentially the [Vertex AI MCP Server](https://github.com/shariqriazz/vertex-ai-mcp-server) for full functionality of certain modes like the Researcher.
+- **中央协调**：Maestro 模式分析用户请求，分解任务，并将其委派给最合适的专业模式。
+- **专业模式**：超过 30 种模式的集合，每种模式都是一个狭窄领域的专家（例如，用于架构的 Visionary、用于 React 开发的 ReactMaster、用于 SQL 数据库的 SqlMaster）。
+- **结构化工作流**：采用已定义的协议进行任务委派、上下文管理、进度跟踪、质量保证和模式间协作。
+- **交互模式**：提供不同的交互风格（例如，`YOLO MVP`、`Follow Production`）来控制专业模式的自主性和彻底性。
+- **可扩展系统**：设计为可根据需要使用新的专业模式进行扩展。
+- **先决条件**：依赖 [Maestro 模式存储库](https://github.com/shariqriazz/maestro)，并且某些模式（如 Researcher）的全部功能可能需要 [Vertex AI MCP 服务器](https://github.com/shariqriazz/vertex-ai-mcp-server)。
 
-This system aims to enhance development consistency, quality, and coverage by leveraging a team of virtual specialists.
+该系统旨在通过利用虚拟专家团队来提高开发的一致性、质量和覆盖范围。

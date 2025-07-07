@@ -2,42 +2,42 @@
 sidebar_label: AWS Bedrock
 ---
 
-# Using AWS Bedrock With Roo Code
+# 通过 Roo Code 使用 AWS Bedrock
 
-Roo Code supports accessing models through Amazon Bedrock, a fully managed service that makes a selection of high-performing foundation models (FMs) from leading AI companies available via a single API.
+Roo Code 支持通过 Amazon Bedrock 访问模型。Amazon Bedrock 是一项完全托管的服务，它通过单一 API 提供来自领先人工智能公司的一系列高性能基础模型 (FM)。
 
-**Website:** [https://aws.amazon.com/bedrock/](https://aws.amazon.com/bedrock/)
+**网站：** [https://aws.amazon.com/bedrock/](https://aws.amazon.com/bedrock/)
 
 ---
 
-## Prerequisites
+## 先决条件
 
-*   **AWS Account:** You need an active AWS account.
-*   **Bedrock Access:** You must request and be granted access to Amazon Bedrock.  See the [AWS Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html) for details on requesting access.
-*   **Model Access:** Within Bedrock, you need to request access to the specific models you want to use (e.g., Anthropic Claude).
-*   **Install AWS CLI:** Use AWS CLI to configure your account for authentication
+*   **AWS 账户：** 您需要一个有效的 AWS 账户。
+*   **Bedrock 访问权限：** 您必须请求并获得 Amazon Bedrock 的访问权限。有关请求访问权限的详细信息，请参阅 [AWS Bedrock 文档](https://docs.aws.amazon.com/bedrock/latest/userguide/getting-started.html)。
+*   **模型访问权限：** 在 Bedrock 中，您需要为您想使用的特定模型（例如 Anthropic Claude）请求访问权限。
+*   **安装 AWS CLI：** 使用 AWS CLI 配置您的账户以进行身份验证。
     ```bash
      aws configure
     ```
 
 ---
 
-## Getting Credentials
+## 获取凭证
 
-You have two main options for configuring AWS credentials:
+您有两种主要方式来配置 AWS 凭证：
 
-1.  **AWS Access Keys (Recommended for Development):**
-    *   Create an IAM user with the necessary permissions (at least `bedrock:InvokeModel`).
-    *   Generate an access key ID and secret access key for that user.
-    *   *(Optional)* Create a session token if required by your IAM configuration.
-2.  **AWS Profile:**
-    *   Configure an AWS profile using the AWS CLI or by manually editing your AWS credentials file.  See the [AWS CLI documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) for details.
+1.  **AWS 访问密钥（推荐用于开发）：**
+    *   创建一个具有必要权限（至少 `bedrock:InvokeModel`）的 IAM 用户。
+    *   为该用户生成一个访问密钥 ID 和秘密访问密钥。
+    *   *（可选）* 如果您的 IAM 配置要求，请创建一个会话令牌。
+2.  **AWS 配置文件：**
+    *   使用 AWS CLI 或通过手动编辑您的 AWS 凭证文件来配置 AWS 配置文件。有关详细信息，请参阅 [AWS CLI 文档](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html)。
 
 ---
 
-## Supported Models
+## 支持的模型
 
-Roo Code supports the following models through Bedrock (based on source code):
+根据源代码，Roo Code 通过 Bedrock 支持以下模型：
 
 *   **Amazon:**
     *   `amazon.nova-pro-v1:0`
@@ -76,46 +76,46 @@ Roo Code supports the following models through Bedrock (based on source code):
     *   `meta.llama3-70b-instruct-v1:0`
     *   `meta.llama3-8b-instruct-v1:0`
 
-Refer to the [Amazon Bedrock documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html) for the most up-to-date list of available models and their IDs. Make sure to use the *model ID* when configuring Roo Code, not the model name.
+请参阅 [Amazon Bedrock 文档](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)以获取最新的可用模型及其 ID 列表。在配置 Roo Code 时，请确保使用*模型 ID*，而不是模型名称。
 
 ---
 
-## Configuration in Roo Code
+## 在 Roo Code 中配置
 
-1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
-2.  **Select Provider:** Choose "Bedrock" from the "API Provider" dropdown.
-3.  **Select Authentication Method:**
-    *   **AWS Credentials:**
-        *   Enter your "AWS Access Key" and "AWS Secret Key."
-        *   (Optional) Enter your "AWS Session Token" if you're using temporary credentials.
-    *   **AWS Profile:**
-        *   Enter your "AWS Profile" name (e.g., "default").
-4.  **Select Region:** Choose the AWS region where your Bedrock service is available (e.g., "us-east-1").
-5.  **(Optional) Cross-Region Inference:** Check "Use cross-region inference" if you want to access models in a region different from your configured AWS region.
-6.  **(Optional) VPC Endpoint:** For enterprise environments:
-    *   Check "Use VPC Endpoint" to route all Bedrock API calls through your VPC endpoint
-    *   Enter your VPC endpoint URL in the text field that appears
-    *   This ensures all LLM transactions remain within your corporate network
-7.  **Select Model:** Choose your desired model from the "Model" dropdown.
+1.  **打开 Roo Code 设置：** 在 Roo Code 面板中点击齿轮图标 (<Codicon name="gear" />)。
+2.  **选择提供商：** 从“API 提供商”下拉菜单中选择“Bedrock”。
+3.  **选择身份验证方法：**
+    *   **AWS 凭证：**
+        *   输入您的“AWS 访问密钥”和“AWS 秘密密钥”。
+        *   （可选）如果您使用临时凭证，请输入您的“AWS 会话令牌”。
+    *   **AWS 配置文件：**
+        *   输入您的“AWS 配置文件”名称（例如，“default”）。
+4.  **选择区域：** 选择您的 Bedrock 服务所在的 AWS 区域（例如，“us-east-1”）。
+5.  **（可选）跨区域推理：** 如果您想访问与您配置的 AWS 区域不同的区域中的模型，请勾选“使用跨区域推理”。
+6.  **（可选）VPC 端点：** 对于企业环境：
+    *   勾选“使用 VPC 端点”以通过您的 VPC 端点路由所有 Bedrock API 调用。
+    *   在出现的文本字段中输入您的 VPC 端点 URL。
+    *   这可确保所有 LLM 事务都保留在您的公司网络内。
+7.  **选择模型：** 从“模型”下拉菜单中选择您想要的模型。
 
 ---
 ---
 
-## Reasoning Budget for Claude Models
+## Claude 模型的推理预算
 
-Roo Code supports using the reasoning budget (extended thinking) for Anthropic's Claude models on Bedrock. This allows the model to "think" more before responding, which can be useful for complex tasks.
+Roo Code 支持在 Bedrock 上为 Anthropic 的 Claude 模型使用推理预算（扩展思考）。这允许模型在响应之前进行更多“思考”，这对于复杂任务非常有用。
 
-To enable the reasoning budget:
+要启用推理预算：
 
-1.  **Select a supported Claude model** (e.g., `anthropic.claude-3-sonnet-20240229-v1:0`).
-2.  **Enable Reasoning Mode** in the model settings.
-3.  **Adjust the thinking budget** to control how much the model should "think".
+1.  **选择一个支持的 Claude 模型**（例如，`anthropic.claude-3-sonnet-20240229-v1:0`）。
+2.  在模型设置中**启用推理模式**。
+3.  **调整思考预算**以控制模型应该“思考”多少。
 
-This feature is only available for supported Claude models.
+此功能仅适用于支持的 Claude 模型。
 
-## Tips and Notes
+## 提示和说明
 
-*   **Permissions:**  Ensure your IAM user or role has the necessary permissions to invoke Bedrock models.  The `bedrock:InvokeModel` permission is required.
-*   **Pricing:**  Refer to the [Amazon Bedrock pricing](https://aws.amazon.com/bedrock/pricing/) page for details on model costs.
-*   **Cross-Region Inference:**  Using cross-region inference may result in higher latency.
-*   **VPC Endpoints:**  When using VPC endpoints, ensure your endpoint is properly configured to handle Bedrock API calls. This feature is particularly useful for organizations with strict security requirements that mandate keeping all API traffic within their private network.
+*   **权限：** 确保您的 IAM 用户或角色具有调用 Bedrock 模型所需的权限。需要 `bedrock:InvokeModel` 权限。
+*   **定价：** 有关模型成本的详细信息，请参阅 [Amazon Bedrock 定价](https://aws.amazon.com/bedrock/pricing/)页面。
+*   **跨区域推理：** 使用跨区域推理可能会导致更高的延迟。
+*   **VPC 端点：** 使用 VPC 端点时，请确保您的端点已正确配置以处理 Bedrock API 调用。此功能对于有严格安全要求、规定所有 API 流量必须保留在其私有网络内的组织特别有用。

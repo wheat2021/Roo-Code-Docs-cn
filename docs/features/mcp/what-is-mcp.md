@@ -1,57 +1,57 @@
 ---
-title: What is MCP?
-sidebar_label: What is MCP?
+title: 什么是 MCP？
+sidebar_label: 什么是 MCP？
 ---
 
-# What is MCP?
+# 什么是 MCP？
 
-MCP (Model Context Protocol) is a standardized communication protocol for LLM systems to interact with external tools and services. It functions as a universal adapter between AI assistants and various data sources or applications.
-
----
-
-## How It Works
-
-MCP uses a client-server architecture:
-
-1. The AI assistant (client) connects to MCP servers
-2. Each server provides specific capabilities (file access, database queries, API integrations)
-3. The AI uses these capabilities through a standardized interface
-4. Communication occurs via JSON-RPC 2.0 messages
-
-Think of MCP as similar to a USB-C port in the sense that any compatible LLM can connect to any MCP server to access its functionality. This standardization eliminates the need to build custom integrations for each tool and service.
-
-For example, an AI using MCP can perform tasks like "search our company database and generate a report" without requiring specialized code for each database system.
+MCP（模型上下文协议）是一种标准化通信协议，用于 LLM 系统与外部工具和服务进行交互。它充当了 AI 助手与各种数据源或应用程序之间的通用适配器。
 
 ---
 
-## Common Questions
+## 工作原理
 
-- **Is MCP a cloud service?** MCP servers can run locally on your computer or remotely as cloud services, depending on the use case and security requirements.
+MCP 使用客户端-服务器架构：
 
-- **Does MCP replace other integration methods?** No. MCP complements existing tools like API plugins and retrieval-augmented generation. It provides a standardized protocol for tool interaction but doesn't replace specialized integration approaches.
+1.  AI 助手（客户端）连接到 MCP 服务器
+2.  每个服务器提供特定的功能（文件访问、数据库查询、API 集成）
+3.  AI 通过标准化的接口使用这些功能
+4.  通信通过 JSON-RPC 2.0 消息进行
 
-- **How is security handled?** Users control which MCP servers they connect to and what permissions those servers have. As with any tool that accesses data or services, use trusted sources and configure appropriate access controls.
+可以将 MCP 看作类似于 USB-C 端口，任何兼容的 LLM 都可以连接到任何 MCP 服务器以访问其功能。这种标准化消除了为每个工具和服务构建自定义集成的需要。
 
----
-
-## MCP in Roo Code
-
-Roo Code implements the Model Context Protocol to:
-
-- Connect to both local and remote MCP servers
-- Provide a consistent interface for accessing tools
-- Extend functionality without core modifications
-- Enable specialized capabilities on demand
-
-MCP provides a standardized way for AI systems to interact with external tools and services, making complex integrations more accessible and consistent.
+例如，使用 MCP 的 AI 可以执行诸如“搜索我们公司的数据库并生成报告”之类的任务，而无需为每个数据库系统编写专门的代码。
 
 ---
 
-## Learn More About MCP
+## 常见问题
 
-Ready to dig deeper? Check out these guides:
+- **MCP 是云服务吗？** MCP 服务器可以根据使用场景和安全要求，在您的计算机上本地运行，也可以作为云服务远程运行。
 
-- [MCP Overview](/features/mcp/overview) - A quick glance at the MCP documentation structure
-- [Using MCP in Roo Code](/features/mcp/using-mcp-in-roo) - Get started with MCP in Roo, including creating simple servers
-- [MCP vs API](/features/mcp/mcp-vs-api) - Technical advantages compared to traditional APIs
-- [STDIO & Streamable HTTP & SSE Transports](/features/mcp/server-transports) - Local vs. hosted deployment models
+- **MCP 是否取代了其他集成方法？** 不。MCP 是对现有工具（如 API 插件和检索增强生成）的补充。它为工具交互提供了一个标准化的协议，但并不会取代专门的集成方法。
+
+- **安全性如何处理？** 用户可以控制他们连接到哪些 MCP 服务器以及这些服务器拥有哪些权限。与任何访问数据或服务的工具一样，请使用受信任的来源并配置适当的访问控制。
+
+---
+
+## Roo Code 中的 MCP
+
+Roo Code 实现了模型上下文协议以：
+
+- 连接到本地和远程 MCP 服务器
+- 提供一致的工具访问接口
+- 无需核心修改即可扩展功能
+- 按需启用专门的功能
+
+MCP 为 AI 系统提供了一种与外部工具和服务交互的标准化方式，使复杂的集成变得更加易于访问和一致。
+
+---
+
+## 了解更多关于 MCP
+
+准备好深入了解了吗？请查看以下指南：
+
+- [MCP 概述](/features/mcp/overview) - 快速浏览 MCP 文档结构
+- [在 Roo Code 中使用 MCP](/features/mcp/using-mcp-in-roo) - 开始在 Roo 中使用 MCP，包括创建简单的服务器
+- [MCP 与 API 的对比](/features/mcp/mcp-vs-api) - 与传统 API 相比的技术优势
+- [STDIO & 可流式 HTTP & SSE 传输](/features/mcp/server-transports) - 本地与托管部署模型

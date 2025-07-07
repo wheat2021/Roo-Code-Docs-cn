@@ -2,36 +2,36 @@
 sidebar_label: Groq
 ---
 
-# Using Groq With Roo Code
+# 通过 Roo Code 使用 Groq
 
-Groq specializes in providing very high-speed inference for large language models, utilizing their custom-built Language Processing Units (LPUs). This can result in significantly faster response times for supported models.
+Groq 专注于为大型语言模型提供极高速的推理服务，这得益于其自研的语言处理单元（LPU）。对于支持的模型，这可以显著缩短响应时间。
 
-**Website:** [https://groq.com/](https://groq.com/)
-
----
-
-## Getting an API Key
-
-To use Groq with Roo Code, you'll need an API key from the [GroqCloud Console](https://console.groq.com/). After signing up or logging in, navigate to the API Keys section of your dashboard to create and copy your key.
+**网站：** [https://groq.com/](https://groq.com/)
 
 ---
 
-## Supported Models
+## 获取 API 密钥
 
-Roo Code will attempt to fetch the list of available models from the Groq API. Common models available via Groq include:
+要通过 Roo Code 使用 Groq，您需要从 [GroqCloud 控制台](https://console.groq.com/) 获取一个 API 密钥。注册或登录后，请转到仪表盘的 API 密钥部分来创建并复制您的密钥。
+
+---
+
+## 支持的模型
+
+Roo Code 会尝试从 Groq API 获取可用模型列表。通过 Groq 提供的常见模型包括：
 
 *   `llama3-8b-8192`
 *   `llama3-70b-8192`
 *   `mixtral-8x7b-32768`
 *   `gemma-7b-it`
 
-Refer to the [Groq Documentation](https://console.groq.com/docs/models) for the most up-to-date list of supported models and their capabilities.
+有关支持的模型及其功能的最新列表，请参阅 [Groq 文档](https://console.groq.com/docs/models)。
 
 ---
 
-## Configuration in Roo Code
+## 在 Roo Code 中配置
 
-1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
-2.  **Select Provider:** Choose "Groq" from the "API Provider" dropdown.
-3.  **Enter API Key:** Paste your Groq API key into the "Groq API Key" field.
-4.  **Select Model:** Choose your desired model from the "Model" dropdown.
+1.  **打开 Roo Code 设置：** 在 Roo Code 面板中点击齿轮图标 (<Codicon name="gear" />)。
+2.  **选择提供商：** 从“API 提供商”下拉菜单中选择“Groq”。
+3.  **输入 API 密钥：** 将您的 Groq API 密钥粘贴到“Groq API 密钥”字段中。
+4.  **选择模型：** 从“模型”下拉菜单中选择您想要的模型。

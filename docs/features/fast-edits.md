@@ -1,42 +1,43 @@
-# Diff/Fast Edits
+# 差异/快速编辑
 
-:::info Default Setting
-Fast Edits (using the "Enable editing through diffs" setting) is enabled by default in Roo Code. You typically don't need to change these settings unless you encounter specific issues or want to experiment with different diff strategies.
+:::info 默认设置
+默认情况下，Roo Code 已启用快速编辑（通过“通过差异启用编辑”设置）。通常，您无需更改这些设置，除非遇到特定问题或希望尝试不同的差异策略。
 :::
 
-Roo Code offers an advanced setting to change how it edits files, using diffs (differences) instead of rewriting entire files. Enabling this feature provides significant benefits.
+Roo Code 提供了一个高级设置，用于更改其编辑文件的方式，即使用差异（diffs）而非重写整个文件。启用此功能将带来显著的好处。
 
-:::note Per-Provider Setting
-Diff editing configuration is set per [API Configuration Profile](/features/api-configuration-profiles), allowing you to customize editing behavior for different providers and models.
-:::
-
----
-
-## Enable Editing Through Diffs
-
-Open the Roo Code pane settings by clicking the gear icon <Codicon name="gear" />. The `Providers` section will be visible. Select the specific [API Configuration Profile](/features/api-configuration-profiles) you want to configure.
-
-When **Enable editing through diffs** is checked:
-
-    <img src="/img/fast-edits/fast-edits-2.png" alt="Roo Code settings showing Enable editing through diffs" width="500" />
-1.  **Faster File Editing**: Roo modifies files more quickly by applying only the necessary changes.
-2.  **Prevents Truncated Writes**: The system automatically detects and rejects attempts by the AI to write incomplete file content, which can happen with large files or complex instructions. This helps prevent corrupted files.
-
-:::note Disabling Fast Edits
-If you uncheck **Enable editing through diffs**, Roo will revert to writing the entire file content for every edit using the [`write_to_file`](/advanced-usage/available-tools/write-to-file) tool, instead of applying targeted changes with [`apply_diff`](/advanced-usage/available-tools/apply-diff). This full-write approach is generally slower for modifying existing files and leads to higher token usage.
+:::note 按提供商设置
+差异编辑配置是按 [API 配置 Profile](/features/api-configuration-profiles) 设置的，允许您为不同的提供商和模型自定义编辑行为。
 :::
 
 ---
 
-## Match Precision
+## 通过差异启用编辑
 
-This slider controls how closely the code sections identified by the AI must match the actual code in your file before a change is applied.
+点击齿轮图标 <Codicon name="gear" /> 打开 Roo Code 面板设置。`提供商`部分将可见。选择您想要配置的特定 [API 配置 Profile](/features/api-configuration-profiles)。
 
-    <img src="/img/fast-edits/fast-edits-4.png" alt="Roo Code settings showing Enable editing through diffs checkbox and Match precision slider" width="500" />
+当勾选 **通过差异启用编辑** 时：
 
-*   **100% (Default)**: Requires an exact match. This is the safest option, minimizing the risk of incorrect changes.
-*   **Lower Values (80%-99%)**: Allows for "fuzzy" matching. Roo can apply changes even if the code section has minor differences from what the AI expected. This can be useful if the file has been slightly modified, but **increases the risk** of applying changes in the wrong place.
+    <img src="/img/fast-edits/fast-edits-2.png" alt="Roo Code 设置中显示“通过差异启用编辑”" width="500" />
 
-**Use values below 100% with extreme caution.** Lower precision might be necessary occasionally, but always review the proposed changes carefully.
+1.  **更快的文件编辑**：Roo 通过仅应用必要的更改来更快地修改文件。
+2.  **防止截断写入**：系统会自动检测并拒绝 AI 写入不完整文件内容的尝试，这种情况可能在处理大文件或复杂指令时发生。这有助于防止文件损坏。
 
-Internally, this setting adjusts a `fuzzyMatchThreshold` used with algorithms like Levenshtein distance to compare code similarity.
+:::note 禁用快速编辑
+如果您取消勾选 **通过差异启用编辑**，Roo 将恢复为每次编辑都使用 [`write_to_file`](/advanced-usage/available-tools/write-to-file) 工具写入整个文件内容，而不是使用 [`apply_diff`](/advanced-usage/available-tools/apply-diff) 应用有针对性的更改。对于修改现有文件，这种完全写入的方法通常较慢，并会导致更高的令牌使用量。
+:::
+
+---
+
+## 匹配精度
+
+此滑块控制 AI 识别的代码片段与文件中实际代码的匹配程度，然后才能应用更改。
+
+    <img src="/img/fast-edits/fast-edits-4.png" alt="Roo Code 设置中显示“通过差异启用编辑”复选框和“匹配精度”滑块" width="500" />
+
+*   **100%（默认）**：要求完全匹配。这是最安全的选择，可最大程度地降低不正确更改的风险。
+*   **较低值（80%-99%）**：允许“模糊”匹配。即使代码片段与 AI 预期的有微小差异，Roo 也可以应用更改。如果文件已被轻微修改，这可能很有用，但会 **增加** 在错误位置应用更改的 **风险**。
+
+**请极其谨慎地使用低于 100% 的值。** 较低的精度可能偶尔是必要的，但请务必仔细审查建议的更改。
+
+在内部，此设置会调整一个 `fuzzyMatchThreshold`，该阈值与 Levenshtein 距离等算法一起使用，以比较代码的相似性。

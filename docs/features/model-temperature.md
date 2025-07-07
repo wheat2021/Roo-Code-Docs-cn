@@ -1,111 +1,111 @@
 import KangarooIcon from '@site/src/components/KangarooIcon';
 
-# Model Temperature
+# 模型温度
 
-Temperature controls the randomness of AI model outputs. Adjusting this setting optimizes results for different tasks - from precise code generation to creative brainstorming. Temperature is one of the most powerful parameters for controlling AI behavior. A well-tuned temperature setting can dramatically improve the quality and appropriateness of responses for specific tasks.
+温度控制着 AI 模型输出的随机性。调整此设置可以针对不同任务优化结果——从精确的代码生成到创造性的头脑风暴。温度是控制 AI 行为最强大的参数之一。一个精心调整的温度设置可以显著提高特定任务响应的质量和适宜性。
 
-<img src="/img/model-temperature/model-temperature.gif" alt="Animation showing temperature slider adjustment" width="100%" />
+<img src="/img/model-temperature/model-temperature.gif" alt="显示温度滑块调整的动画" width="100%" />
 
 ---
 
-## What is Temperature?
+## 什么是温度？
 
-Temperature is a setting (usually between 0.0 and 2.0) that controls how random or predictable the AI's output is. Finding the right balance is key: lower values make the output more focused and consistent, while higher values encourage more creativity and variation. For many coding tasks, a moderate temperature (around 0.3 to 0.7) often works well, but the best setting depends on what you're trying to achieve.
+温度是一个设置（通常在 0.0 到 2.0 之间），用于控制 AI 输出的随机性或可预测性。找到合适的平衡点是关键：较低的值使输出更专注和一致，而较高的值则鼓励更多的创造力和变化。对于许多编码任务，适中的温度（约 0.3 到 0.7）通常效果很好，但最佳设置取决于您想要实现的目标。
 
-:::info Temperature and Code: Common Misconceptions
-Temperature controls output randomness, not code quality or accuracy directly. Key points:
+:::info 温度与代码：常见误解
+温度控制输出的随机性，而不是直接控制代码质量或准确性。关键点：
 
-*   **Low Temperature (near 0.0):** Produces predictable, consistent code. Good for simple tasks, but can be repetitive and lack creativity. It doesn't guarantee *better* code.
-*   **High Temperature:** Increases randomness, potentially leading to creative solutions but also more errors or nonsensical code. It doesn't guarantee *higher-quality* code.
-*   **Accuracy:** Code accuracy depends on the model's training and prompt clarity, not temperature.
-*   **Temperature 0.0:** Useful for consistency, but limits exploration needed for complex problems.
+*   **低温（接近 0.0）：** 生成可预测、一致的代码。适用于简单任务，但可能重复且缺乏创造性。它不保证*更好*的代码。
+*   **高温：** 增加随机性，可能带来创造性的解决方案，但也可能导致更多错误或无意义的代码。它不保证*更高质量*的代码。
+*   **准确性：** 代码的准确性取决于模型的训练和提示的清晰度，而不是温度。
+*   **温度 0.0：** 有助于保持一致性，但限制了解决复杂问题所需的探索。
 :::
 
 ---
 
-## Default Values in Roo Code
+## Roo Code 中的默认值
 
-Roo Code uses a default temperature of 0.0 for most models, optimizing for maximum determinism and precision in code generation. This applies to OpenAI models, Anthropic models (non-thinking variants), LM Studio models, and most other providers.
+Roo Code 对大多数模型使用 0.0 的默认温度，以优化代码生成中的最大确定性和精度。这适用于 OpenAI 模型、Anthropic 模型（非思考型变体）、LM Studio 模型以及大多数其他提供商。
 
-Some models use higher default temperatures - DeepSeek R1 models and certain reasoning-focused models default to 0.6, providing a balance between determinism and creative exploration.
+一些模型使用更高的默认温度——DeepSeek R1 模型和某些以推理为重点的模型默认为 0.6，在确定性和创造性探索之间提供了平衡。
 
-Models with thinking capabilities (where the AI shows its reasoning process) require a fixed temperature of 1.0 which cannot be changed, as this setting ensures optimal performance of the thinking mechanism. This applies to any model with the ":thinking" flag enabled.
+具有思考能力（AI 显示其推理过程）的模型需要固定的 1.0 温度且无法更改，因为此设置可确保思考机制的最佳性能。这适用于任何启用了“:thinking”标志的模型。
 
-Some specialized models don't support temperature adjustments at all, in which case Roo Code respects these limitations automatically.
-
----
-
-## When to Adjust Temperature
-
-Here are some examples of temperature settings that might work well for different tasks:
-
-*   **Code Mode (0.0-0.3):** For writing precise, correct code with consistent, deterministic results
-*   **Architect Mode (0.4-0.7):** For brainstorming architecture or design solutions with balanced creativity and structure
-*   **Ask Mode (0.7-1.0):** For explanations or open-ended questions requiring diverse and insightful responses
-*   **Debug Mode (0.0-0.3):** For troubleshooting bugs with consistent precision
-
-These are starting points – it's important to [experiment with different settings](#experimentation) to find what works best for your specific needs and preferences.
+一些专用模型根本不支持温度调整，在这种情况下，Roo Code 会自动尊重这些限制。
 
 ---
 
-## How to Adjust Temperature
+## 何时调整温度
 
-1.  **Open the Roo Code Panel:** Click the Roo Code icon (<KangarooIcon />) in the VS Code Activity Bar
-2.  **Open Settings:** Click the <Codicon name="gear" /> icon in the top right corner
-3.  **Find Temperature Control:** Navigate to the Providers section
-4.  **Enable Custom Temperature:** Check the "Use custom temperature" box
-5.  **Set Your Value:** Adjust the slider to your preferred value
+以下是一些可能适用于不同任务的温度设置示例：
 
-    <img src="/img/model-temperature/model-temperature.png" alt="Temperature setting in Roo Code settings panel" width="550" />
-    *Temperature slider in Roo Code settings panel*
+*   **代码模式 (0.0-0.3):** 用于编写精确、正确的代码，并获得一致、确定的结果
+*   **架构师模式 (0.4-0.7):** 用于头脑风暴架构或设计解决方案，兼顾创造力和结构
+*   **提问模式 (0.7-1.0):** 用于需要多样化和富有洞察力的响应的解释或开放式问题
+*   **调试模式 (0.0-0.3):** 用于以一致的精度排查错误
 
----
-
-## Using API Configuration Profiles for Temperature
-
-Create multiple [API configuration profiles](/features/api-configuration-profiles) with different temperature settings:
-
-**How to set up task-specific temperature profiles:**
-
-1. Create specialized profiles like "Code - Low Temp" (0.1) and "Ask - High Temp" (0.8)
-2. Configure each profile with appropriate temperature settings
-3. Switch between profiles using the dropdown in settings or chat interface
-4. Set different profiles as defaults for each mode for automatic switching when changing modes
-
-This approach optimizes model behavior for specific tasks without manual adjustments.
+这些是起点——重要的是[尝试不同的设置](#experimentation)，以找到最适合您特定需求和偏好的设置。
 
 ---
 
-## Technical Implementation
+## 如何调整温度
 
-Roo Code implements temperature handling with these considerations:
+1.  **打开 Roo Code 面板：** 单击 VS Code 活动栏中的 Roo Code 图标 (<KangarooIcon />)
+2.  **打开设置：** 单击右上角的 <Codicon name="gear" /> 图标
+3.  **找到温度控制：** 导航到“提供商”部分
+4.  **启用自定义温度：** 选中“使用自定义温度”复选框
+5.  **设置您的值：** 将滑块调整到您偏好的值
 
-*   User-defined settings take priority over defaults
-*   Provider-specific behaviors are respected
-*   Model-specific limitations are enforced:
-    *   Thinking-enabled models require a fixed temperature of 1.0
-    *   Some models don't support temperature adjustments
-
----
-
-## Experimentation
-
-Experimenting with different temperature settings is the most effective way to discover what works best for your specific needs:
-
-### Effective Temperature Testing
-
-1. **Start with defaults** - Begin with Roo Code's preset values (0.0 for most tasks) as your baseline
-2. **Make incremental adjustments** - Change values in small steps (±0.1) to observe subtle differences
-3. **Test consistently** - Use the same prompt across different temperature settings for valid comparisons
-4. **Document results** - Note which values produce the best outcomes for specific types of tasks
-5. **Create profiles** - Save effective settings as [API configuration profiles](/features/api-configuration-profiles) for quick access
-
-Remember that different models may respond differently to the same temperature values, and thinking-enabled models always use a fixed temperature of 1.0 regardless of your settings.
+    <img src="/img/model-temperature/model-temperature.png" alt="Roo Code 设置面板中的温度设置" width="550" />
+    *Roo Code 设置面板中的温度滑块*
 
 ---
 
-## Related Features
+## 使用 API 配置档案进行温度设置
 
-- Works with all [API providers](/providers/openai) supported by Roo Code
-- Complements [custom instructions](/features/custom-instructions) for fine-tuning responses
-- Works alongside [custom modes](/features/custom-modes) you create
+创建多个具有不同温度设置的 [API 配置档案](/features/api-configuration-profiles)：
+
+**如何设置特定于任务的温度档案：**
+
+1. 创建专门的档案，如“代码 - 低温”(0.1) 和“提问 - 高温”(0.8)
+2. 为每个档案配置适当的温度设置
+3. 使用设置或聊天界面中的下拉菜单在档案之间切换
+4. 为每种模式设置不同的默认档案，以便在更改模式时自动切换
+
+这种方法可以针对特定任务优化模型行为，而无需手动调整。
+
+---
+
+## 技术实现
+
+Roo Code 在实现温度处理时考虑了以下因素：
+
+*   用户定义的设置优先于默认值
+*   尊重特定于提供商的行为
+*   强制执行特定于模型的限制：
+    *   启用思考的模型需要固定的 1.0 温度
+    *   某些模型不支持温度调整
+
+---
+
+## 实验
+
+尝试不同的温度设置是发现最适合您特定需求的有效方法：
+
+### 有效的温度测试
+
+1. **从默认值开始** - 以 Roo Code 的预设值（大多数任务为 0.0）作为基线
+2. **进行增量调整** - 以小步长 (±0.1) 更改值，以观察细微差异
+3. **保持测试一致性** - 在不同温度设置下使用相同的提示进行有效比较
+4. **记录结果** - 记下哪些值为特定类型的任务产生最佳结果
+5. **创建档案** - 将有效设置保存为 [API 配置档案](/features/api-configuration-profiles) 以便快速访问
+
+请记住，不同的模型对相同的温度值可能会有不同的反应，并且启用思考的模型始终使用固定的 1.0 温度，无论您的设置如何。
+
+---
+
+## 相关功能
+
+- 适用于 Roo Code 支持的所有 [API 提供商](/providers/openai)
+- 补充[自定义指令](/features/custom-instructions)以微调响应
+- 与您创建的[自定义模式](/features/custom-modes)协同工作

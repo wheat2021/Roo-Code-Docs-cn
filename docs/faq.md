@@ -1,64 +1,64 @@
 import KangarooIcon from '@site/src/components/KangarooIcon';
 
-# Frequently Asked Questions
+# 常见问题解答
 
-This page answers some common questions about Roo Code.
-
----
-
-## General
-
-### What is Roo Code?
-
-Roo Code is an AI-powered autonomous coding agent that lives in your editor.
-
-### How does Roo Code work?
-
-Roo Code uses large language models (LLMs) to understand your requests and translate them into actions.  It can:
-
-*   Read and write files in your project.
-*   Execute commands in your VS Code terminal.
-*   Perform web browsing (if enabled).
-*   Use external tools via the Model Context Protocol (MCP).
-
-You interact with Roo Code through a chat interface, where you provide instructions and review/approve its proposed actions.
-
-### What can Roo Code do?
-
-Roo Code can help with a variety of coding tasks, including:
-
-*   Generating code from natural language descriptions.
-*   Refactoring existing code.
-*   Fixing bugs.
-*   Writing documentation.
-*   Explaining code.
-*   Answering questions about your codebase.
-*   Automating repetitive tasks.
-*   Creating new files and projects.
-
-### Is Roo Code free to use?
-
-The Roo Code extension itself is free and open-source. However, Roo Code relies on external API providers (like [Anthropic](providers/anthropic), [OpenAI](providers/openai), [OpenRouter](providers/openrouter), [Requesty](providers/requesty), etc.) for its AI capabilities.  These providers typically charge for API usage based on the number of tokens processed.  You will need to create an account and obtain an API key from your chosen provider.  See [Setting Up Your First AI Provider](getting-started/connecting-api-provider) for details.
-
-### What are the risks of using Roo Code?
-
-Roo Code is a powerful tool, and it's important to use it responsibly.  Here are some things to keep in mind:
-
-*   **Roo Code can make mistakes.**  Always review Roo Code's proposed changes carefully before approving them.
-*   **Roo Code can execute commands.**  Be very cautious about allowing Roo Code to run commands, especially if you're using auto-approval.
-*   **Roo Code can access the internet.** If you're using a provider that supports web browsing, be aware that Roo Code could potentially access sensitive information.
+本页面回答一些关于 Roo Code 的常见问题。
 
 ---
 
-## Setup & Installation
+## 常规问题
 
-### How do I install Roo Code?
+### 什么是 Roo Code？
 
-See the [Installation Guide](/getting-started/installing) for detailed instructions.
+Roo Code 是一款内嵌于您编辑器中的 AI 驱动的自主编码代理。
 
-### Which API providers are supported?
+### Roo Code 是如何工作的？
 
-Roo Code supports a wide range of API providers, including:
+Roo Code 使用大型语言模型 (LLM) 来理解您的请求并将其转化为行动。它可以：
+
+*   读写您项目中的文件。
+*   在您的 VS Code 终端中执行命令。
+*   进行网页浏览（如果启用）。
+*   通过模型上下文协议 (MCP) 使用外部工具。
+
+您通过一个聊天界面与 Roo Code 互动，在其中提供指令并审查/批准其建议的操作。
+
+### Roo Code 能做什么？
+
+Roo Code 可以帮助完成各种编码任务，包括：
+
+*   根据自然语言描述生成代码。
+*   重构现有代码。
+*   修复错误。
+*   编写文档。
+*   解释代码。
+*   回答关于您代码库的问题。
+*   自动化重复性任务。
+*   创建新文件和项目。
+
+### Roo Code 是免费的吗？
+
+Roo Code 扩展本身是免费且开源的。然而，Roo Code 依赖外部 API 提供商（如 [Anthropic](providers/anthropic)、[OpenAI](providers/openai)、[OpenRouter](providers/openrouter)、[Requesty](providers/requesty) 等）来实现其 AI 功能。这些提供商通常根据处理的令牌数量收取 API 使用费。您需要创建一个账户并从您选择的提供商那里获取 API 密钥。详情请参阅[设置您的第一个 AI 提供商](/getting-started/connecting-api-provider)。
+
+### 使用 Roo Code 有哪些风险？
+
+Roo Code 是一个强大的工具，负责任地使用它非常重要。以下是一些需要注意的事项：
+
+*   **Roo Code 可能会犯错。** 在批准 Roo Code 提出的更改之前，请务必仔细审查。
+*   **Roo Code 可以执行命令。** 在允许 Roo Code 运行命令时要非常谨慎，尤其是在使用自动批准功能时。
+*   **Roo Code 可以访问互联网。** 如果您使用的提供商支持网页浏览，请注意 Roo Code 可能会访问敏感信息。
+
+---
+
+## 设置与安装
+
+### 如何安装 Roo Code？
+
+请参阅[安装指南](/getting-started/installing)获取详细说明。
+
+### 支持哪些 API 提供商？
+
+Roo Code 支持多种 API 提供商，包括：
 *   [Anthropic (Claude)](/providers/anthropic)
 *   [OpenAI](/providers/openai)
 *   [OpenRouter](/providers/openrouter)
@@ -72,127 +72,127 @@ Roo Code supports a wide range of API providers, including:
 *   [Mistral](/providers/mistral)
 *   [Unbound](/providers/unbound)
 *   [Requesty](/providers/requesty)
-*   [VS Code Language Model API](/providers/vscode-lm)
+*   [VS Code 语言模型 API](/providers/vscode-lm)
 
-### How do I get an API key?
-Each API provider has its own process for obtaining an API key.  See the [Setting Up Your First AI Provider](/getting-started/connecting-api-provider) for links to the relevant documentation for each provider.
+### 如何获取 API 密钥？
+每个 API 提供商都有其自己获取 API 密钥的流程。请参阅[设置您的第一个 AI 提供商](/getting-started/connecting-api-provider)以获取每个提供商相关文档的链接。
 
-### Can I use Roo Code with local models?
-Yes, Roo Code supports running models locally using [Ollama](/providers/ollama) and [LM Studio](/providers/lmstudio).  See [Using Local Models](/advanced-usage/local-models) for instructions.
-
----
-
-## Usage
-
-### How do I start a new task?
-Open the Roo Code panel (<KangarooIcon />) and type your task in the chat box. Be clear and specific about what you want Roo Code to do. See [Typing Your Requests](/basic-usage/typing-your-requests) for best practices.
-
-### What are modes in Roo Code?
-[Modes](/basic-usage/using-modes) are different personas that Roo Code can adopt, each with a specific focus and set of capabilities. The built-in modes are:
-
-*   **Code:** For general-purpose coding tasks.
-*   **Architect:** For planning and technical leadership.
-*   **Ask:** For answering questions and providing information.
-*   **Debug:** For systematic problem diagnosis.
-You can also create [Custom Modes](/features/custom-modes).
-
-### How do I switch between modes?
-
-Use the dropdown menu in the chat input area to select a different mode, or use the `/` command to switch to a specific mode.
-
-### What are tools and how do I use them?
-[Tools](/basic-usage/how-tools-work) are how Roo Code interacts with your system.  Roo Code automatically selects and uses the appropriate tools to complete your tasks. You don't need to call tools directly. You will be prompted to approve or reject each tool use.
-
-### What are context mentions?
-[Context mentions](/basic-usage/context-mentions) are a way to provide Roo Code with specific information about your project, such as files, folders, or problems. Use the "@" symbol followed by the item you want to mention (e.g., `@/src/file.ts`, `@problems`).
-
-### Can Roo Code access the internet?
-
-Yes, if you are using a provider with a model that support web browsing. Be mindful of the security implications of allowing this.
-
-### Can Roo Code run commands in my terminal?
-
-Yes, Roo Code can execute commands in your VS Code terminal.  You will be prompted to approve each command before it's executed, unless you've enabled auto-approval for commands. Be extremely cautious about auto-approving commands. If you're experiencing issues with terminal commands, see the [Shell Integration Guide](/features/shell-integration) for troubleshooting.
-
-### How do I provide feedback to Roo Code?
-
-You can provide feedback by approving or rejecting Roo Code's proposed actions. You can provide additional feedback by using the feedback field.
-
-### Can I customize Roo Code's behavior?
-
-Yes, you can customize Roo Code in several ways:
-
-*   **Custom Instructions:** Provide general instructions that apply to all modes, or mode-specific instructions.
-*   **Custom Modes:** Create your own modes with tailored prompts and some tool permissions.
-*   **`.roorules` Files:** Create `.roorules` files in your project to provide additional guidelines.
-*   **Settings:** Adjust various settings, such as auto-approval, diff editing, and more.
-
-### Does Roo Code have any auto approval settings?
-Yes, Roo Code has a few settings that when enabled will automatically approve actions. Find out more [here](/features/auto-approving-actions).
+### 我可以使用本地模型运行 Roo Code 吗？
+是的，Roo Code 支持使用 [Ollama](/providers/ollama) 和 [LM Studio](/providers/lmstudio) 在本地运行模型。请参阅[使用本地模型](/advanced-usage/local-models)获取说明。
 
 ---
 
-## Advanced Features
+## 使用方法
 
-### Can I use Roo offline?
-Yes, if you use a [local model](/advanced-usage/local-models).
+### 如何开始一个新任务？
+打开 Roo Code 面板 (<KangarooIcon />) 并在聊天框中输入您的任务。请清晰具体地说明您希望 Roo Code 做什么。最佳实践请参阅[输入您的请求](/basic-usage/typing-your-requests)。
 
-### What is MCP (Model Context Protocol)?
-[MCP](/features/mcp/overview) is a protocol that allows Roo Code to communicate with external servers, extending its capabilities with custom tools and resources.
+### Roo Code 中的模式是什么？
+[模式](/basic-usage/using-modes)是 Roo Code 可以扮演的不同角色，每个角色都有特定的重点和能力集。内置的模式有：
 
-### Can I create my own MCP servers?
+*   **代码 (Code)：** 用于通用编码任务。
+*   **架构师 (Architect)：** 用于规划和技术领导。
+*   **提问 (Ask)：** 用于回答问题和提供信息。
+*   **调试 (Debug)：** 用于系统性问题诊断。
+您还可以创建[自定义模式](/features/custom-modes)。
 
-Yes, you can create your own MCP servers to add custom functionality to Roo Code. See the [MCP documentation](https://github.com/modelcontextprotocol) for details.
+### 如何在模式之间切换？
 
-### What is Codebase Indexing?
+使用聊天输入区的下拉菜单选择不同的模式，或使用 `/` 命令切换到特定模式。
 
-[Codebase Indexing](/features/experimental/codebase-indexing) is an experimental feature that creates a semantic search index of your project using AI embeddings. This enables Roo Code to better understand and navigate large codebases by finding relevant code based on meaning rather than just keywords.
+### 什么是工具？如何使用它们？
+[工具](/basic-usage/how-tools-work)是 Roo Code 与您的系统交互的方式。Roo Code 会自动选择并使用适当的工具来完成您的任务。您无需直接调用工具。系统会提示您批准或拒绝每次工具使用。
 
-### How much does Codebase Indexing cost?
+### 什么是上下文提及？
+[上下文提及](/basic-usage/context-mentions)是一种向 Roo Code 提供关于您项目的特定信息的方式，例如文件、文件夹或问题。使用“@”符号后跟您想提及的项目（例如，`@/src/file.ts`、`@problems`）。
 
-Codebase Indexing requires an OpenAI API key for generating embeddings and a Qdrant vector database for storage. Costs depend on your project size and the embedding model used. Initial indexing is the most expensive part; subsequent updates are incremental and much cheaper.
+### Roo Code 可以访问互联网吗？
+
+是的，如果您使用的提供商的模型支持网页浏览。请注意允许此操作的安全隐患。
+
+### Roo Code 可以在我的终端中运行命令吗？
+
+是的，Roo Code 可以在您的 VS Code 终端中执行命令。除非您为命令启用了自动批准，否则在执行每个命令之前都会提示您批准。在自动批准命令时要极其谨慎。如果您在终端命令方面遇到问题，请参阅[Shell 集成指南](/features/shell-integration)进行故障排除。
+
+### 如何向 Roo Code 提供反馈？
+
+您可以通过批准或拒绝 Roo Code 提出的操作来提供反馈。您可以使用反馈字段提供额外的反馈。
+
+### 我可以自定义 Roo Code 的行为吗？
+
+是的，您可以通过多种方式自定义 Roo Code：
+
+*   **自定义指令：** 提供适用于所有模式的通用指令，或特定于模式的指令。
+*   **自定义模式：** 创建具有量身定制的提示和一些工具权限的您自己的模式。
+*   **`.roorules` 文件：** 在您的项目中创建 `.roorules` 文件以提供额外的指导方针。
+*   **设置：** 调整各种设置，例如自动批准、差异编辑等。
+
+### Roo Code 有任何自动批准设置吗？
+是的，Roo Code 有一些设置，启用后会自动批准操作。在此处了解更多信息[此处](/features/auto-approving-actions)。
 
 ---
 
-## Troubleshooting
+## 高级功能
 
-### Roo Code isn't responding. What should I do?
+### 我可以离线使用 Roo 吗？
+是的，如果您使用[本地模型](/advanced-usage/local-models)。
 
-*   Make sure your API key is correct and hasn't expired.
-*   Check your internet connection.
-*   Check the status of your chosen API provider.
-*   Try restarting VS Code.
-*   If the problem persists, report the issue on [GitHub](https://github.com/RooCodeInc/Roo-Code/issues) or [Discord](https://discord.gg/roocode).
+### 什么是 MCP (模型上下文协议)？
+[MCP](/features/mcp/overview) 是一个允许 Roo Code 与外部服务器通信的协议，通过自定义工具和资源扩展其功能。
 
-### I'm seeing an error message. What does it mean?
+### 我可以创建自己的 MCP 服务器吗？
 
-The error message should provide some information about the problem. If you're unsure how to resolve it, seek help in [Discord](https://discord.gg/roocode).
+是的，您可以创建自己的 MCP 服务器以向 Roo Code 添加自定义功能。详情请参阅 [MCP 文档](https://github.com/modelcontextprotocol)。
 
-### Roo Code made changes I didn't want. How do I undo them?
+### 什么是代码库索引？
 
-Roo Code uses VS Code's built-in file editing capabilities.  You can use the standard "Undo" command (Ctrl/Cmd + Z) to revert changes. Also, if experimental checkpoints are enabled, Roo can revert changes made to a file.
+[代码库索引](/features/experimental/codebase-indexing)是一项实验性功能，它使用 AI 嵌入为您的项目创建一个语义搜索索引。这使得 Roo Code 能够通过基于含义而不仅仅是关键字查找相关代码，从而更好地理解和导航大型代码库。
 
-### Roo Code can't write to markdown files. What's wrong?
+### 代码库索引的成本是多少？
 
-If Roo Code fails to write to `.md` files with errors like "Failed to open diff editor" or "write_to_file tool failed", this is typically caused by VS Code extensions or settings that interfere with file editing:
+代码库索引需要一个 OpenAI API 密钥来生成嵌入，以及一个 Qdrant 向量数据库用于存储。成本取决于您的项目大小和使用的嵌入模型。初始索引是最昂贵的部分；后续更新是增量的，成本要低得多。
 
-**Common causes:**
-- Extensions with "format on save" functionality
-- VS Code settings that open markdown files in preview mode by default
-- The Markdown Preview extension or similar markdown processing extensions
+---
 
-**Solutions:**
-- Disable any extensions that automatically format files on save
-- Remove these settings from your VS Code `settings.json`:
+## 故障排除
+
+### Roo Code 没有响应。我该怎么办？
+
+*   确保您的 API 密钥正确且未过期。
+*   检查您的互联网连接。
+*   检查您选择的 API 提供商的状态。
+*   尝试重启 VS Code。
+*   如果问题仍然存在，请在 [GitHub](https://github.com/RooCodeInc/Roo-Code/issues) 或 [Discord](https://discord.gg/roocode) 上报告问题。
+
+### 我看到了一个错误消息。这是什么意思？
+
+错误消息应提供有关问题的一些信息。如果您不确定如何解决，请在 [Discord](https://discord.gg/roocode) 中寻求帮助。
+
+### Roo Code 做了我不想做的更改。如何撤销它们？
+
+Roo Code 使用 VS Code 的内置文件编辑功能。您可以使用标准的“撤销”命令 (Ctrl/Cmd + Z) 来恢复更改。此外，如果启用了实验性的检查点功能，Roo 可以恢复对文件所做的更改。
+
+### Roo Code 无法写入 markdown 文件。出了什么问题？
+
+如果 Roo Code 无法写入 `.md` 文件并出现“无法打开差异编辑器”或“write_to_file 工具失败”等错误，这通常是由干扰文件编辑的 VS Code 扩展或设置引起的：
+
+**常见原因：**
+- 具有“保存时格式化”功能的扩展
+- 默认以预览模式打开 markdown 文件的 VS Code 设置
+- Markdown 预览扩展或类似的 markdown 处理扩展
+
+**解决方案：**
+- 禁用任何在保存时自动格式化文件的扩展
+- 从您的 VS Code `settings.json` 中删除这些设置：
   ```json
   "markdown.preview.openMarkdownLinks": "inPreview",
   "workbench.editorAssociations": {
     "*.md": "vscode.markdown.preview.editor"
   }
   ```
-- Temporarily disable markdown-related extensions to test if they're causing the issue
-- Restart VS Code after making these changes
+- 暂时禁用与 markdown 相关的扩展，以测试它们是否是问题的原因
+- 做出这些更改后重启 VS Code
 
-### How do I report a bug or suggest a feature?
+### 如何报告错误或建议功能？
 
-Please report bugs or suggest features on the Roo Code [Issues page](https://github.com/RooCodeInc/Roo-Code/issues) and [Feature Requests page](https://github.com/RooCodeInc/Roo-Code/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop).
+请在 Roo Code 的 [问题页面](https://github.com/RooCodeInc/Roo-Code/issues) 和 [功能请求页面](https://github.com/RooCodeInc/Roo-Code/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop) 上报告错误或建议功能。

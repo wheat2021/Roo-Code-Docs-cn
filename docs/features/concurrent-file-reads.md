@@ -1,65 +1,65 @@
 ---
-sidebar_label: 'Multi-File Reads'
+sidebar_label: '多文件读取'
 ---
 
-# Concurrent File Reads (AKA Multi-File Reads)
+# 并发文件读取（又称多文件读取）
 
-The Concurrent File Reads feature allows Roo to read multiple files from your workspace in a single step. This significantly improves efficiency when working on tasks that require context from several files, as Roo can gather all the necessary information at once instead of reading files one by one.
+并发文件读取功能允许 Roo 在单一步骤中从您的工作区读取多个文件。当处理需要来自多个文件的上下文的任务时，这显著提高了效率，因为 Roo 可以一次性收集所有必要的信息，而不是逐个读取文件。
 
 
-### Key Features
-- Read up to 100 files in a single request.
-- Enabled by default for a faster, more streamlined workflow.
-- Configurable limit from 1 to 100 files (setting to 1 effectively disables concurrent reads).
-
----
-
-## Benefits
-
--   **Increased Speed**: Reduces the time it takes for Roo to understand your code by minimizing the number of back-and-forth steps.
--   **Better Context**: Allows Roo to build a more complete mental model of your code, leading to more accurate and relevant responses.
--   **Improved Workflow**: Streamlines tasks that require information from multiple files, making you more productive.
+### 主要特性
+- 单次请求最多可读取 100 个文件。
+- 默认启用，以实现更快、更流畅的工作流程。
+- 可配置的限制范围为 1 到 100 个文件（设置为 1 可有效禁用并发读取）。
 
 ---
 
-## Why This Matters
+## 优点
 
-**Faster Context Building**: Previously, when Roo needed to understand your project, you'd see multiple requests like:
-- "Can I read `src/app.js`?" → You approve
-- "Now can I read `src/utils.js`?" → You approve
-- "And can I read `src/config.json`?" → You approve
-
-**With concurrent file reads**: Roo asks once to read all related files together, getting the full picture immediately and providing better assistance faster.
+-   **提高速度**：通过最大限度地减少来回步骤的数量，缩短 Roo 理解您的代码所需的时间。
+-   **更好的上下文**：允许 Roo 构建更完整的代码心智模型，从而提供更准确、更相关的响应。
+-   **改进工作流程**：简化需要来自多个文件的信息的任务，使您更具生产力。
 
 ---
 
-## How it Works
+## 为何如此重要
 
-When you ask Roo to perform a task that involves multiple files, it will automatically identify the relevant files and read them together. This is especially useful for:
+**更快的上下文构建**：以前，当 Roo 需要理解您的项目时，您会看到多个请求，例如：
+- “我可以读取 `src/app.js` 吗？” → 您批准
+- “现在我可以读取 `src/utils.js` 吗？” → 您批准
+- “并且我可以读取 `src/config.json` 吗？” → 您批准
 
--   Understanding the overall structure of a component that is split across multiple files.
--   Refactoring code that has dependencies in other parts of the codebase.
--   Answering questions that require a broad understanding of your project.
-
-Roo is instructed to use this feature efficiently by prioritizing the most critical files and reading them in a single batch. The [`read_file`](/advanced-usage/available-tools/read-file) tool automatically accepts multiple files in a single request.
-
-When Roo requests to read multiple files, you'll see a batch approval interface that displays:
-
-- List of all files to be read
-- File paths with line range indicators (if specified)
-- Clickable file headers to open files in your editor
-- **Approve All** and **Deny All** buttons for quick decisions
-
-<img src="/img/concurrent-file-reads/concurrent-file-reads-2.png" alt="Batch approval interface for reading multiple files" width="600" />
+**通过并发文件读取**：Roo 只需一次请求即可同时读取所有相关文件，从而立即获得全貌并更快地提供更好的帮助。
 
 ---
 
-## Configuration
+## 工作原理
 
-You can configure the Multi-File Read feature by clicking the <Codicon name="gear" /> icon and navigating to the "Context" section of the settings.
+当您要求 Roo 执行涉及多个文件的任务时，它会自动识别相关文件并一起读取它们。这在以下情况中特别有用：
 
-<img src="/img/concurrent-file-reads/concurrent-file-reads-1.png" alt="Concurrent file reads settings showing limit slider" width="600" />
+-   理解分布在多个文件中的组件的整体结构。
+-   重构在代码库其他部分有依赖关系的代码。
+-   回答需要对您的项目有广泛理解的问题。
 
-1.  **Concurrent File Reads Limit**:
-    *   **Setting**: `Concurrent file reads limit`
-    *   **Description**: This setting determines the maximum number of files that Roo can read in a single request. The default is 5, with a range of 1-100 files. Higher values can speed up tasks involving many small files but may use more memory. Setting the value to 1 effectively disables concurrent reads, reverting to single-file reads.
+Roo 被指示通过优先处理最关键的文件并以单批次方式读取它们来高效地使用此功能。[`read_file`](/advanced-usage/available-tools/read-file) 工具在单次请求中自动接受多个文件。
+
+当 Roo 请求读取多个文件时，您会看到一个批量批准界面，其中显示：
+
+- 所有待读取文件的列表
+- 带有行号范围指示符的文件路径（如果已指定）
+- 可点击的文件头，可在您的编辑器中打开文件
+- **全部批准** 和 **全部拒绝** 按钮，用于快速决策
+
+<img src="/img/concurrent-file-reads/concurrent-file-reads-2.png" alt="用于读取多个文件的批量批准界面" width="600" />
+
+---
+
+## 配置
+
+您可以通过点击 <Codicon name="gear" /> 图标并导航到设置的“上下文”部分来配置多文件读取功能。
+
+<img src="/img/concurrent-file-reads/concurrent-file-reads-1.png" alt="并发文件读取设置显示限制滑块" width="600" />
+
+1.  **并发文件读取限制**:
+    *   **设置**: `Concurrent file reads limit`
+    *   **描述**: 此设置决定了 Roo 在单次请求中可以读取的最大文件数。默认值为 5，范围为 1-100 个文件。较高的值可以加快涉及许多小文件的任务，但可能会使用更多内存。将值设置为 1 可有效禁用并发读取，恢复为单文件读取。

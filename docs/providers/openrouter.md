@@ -2,51 +2,51 @@
 sidebar_label: OpenRouter
 ---
 
-# Using OpenRouter With Roo Code
+# 通过 Roo Code 使用 OpenRouter
 
-OpenRouter is an AI platform that provides access to a wide variety of language models from different providers, all through a single API.  This can simplify setup and allow you to easily experiment with different models.
+OpenRouter 是一个 AI 平台，它通过单一的 API 提供了对来自不同提供商的各种语言模型的访问。这可以简化设置，并让你轻松地试验不同的模型。
 
-**Website:** [https://openrouter.ai/](https://openrouter.ai/)
-
----
-
-## Getting an API Key
-
-1.  **Sign Up/Sign In:** Go to the [OpenRouter website](https://openrouter.ai/).  Sign in with your Google or GitHub account.
-2.  **Get an API Key:** Go to the [keys page](https://openrouter.ai/keys).  You should see an API key listed.  If not, create a new key.
-3.  **Copy the Key:** Copy the API key.
+**网站：** [https://openrouter.ai/](https://openrouter.ai/)
 
 ---
 
-## Supported Models
+## 获取 API 密钥
 
-OpenRouter supports a large and growing number of models.  Roo Code automatically fetches the list of available models. Refer to the [OpenRouter Models page](https://openrouter.ai/models) for the complete and up-to-date list.
-
----
-
-## Configuration in Roo Code
-
-1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
-2.  **Select Provider:** Choose "OpenRouter" from the "API Provider" dropdown.
-3.  **Enter API Key:** Paste your OpenRouter API key into the "OpenRouter API Key" field.
-4.  **Select Model:** Choose your desired model from the "Model" dropdown.
-5.  **(Optional) Custom Base URL:** If you need to use a custom base URL for the OpenRouter API, check "Use custom base URL" and enter the URL. Leave this blank for most users.
+1.  **注册/登录：** 前往 [OpenRouter 网站](https://openrouter.ai/)。使用你的 Google 或 GitHub 帐户登录。
+2.  **获取 API 密钥：** 前往 [密钥页面](https://openrouter.ai/keys)。你应该会看到一个列出的 API 密钥。如果没有，请创建一个新密钥。
+3.  **复制密钥：** 复制该 API 密钥。
 
 ---
 
-## Supported Transforms
+## 支持的模型
 
-OpenRouter provides an [optional "middle-out" message transform](https://openrouter.ai/docs/features/message-transforms) to help with prompts that exceed the maximum context size of a model. You can enable it by checking the "Compress prompts and message chains to the context size" box.
+OpenRouter 支持大量且不断增加的模型。Roo Code 会自动获取可用模型的列表。请参阅 [OpenRouter 模型页面](https://openrouter.ai/models) 获取完整且最新的列表。
 
 ---
 
-## Tips and Notes
+## 在 Roo Code 中配置
 
-* **Model Selection:** OpenRouter offers a wide range of models. Experiment to find the best one for your needs.
-* **Pricing:**  OpenRouter charges based on the underlying model's pricing.  See the [OpenRouter Models page](https://openrouter.ai/models) for details.
-*   **Prompt Caching:**
-    *   OpenRouter passes caching requests to underlying models that support it. Check the [OpenRouter Models page](https://openrouter.ai/models) to see which models offer caching.
-    *   For most models, caching should activate automatically if supported by the model itself (similar to how Requesty works).
-    *   **Exception for Gemini Models via OpenRouter:** Due to potential response delays sometimes observed with Google's caching mechanism when accessed via OpenRouter, a manual activation step is required *specifically for Gemini models*.
-    *   If using a **Gemini model** via OpenRouter, you **must manually check** the "Enable Prompt Caching" box in the provider settings to activate caching for that model. This checkbox serves as a temporary workaround. For non-Gemini models on OpenRouter, this checkbox is not necessary for caching.
-*   **Bring Your Own Key (BYOK):** If you use your own key for the underlying service, OpenRouter charges 5% of what it normally would. Roo Code automatically adjusts the cost calculation to reflect this.
+1.  **打开 Roo Code 设置：** 点击 Roo Code 面板中的齿轮图标 (<Codicon name="gear" />)。
+2.  **选择提供商：** 从“API 提供商”下拉菜单中选择“OpenRouter”。
+3.  **输入 API 密钥：** 将你的 OpenRouter API 密钥粘贴到“OpenRouter API 密钥”字段中。
+4.  **选择模型：** 从“模型”下拉菜单中选择你想要的模型。
+5.  **（可选）自定义基础 URL：** 如果你需要为 OpenRouter API 使用自定义的基础 URL，请勾选“使用自定义基础 URL”并输入该 URL。大多数用户可以留空此项。
+
+---
+
+## 支持的转换
+
+OpenRouter 提供了一个[可选的“中间删减”消息转换功能](https://openrouter.ai/docs/features/message-transforms)，以帮助处理超出模型最大上下文大小的提示。你可以通过勾选“将提示和消息链压缩至上下文大小”框来启用它。
+
+---
+
+## 提示和说明
+
+*   **模型选择：** OpenRouter 提供了广泛的模型选择。请进行试验，找到最适合你需求的模型。
+*   **定价：** OpenRouter 根据底层模型的定价收费。详情请参阅 [OpenRouter 模型页面](https://openrouter.ai/models)。
+*   **提示缓存：**
+    *   OpenRouter 会将缓存请求传递给支持它的底层模型。请查看 [OpenRouter 模型页面](https://openrouter.ai/models) 以了解哪些模型提供缓存功能。
+    *   对于大多数模型，如果模型本身支持缓存（类似于 Requesty 的工作方式），缓存功能应会自动激活。
+    *   **通过 OpenRouter 使用 Gemini 模型的例外情况：** 由于通过 OpenRouter 访问时，有时会观察到 Google 的缓存机制存在潜在的响应延迟，因此*专门针对 Gemini 模型*需要一个手动激活步骤。
+    *   如果通过 OpenRouter 使用 **Gemini 模型**，你**必须手动勾选**提供商设置中的“启用提示缓存”框以激活该模型的缓存功能。此复选框是一个临时解决方案。对于 OpenRouter 上的非 Gemini 模型，此复选框对于缓存不是必需的。
+*   **自带密钥 (BYOK)：** 如果你为底层服务使用自己的密钥，OpenRouter 会收取其正常费用的 5%。Roo Code 会自动调整成本计算以反映这一点。

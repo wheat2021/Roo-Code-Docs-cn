@@ -1,8 +1,8 @@
-# Auto-Approving Actions
+# 自动批准操作
 
-> ⚠️ **SECURITY WARNING:** Auto-approve settings bypass confirmation prompts, giving Roo direct access to your system. This can result in **data loss, file corruption, or worse**. Command line access is particularly dangerous, as it can potentially execute harmful operations that could damage your system or compromise security. Only enable auto-approval for actions you fully trust.
+> ⚠️ **安全警告：** 自动批准设置会绕过确认提示，从而使 Roo 可以直接访问您的系统。这可能导致**数据丢失、文件损坏或更糟的情况**。命令行访问尤其危险，因为它可能执行有害操作，从而损坏您的系统或危及安全。请仅对您完全信任的操作启用自动批准。
 
-Auto-approve settings speed up your workflow by eliminating repetitive confirmation prompts, but they significantly increase security risks.
+自动批准设置通过消除重复的确认提示来加快您的工作流程，但它们会显著增加安全风险。
 
 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
   <iframe
@@ -21,248 +21,248 @@ Auto-approve settings speed up your workflow by eliminating repetitive confirmat
 </div>
 <br />
 
-\* **Update:** We've added an auto-approve Question action since this video was made. [You can find it below](#follow-up-questions)!
+\* **更新：** 自本视频制作以来，我们增加了一个自动批准问题操作。 [您可以在下面找到它](#后续问题)！
 
 ---
 
-## Quick Start Guide
+## 快速入门指南
 
-1. Click the Auto-Approve Toolbar above the chat input
-2. Select which actions Roo can perform without asking permission
-3. Use the master toggle (leftmost checkbox) to quickly enable/disable all permissions
-
----
-
-## Auto-Approve Toolbar
-
-<img src="/img/auto-approving-actions/auto-approving-actions.png" alt="Auto-approve toolbar collapsed state" width="600" />
-
-*Prompt box and Auto-Approve Toolbar showing enabled permissions*
-
-Click the toolbar to expand it and configure individual permissions:
-
-<img src="/img/auto-approving-actions/auto-approving-actions-1.png" alt="Auto-approve toolbar expanded state" width="600" />
-
-*Prompt text box and Expanded toolbar with all options*
-
-### Available Permissions
-
-| Permission | What it does | Risk level |
-|------------|--------------|------------|
-| **Read files and directories** | Lets Roo access files without asking | Medium |
-| **Edit files** | Lets Roo modify files without asking | **High** |
-| **Execute approved commands** | Runs whitelisted terminal commands automatically | **High** |
-| **Use the browser** | Allows headless browser interaction | Medium |
-| **Use MCP servers** | Lets Roo use configured MCP services | Medium-High |
-| **Switch modes** | Changes between Roo modes automatically | Low |
-| **Create & complete subtasks** | Manages subtasks without confirmation | Low |
-| **Retry failed requests** | Automatically retries failed API requests | Low |
-| **Answer follow-up questions** | Selects default answer for follow-up questions| Low |
+1.  点击聊天输入框上方的“自动批准”工具栏
+2.  选择 Roo 可以在未经许可的情况下执行哪些操作
+3.  使用主开关（最左侧的复选框）快速启用/禁用所有权限
 
 ---
 
-## Master Toggle for Quick Control
+## 自动批准工具栏
 
-The leftmost checkbox works as a master toggle:
+<img src="/img/auto-approving-actions/auto-approving-actions.png" alt="自动批准工具栏折叠状态" width="600" />
 
-<img src="/img/auto-approving-actions/auto-approving-actions-14.png" alt="Master toggle in Auto-approve toolbar" width="600" />
+*显示已启用权限的提示框和自动批准工具栏*
 
-*Master toggle (checkbox) controls all auto-approve permissions at once*
+点击工具栏将其展开并配置单个权限：
 
-Use the master toggle when:
-- Working in sensitive code (turn off)
-- Doing rapid development (turn on)
-- Switching between exploration and editing tasks
+<img src="/img/auto-approving-actions/auto-approving-actions-1.png" alt="自动批准工具栏展开状态" width="600" />
+
+*提示文本框和包含所有选项的展开工具栏*
+
+### 可用权限
+
+| 权限 | 功能 | 风险等级 |
+|---|---|---|
+| **读取文件和目录** | 允许 Roo 在不询问的情况下访问文件 | 中 |
+| **编辑文件** | 允许 Roo 在不询问的情况下修改文件 | **高** |
+| **执行已批准的命令** | 自动运行白名单中的终端命令 | **高** |
+| **使用浏览器** | 允许无头浏览器交互 | 中 |
+| **使用 MCP 服务器** | 允许 Roo 使用已配置的 MCP 服务 | 中-高 |
+| **切换模式** | 自动在 Roo 模式之间切换 | 低 |
+| **创建和完成子任务** | 无需确认即可管理子任务 | 低 |
+| **重试失败的请求** | 自动重试失败的 API 请求 | 低 |
+| **回答后续问题** | 为后续问题选择默认答案 | 低 |
 
 ---
 
-## Advanced Settings Panel
+## 用于快速控制的主开关
 
-The settings panel provides detailed control with important security context:
+最左侧的复选框用作主开关：
 
-> **Allow Roo to automatically perform operations without requiring approval. Enable these settings only if you fully trust the AI and understand the associated security risks.**
+<img src="/img/auto-approving-actions/auto-approving-actions-14.png" alt="自动批准工具栏中的主开关" width="600" />
 
-To access these settings:
+*主开关（复选框）可一次性控制所有自动批准权限*
 
-1. Click <Codicon name="gear" /> in the top-right corner
-2. Navigate to Auto-Approve Settings
+在以下情况下使用主开关：
+- 处理敏感代码时（关闭）
+- 进行快速开发时（开启）
+- 在探索和编辑任务之间切换时
 
-<img src="/img/auto-approving-actions/auto-approving-actions-4.png" alt="Settings panel auto-approve options" width="550" />
+---
 
-*Complete settings panel view*
+## 高级设置面板
 
-### Read Operations
+设置面板提供了详细的控制以及重要的安全上下文：
 
-:::caution Read Operations
-<img src="/img/auto-approving-actions/auto-approving-actions-6.png" alt="Read-only operations setting" width="550" />
+> **允许 Roo 自动执行操作而无需批准。仅当您完全信任 AI 并了解相关的安全风险时，才启用这些设置。**
 
-**Setting:** "Always approve read-only operations"
+要访问这些设置：
 
-**Description:** "When enabled, Roo will automatically view directory contents and read files without requiring you to click the Approve button."
+1.  点击右上角的 <Codicon name="gear" />
+2.  导航至“自动批准设置”
 
-**Risk level:** Medium
+<img src="/img/auto-approving-actions/auto-approving-actions-4.png" alt="设置面板自动批准选项" width="550" />
 
-While this setting only allows reading files (not modifying them), it could potentially expose sensitive data. Still recommended as a starting point for most users, but be mindful of what files Roo can access.
+*完整的设置面板视图*
+
+### 读取操作
+
+:::caution 读取操作
+<img src="/img/auto-approving-actions/auto-approving-actions-6.png" alt="只读操作设置" width="550" />
+
+**设置：** “始终批准只读操作”
+
+**描述：** “启用后，Roo 将自动查看目录内容和读取文件，而无需您点击‘批准’按钮。”
+
+**风险等级：** 中
+
+虽然此设置仅允许读取文件（而非修改文件），但它可能会暴露敏感数据。仍然建议大多数用户以此为起点，但请注意 Roo 可以访问哪些文件。
 :::
 
-### Write Operations
+### 写入操作
 
-:::caution Write Operations
-<img src="/img/auto-approving-actions/auto-approving-actions-7.png" alt="Write operations setting with delay slider" width="550" />
+:::caution 写入操作
+<img src="/img/auto-approving-actions/auto-approving-actions-7.png" alt="带有延迟滑块的写入操作设置" width="550" />
 
-**Setting:** "Always approve write operations"
+**设置：** “始终批准写入操作”
 
-**Description:** "Automatically create and edit files without requiring approval"
+**描述：** “自动创建和编辑文件而无需批准”
 
-**Delay slider:** "Delay after writes to allow diagnostics to detect potential problems" (Default: 1000ms)
+**延迟滑块：** “写入后延迟，以允许诊断工具检测潜在问题”（默认值：1000毫秒）
 
-**Risk level:** High
+**风险等级：** 高
 
-This setting allows Roo to modify your files without confirmation. The delay timer is crucial:
-- Higher values (2000ms+): Recommended for complex projects where diagnostics take longer
-- Default (1000ms): Suitable for most projects
-- Lower values: Use only when speed is critical and you're in a controlled environment
-- Zero: No delay for diagnostics (not recommended for critical code)
+此设置允许 Roo 在未经您确认的情况下修改您的文件。延迟计时器至关重要：
+- 更高的值（2000毫秒+）：建议用于诊断需要更长时间的复杂项目
+- 默认值（1000毫秒）：适用于大多数项目
+- 更低的值：仅在速度至关重要且您处于受控环境中时使用
+- 零：无诊断延迟（不建议用于关键代码）
 
-#### Write Delay & Problems Pane Integration
+#### 写入延迟与问题面板集成
 
-<img src="/img/auto-approving-actions/auto-approving-actions-5.png" alt="VSCode Problems pane showing diagnostic information" width="600" />
+<img src="/img/auto-approving-actions/auto-approving-actions-5.png" alt="显示诊断信息的 VSCode 问题面板" width="600" />
 
-*VSCode Problems pane that Roo checks during the write delay*
+*Roo 在写入延迟期间检查的 VSCode 问题面板*
 
-When you enable auto-approval for writing files, the delay timer works with VSCode's Problems pane:
+当您为写入文件启用自动批准时，延迟计时器会与 VSCode 的“问题”面板协同工作：
 
-1. Roo makes a change to your file
-2. VSCode's diagnostic tools analyze the change
-3. The Problems pane updates with any errors or warnings
-4. Roo notices these issues before continuing
+1.  Roo 对您的文件进行更改
+2.  VSCode 的诊断工具分析更改
+3.  “问题”面板会更新任何错误或警告
+4.  Roo 在继续之前会注意到这些问题
 
-This works like a human developer pausing to check for errors after changing code. You can adjust the delay time based on:
+这就像人类开发人员在更改代码后暂停检查错误一样。您可以根据以下因素调整延迟时间：
 
-- Project complexity
-- Language server speed
-- How important error detection is for your workflow
+- 项目复杂性
+- 语言服务器速度
+- 错误检测对您的工作流程的重要性
 :::
 
-### Browser Actions
+### 浏览器操作
 
-:::info Browser Actions
-<img src="/img/auto-approving-actions/auto-approving-actions-8.png" alt="Browser actions setting" width="550" />
+:::info 浏览器操作
+<img src="/img/auto-approving-actions/auto-approving-actions-8.png" alt="浏览器操作设置" width="550" />
 
-**Setting:** "Always approve browser actions"
+**设置：** “始终批准浏览器操作”
 
-**Description:** "Automatically perform browser actions without requiring approval"
+**描述：** “自动执行浏览器操作而无需批准”
 
-**Note:** "Only applies when the model supports computer use"
+**注意：** “仅当模型支持计算机使用时适用”
 
-**Risk level:** Medium
+**风险等级：** 中
 
-Allows Roo to control a headless browser without confirmation. This can include:
-- Opening websites
-- Navigating pages
-- Interacting with web elements
+允许 Roo 在未经确认的情况下控制无头浏览器。这可以包括：
+- 打开网站
+- 导航页面
+- 与网页元素交互
 
-Consider the security implications of allowing automated browser access.
+请考虑允许自动浏览器访问的安全隐患。
 :::
 
-### API Requests
+### API 请求
 
-:::info API Requests
-<img src="/img/auto-approving-actions/auto-approving-actions-9.png" alt="API requests retry setting with delay slider" width="550" />
+:::info API 请求
+<img src="/img/auto-approving-actions/auto-approving-actions-9.png" alt="带有延迟滑块的 API 请求重试设置" width="550" />
 
-**Setting:** "Always retry failed API requests"
+**设置：** “始终重试失败的 API 请求”
 
-**Description:** "Automatically retry failed API requests when server returns an error response"
+**描述：** “当服务器返回错误响应时，自动重试失败的 API 请求”
 
-**Delay slider:** "Delay before retrying the request" (Default: 5s)
+**延迟滑块：** “重试请求前的延迟”（默认值：5秒）
 
-**Risk level:** Low
+**风险等级：** 低
 
-This setting automatically retries API calls when they fail. The delay controls how long Roo waits before trying again:
-- Longer delays are gentler on API rate limits
-- Shorter delays give faster recovery from transient errors
+此设置会在 API 调用失败时自动重试。延迟控制 Roo 在再次尝试之前等待多长时间：
+- 较长的延迟对 API 速率限制更友好
+- 较短的延迟可以更快地从瞬时错误中恢复
 :::
 
-### MCP Tools
+### MCP 工具
 
-:::caution MCP Tools
-<img src="/img/auto-approving-actions/auto-approving-actions-10.png" alt="MCP tools setting" width="550" />
+:::caution MCP 工具
+<img src="/img/auto-approving-actions/auto-approving-actions-10.png" alt="MCP 工具设置" width="550" />
 
-**Setting:** "Always approve MCP tools"
+**设置：** “始终批准 MCP 工具”
 
-**Description:** "Enable auto-approval of individual MCP tools in the MCP Servers view (requires both this setting and the tool's individual 'Always allow' checkbox)"
+**描述：** “在 MCP 服务器视图中启用单个 MCP 工具的自动批准（需要此设置和该工具的单个‘始终允许’复选框）”
 
-**Risk level:** Medium-High (depends on configured MCP tools)
+**风险等级：** 中-高（取决于配置的 MCP 工具）
 
-This setting works in conjunction with individual tool permissions in the MCP Servers view. Both this global setting and the tool-specific permission must be enabled for auto-approval.
+此设置与 MCP 服务器视图中的单个工具权限结合使用。必须同时启用此全局设置和特定于工具的权限才能进行自动批准。
 :::
 
-### Mode Switching
+### 模式切换
 
-:::info Mode Switching
-<img src="/img/auto-approving-actions/auto-approving-actions-11.png" alt="Mode switching setting" width="550" />
+:::info 模式切换
+<img src="/img/auto-approving-actions/auto-approving-actions-11.png" alt="模式切换设置" width="550" />
 
-**Setting:** "Always approve mode switching"
+**设置：** “始终批准模式切换”
 
-**Description:** "Automatically switch between different modes without requiring approval"
+**描述：** “自动在不同模式之间切换而无需批准”
 
-**Risk level:** Low
+**风险等级：** 低
 
-Allows Roo to change between different modes (Code, Architect, etc.) without asking for permission. This primarily affects the AI's behavior rather than system access.
+允许 Roo 在不同模式（代码、架构师等）之间切换而无需请求许可。这主要影响 AI 的行为而不是系统访问。
 :::
 
-### Subtasks
+### 子任务
 
-:::info Subtasks
-<img src="/img/auto-approving-actions/auto-approving-actions-12.png" alt="Subtasks setting" width="550" />
+:::info 子任务
+<img src="/img/auto-approving-actions/auto-approving-actions-12.png" alt="子任务设置" width="550" />
 
-**Setting:** "Always approve creation & completion of subtasks"
+**设置：** “始终批准创建和完成子任务”
 
-**Description:** "Allow creation and completion of subtasks without requiring approval"
+**描述：** “允许创建和完成子任务而无需批准”
 
-**Risk level:** Low
+**风险等级：** 低
 
-Enables Roo to create and complete subtasks automatically. This relates to workflow organization rather than system access.
+使 Roo 能够自动创建和完成子任务。这与工作流程组织有关，而不是系统访问。
 :::
 
-### Command Execution
+### 命令执行
 
-:::caution Command Execution
-<img src="/img/auto-approving-actions/auto-approving-actions-13.png" alt="Command execution setting with whitelist interface" width="550" />
+:::caution 命令执行
+<img src="/img/auto-approving-actions/auto-approving-actions-13.png" alt="带有白名单界面的命令执行设置" width="550" />
 
-**Setting:** "Always approve allowed execute operations"
+**设置：** “始终批准允许的执行操作”
 
-**Description:** "Automatically execute allowed terminal commands without requiring approval"
+**描述：** “自动执行允许的终端命令而无需批准”
 
-**Command management:** "Command prefixes that can be auto-executed when 'Always approve execute operations' is enabled. Add * to allow all commands (use with caution)."
+**命令管理：** “当‘始终批准执行操作’启用时可以自动执行的命令前缀。添加 * 以允许所有命令（请谨慎使用）。”
 
-**Risk level:** High
+**风险等级：** 高
 
-This setting allows terminal command execution with controls. While risky, the whitelist feature limits what commands can run. Important security features:
+此设置允许通过控制来执行终端命令。虽然有风险，但白名单功能限制了可以运行的命令。重要的安全功能：
 
-- Whitelist specific command prefixes (recommended)
-- Never use * wildcard in production or with sensitive data
-- Consider security implications of each allowed command
-- Always verify commands that interact with external systems
+- 将特定的命令前缀列入白名单（推荐）
+- 切勿在生产环境或处理敏感数据时使用 * 通配符
+- 考虑每个允许的命令的安全隐患
+- 始终验证与外部系统交互的命令
 
-**Interface elements:**
-- Text field to enter command prefixes (e.g., 'git')
-- "Add" button to add new prefixes
-- Clickable command buttons with X to remove them
+**界面元素：**
+- 用于输入命令前缀的文本字段（例如，'git'）
+- “添加”按钮以添加新前缀
+- 可点击的命令按钮，带 X 可移除它们
 :::
 
-### Follow-Up Questions
+### 后续问题
 
-:::info Follow-Up Questions
-<img src="/img/auto-approving-actions/auto-approving-actions-15.png" alt="Follow-up question operations setting with timeout slider" width="550" />
+:::info 后续问题
+<img src="/img/auto-approving-actions/auto-approving-actions-15.png" alt="带有超时滑块的后续问题操作设置" width="550" />
 
-**Setting:** `Always default answer for follow-up questions`
+**设置：** `始终为后续问题选择默认答案`
 
-**Description:** Automatically selects the first AI-suggested answer for a follow-up question after a configurable timeout. This speeds up your workflow by letting Roo proceed without manual intervention. A visual countdown appears on the first suggestion.
+**描述：** 在可配置的超时后，自动为后续问题选择第一个 AI 建议的答案。这通过让 Roo 无需手动干预即可继续操作，从而加快了您的工作流程。第一个建议上会显示一个可视化的倒计时。
 
-**Timeout slider:** Use the slider to set the wait time from 1 to 300 seconds (Default: 60s).
+**超时滑块：** 使用滑块设置等待时间，范围为 1 到 300 秒（默认值：60秒）。
 
-**Note:** You can override the timer at any point by clicking a different suggestion, editing a suggestion, or typing a response.
+**注意：** 您可以随时通过点击不同的建议、编辑建议或输入回复来覆盖计时器。
 
-**Risk level:** Low
+**风险等级：** 低
 :::

@@ -1,15 +1,15 @@
-# Checkpoints
+# 检查点
 
-Checkpoints automatically version your workspace files during Roo Code tasks, enabling non-destructive exploration of AI suggestions and easy recovery from unwanted changes.
+检查点会在 Roo Code 任务期间自动为您的工作区文件创建版本，从而实现对 AI 建议的非破坏性探索，并能轻松地从不需要的更改中恢复。
 
-Checkpoints let you:
-- Safely experiment with AI-suggested changes
-- Easily recover from undesired modifications
-- Compare different implementation approaches
-- Revert to previous project states without losing work
+检查点让您能够：
+- 安全地试验 AI 建议的更改
+- 轻松地从不希望的修改中恢复
+- 比较不同的实现方法
+- 恢复到以前的项目状态而不会丢失工作
 
 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
-  <iframe title="Checkpoints Tutorial Video"
+  <iframe title="检查点教程视频"
     src="https://www.youtube.com/embed/Ho30nyY332E"
     style={{
       position: 'absolute',
@@ -26,219 +26,219 @@ Checkpoints let you:
 
 <div style={{ marginTop: '20px' }}></div>
 
-:::info Important Notes
-- **Checkpoints are enabled by default.**
-- **Git must be installed** for checkpoints to function - [see installation instructions](#git-installation)
-- No GitHub account or repository is required
-- No Git personal information configuration is needed
-- The shadow Git repository operates independently from your project's existing Git configuration
+:::info 重要提示
+- **检查点默认启用。**
+- **必须安装 Git** 才能使用检查点功能 - [参见安装说明](#git-安装)
+- 无需 GitHub 帐户或仓库
+- 无需配置 Git 个人信息
+- “影子” Git 仓库独立于您项目现有的 Git 配置运行
 :::
 
 ---
 
-## Configuration Options
+## 配置选项
 
-Access checkpoint settings in Roo Code settings under the "Checkpoints" section:
+在 Roo Code 设置的“检查点”部分访问检查点设置：
 
-1. Open Settings by clicking the gear icon <Codicon name="gear" /> → Checkpoints
-2. Check or uncheck the "Enable automatic checkpoints" checkbox
+1. 点击齿轮图标 <Codicon name="gear" /> → 检查点 打开设置
+2. 勾选或取消勾选“启用自动检查点”复选框
 
-   <img src="/img/checkpoints/checkpoints.png" alt="Checkpoint settings in Roo Code configuration" width="500" />
-
----
-
-## How Checkpoints Work
-
-Roo Code captures snapshots of your project's state using a shadow Git repository, separate from your main version control system. These snapshots, called checkpoints, automatically record changes throughout your AI-assisted workflow—whenever tasks begin, files change, or commands run.
-
-Checkpoints are stored as Git commits in the shadow repository, capturing:
-
-- File content changes
-- New files added
-- Deleted files
-- Renamed files
-- Binary file changes
+   <img src="/img/checkpoints/checkpoints.png" alt="Roo Code 配置中的检查点设置" width="500" />
 
 ---
 
-## Working with Checkpoints
+## 检查点工作原理
 
-Checkpoints are integrated directly into your workflow through the chat interface.
+Roo Code 使用一个“影子” Git 仓库来捕获您项目状态的快照，该仓库独立于您的主版本控制系统。这些快照被称为检查点，会在您的 AI 辅助工作流中自动记录更改——每当任务开始、文件更改或命令运行时。
 
-Checkpoints appear directly in your chat history in two forms:
+检查点作为 Git 提交存储在影子仓库中，捕获以下内容：
 
-- **Initial checkpoint** marks your starting project state
-   <img src="/img/checkpoints/checkpoints-1.png" alt="Initial checkpoint indicator in chat" width="500" />
-
-- **Regular checkpoints** appear after file modifications or command execution
-   <img src="/img/checkpoints/checkpoints-2.png" alt="Regular checkpoint indicator in chat" width="500" />
-
-Each checkpoint provides two primary functions:
-
-### Viewing Differences
-
-To compare your current workspace with a previous checkpoint:
-
-1. Locate the checkpoint in your chat history
-2. Click the checkpoint's `View Differences` button
-
-   <img src="/img/checkpoints/checkpoints-6.png" alt="View Differences button interface" width="100" />
-
-3. Review the differences in the comparison view:
-   - Added lines are highlighted in green
-   - Removed lines are highlighted in red
-   - Modified files are listed with detailed changes
-   - Renamed and moved files are tracked with their path changes
-   - New or deleted files are clearly marked
-
-<img src="/img/checkpoints/checkpoints-3.png" alt="View differences option for checkpoints" width="800" />
-
-### Restoring Checkpoints
-
-To restore a project to a previous checkpoint state:
-
-1. Locate the checkpoint in your chat history
-2. Click the checkpoint's `Restore Checkpoint` button
-   <img src="/img/checkpoints/checkpoints-7.png" alt="Restore checkpoint button interface" width="100" />
-3. Choose one of these restoration options:
-   
-   <img src="/img/checkpoints/checkpoints-4.png" alt="Restore checkpoint option" width="300" />
-
-   - **Restore Files Only** - Reverts only workspace files to checkpoint state without modifying conversation history. Ideal for comparing alternative implementations while maintaining chat context, allowing you to seamlessly switch between different project states. This option does not require confirmation and lets you quickly switch between different implementations.
-   
-   - **Restore Files & Task** - Reverts both workspace files AND removes all subsequent conversation messages. Use when you want to completely reset both your code and conversation back to the checkpoint's point in time. This option requires confirmation in a dialog as it cannot be undone.
-
-      <img src="/img/checkpoints/checkpoints-9.png" alt="Confirmation dialog for restoring checkpoint with files & task" width="300" />
-
-### Limitations and Considerations
-
-- **Scope**: Checkpoints only capture changes made during active Roo Code tasks
-- **External changes**: Modifications made outside of tasks (manual edits, other tools) aren't included
-- **Large files**: Very large binary files may impact performance
-- **Unsaved work**: Restoration will overwrite any unsaved changes in your workspace
+- 文件内容更改
+- 添加的新文件
+- 删除的文件
+- 重命名的文件
+- 二进制文件更改
 
 ---
 
-## Technical Implementation
+## 使用检查点
 
-### Checkpoint Architecture
+检查点通过聊天界面直接集成到您的工作流程中。
 
-The checkpoint system consists of:
+检查点以两种形式直接出现在您的聊天记录中：
 
-1. **Shadow Git Repository**: A separate Git repository created specifically for checkpoint tracking that functions as the persistent storage mechanism for checkpoint state.
+- **初始检查点** 标记您项目的起始状态
+   <img src="/img/checkpoints/checkpoints-1.png" alt="聊天中的初始检查点指示器" width="500" />
 
-2. **Checkpoint Service**: Handles Git operations and state management through:
-   - Repository initialization
-   - Checkpoint creation and storage
-   - Diff computation
-   - State restoration
+- **常规检查点** 在文件修改或命令执行后出现
+   <img src="/img/checkpoints/checkpoints-2.png" alt="聊天中的常规检查点指示器" width="500" />
 
-3. **UI Components**: Interface elements displayed in the chat that enable interaction with checkpoints.
+每个检查点提供两个主要功能：
 
-### Restoration Process
+### 查看差异
 
-When restoration executes, Roo Code:
-- Performs a hard reset to the specified checkpoint commit
-- Copies all files from the shadow repository to your workspace
-- Updates internal checkpoint tracking state
+要将当前工作区与先前的检查点进行比较：
 
-### Storage Type
+1. 在您的聊天记录中找到该检查点
+2. 点击检查点的 `查看差异` 按钮
 
-Checkpoints are task-scoped, meaning they are specific to a single task.
+   <img src="/img/checkpoints/checkpoints-6.png" alt="查看差异按钮界面" width="100" />
 
-### Diff Computation
+3. 在比较视图中查看差异：
+   - 添加的行以绿色高亮显示
+   - 删除的行以红色高亮显示
+   - 修改的文件会列出详细的更改
+   - 重命名和移动的文件会跟踪其路径更改
+   - 新建或删除的文件会明确标记
 
-Checkpoint comparison uses Git's underlying diff capabilities to produce structured file differences:
-- Modified files show line-by-line changes
-- Binary files are properly detected and handled
-- Renamed and moved files are tracked correctly
-- File creation and deletion are clearly identified
+<img src="/img/checkpoints/checkpoints-3.png" alt="检查点的查看差异选项" width="800" />
 
-### File Exclusion and Ignore Patterns
+### 恢复检查点
 
-The checkpoint system uses intelligent file exclusion to track only relevant files:
+要将项目恢复到先前的检查点状态：
 
-#### Built-in Exclusions
+1. 在您的聊天记录中找到该检查点
+2. 点击检查点的 `恢复检查点` 按钮
+   <img src="/img/checkpoints/checkpoints-7.png" alt="恢复检查点按钮界面" width="100" />
+3. 选择以下恢复选项之一：
 
-The system has comprehensive built-in exclusion patterns that automatically ignore:
-- Build artifacts and dependency directories (`node_modules/`, `dist/`, `build/`)
-- Media files and binary assets (images, videos, audio)
-- Cache and temporary files (`.cache/`, `.tmp/`, `.bak`)
-- Configuration files with sensitive information (`.env`)
-- Large data files (archives, executables, binaries)
-- Database files and logs
+   <img src="/img/checkpoints/checkpoints-4.png" alt="恢复检查点选项" width="300" />
 
-These patterns are written to the shadow repository's `.git/info/exclude` file during initialization.
+   - **仅恢复文件** - 仅将工作区文件恢复到检查点状态，而不修改对话历史记录。这非常适合在保持聊天上下文的同时比较不同的实现方案，让您可以无缝地在不同的项目状态之间切换。此选项无需确认，可让您快速切换不同的实现。
 
-#### .gitignore Support
+   - **恢复文件和任务** - 同时恢复工作区文件并删除所有后续的对话消息。当您想将代码和对话完全重置回检查点所在的时间点时使用。此选项需要在一个对话框中进行确认，因为该操作无法撤销。
 
-The checkpoint system respects `.gitignore` patterns in your workspace:
-- Files excluded by `.gitignore` won't trigger checkpoint creation
-- Excluded files won't appear in checkpoint diffs
-- Standard Git ignore rules apply when staging file changes
+      <img src="/img/checkpoints/checkpoints-9.png" alt="恢复文件和任务的确认对话框" width="300" />
 
-#### .rooignore Behavior
+### 限制与注意事项
 
-The `.rooignore` file (which controls AI access to files) is separate from checkpoint tracking:
-- Files excluded by `.rooignore` but not by `.gitignore` will still be checkpointed
-- Changes to AI-inaccessible files can still be restored through checkpoints
-
-This separation is intentional, as `.rooignore` limits which files the AI can access, not which files should be tracked for version history.
-
-#### Nested Git Repositories
-
-The checkpoint system includes special handling for nested Git repositories:
-- Temporarily renames nested `.git` directories to `.git_disabled` during operations
-- Restores them after operations complete
-- Allows proper tracking of files in nested repositories
-- Ensures nested repositories remain functional and unaffected
-
-### Concurrency Control
-
-Operations are queued to prevent concurrent Git operations that might corrupt repository state. This ensures that rapid checkpoint operations complete safely even when requested in quick succession.
+- **范围**：检查点仅捕获在活动的 Roo Code 任务期间所做的更改
+- **外部更改**：在任务之外进行的修改（手动编辑、其他工具）不包括在内
+- **大文件**：非常大的二进制文件可能会影响性能
+- **未保存的工作**：恢复操作将覆盖您工作区中任何未保存的更改
 
 ---
 
-## Git Installation
+## 技术实现
 
-Checkpoints require Git to be installed on your system. The implementation uses the `simple-git` library, which relies on Git command-line tools to create and manage shadow repositories.
+### 检查点架构
+
+检查点系统包括：
+
+1.  **影子 Git 仓库**：一个专门为检查点跟踪创建的独立 Git 仓库，作为检查点状态的持久存储机制。
+
+2.  **检查点服务**：通过以下方式处理 Git 操作和状态管理：
+    - 仓库初始化
+    - 检查点创建和存储
+    - 差异计算
+    - 状态恢复
+
+3.  **UI 组件**：显示在聊天中的界面元素，用于与检查点进行交互。
+
+### 恢复过程
+
+当执行恢复时，Roo Code 会：
+- 执行硬重置到指定的检查点提交
+- 将所有文件从影子仓库复制到您的工作区
+- 更新内部检查点跟踪状态
+
+### 存储类型
+
+检查点是任务范围的，意味着它们特定于单个任务。
+
+### 差异计算
+
+检查点比较使用 Git 的底层差异功能来生成结构化的文件差异：
+- 修改的文件显示逐行更改
+- 正确检测和处理二进制文件
+- 正确跟踪重命名和移动的文件
+- 清晰地标识文件的创建和删除
+
+### 文件排除和忽略模式
+
+检查点系统使用智能文件排除来仅跟踪相关文件：
+
+#### 内置排除项
+
+系统具有全面的内置排除模式，可自动忽略：
+- 构建产物和依赖目录 (`node_modules/`, `dist/`, `build/`)
+- 媒体文件和二进制资产（图像、视频、音频）
+- 缓存和临时文件 (`.cache/`, `.tmp/`, `.bak`)
+- 包含敏感信息的配置文件 (`.env`)
+- 大型数据文件（存档、可执行文件、二进制文件）
+- 数据库文件和日志
+
+这些模式在初始化期间被写入影子仓库的 `.git/info/exclude` 文件。
+
+#### .gitignore 支持
+
+检查点系统尊重您工作区中的 `.gitignore` 模式：
+- 被 `.gitignore` 排除的文件不会触发检查点创建
+- 被排除的文件不会出现在检查点差异中
+- 在暂存文件更改时应用标准的 Git 忽略规则
+
+#### .rooignore 行为
+
+`.rooignore` 文件（控制 AI 对文件的访问）与检查点跟踪是分开的：
+- 被 `.rooignore` 排除但未被 `.gitignore` 排除的文件仍将被检查点跟踪
+- 对 AI 不可访问的文件的更改仍可通过检查点恢复
+
+这种分离是故意的，因为 `.rooignore` 限制了 AI 可以访问哪些文件，而不是哪些文件应该被跟踪以进行版本历史记录。
+
+#### 嵌套的 Git 仓库
+
+检查点系统对嵌套的 Git 仓库有特殊处理：
+- 在操作期间临时将嵌套的 `.git` 目录重命名为 `.git_disabled`
+- 操作完成后恢复它们
+- 允许正确跟踪嵌套仓库中的文件
+- 确保嵌套仓库保持功能正常且不受影响
+
+### 并发控制
+
+操作被排队以防止可能破坏仓库状态的并发 Git 操作。这确保了即使在快速连续请求时，快速的检查点操作也能安全完成。
+
+---
+
+## Git 安装
+
+检查点要求您的系统上安装了 Git。该实现使用 `simple-git` 库，该库依赖 Git 命令行工具来创建和管理影子仓库。
 
 ### macOS
 
-1. **Install with Homebrew (recommended)**:
-   ```
-   brew install git
-   ```
+1.  **使用 Homebrew 安装 (推荐)**：
+    ```
+    brew install git
+    ```
 
-2. **Alternative: Install with Xcode Command Line Tools**:
-   ```
-   xcode-select --install
-   ```
+2.  **或者：使用 Xcode 命令行工具安装**：
+    ```
+    xcode-select --install
+    ```
 
-3. **Verify installation**:
-   - Open Terminal
-   - Type `git --version`
-   - You should see a version number like `git version 2.40.0`
+3.  **验证安装**：
+    - 打开终端
+    - 输入 `git --version`
+    - 您应该会看到类似 `git version 2.40.0` 的版本号
 
 ### Windows
 
-1. **Download Git for Windows**:
-   - Visit https://git-scm.com/download/win
-   - The download should start automatically
+1.  **下载 Git for Windows**：
+    - 访问 https://git-scm.com/download/win
+    - 下载应会自动开始
 
-2. **Run the installer**:
-   - Accept the license agreement
-   - Choose installation location (default is recommended)
-   - Select components (default options are typically sufficient)
-   - Choose the default editor
-   - Choose how to use Git from the command line (recommended: Git from the command line and also from 3rd-party software)
-   - Configure line ending conversions (recommended: Checkout Windows-style, commit Unix-style)
-   - Complete the installation
+2.  **运行安装程序**：
+    - 接受许可协议
+    - 选择安装位置（推荐使用默认值）
+    - 选择组件（通常默认选项就足够了）
+    - 选择默认编辑器
+    - 选择如何从命令行使用 Git（推荐：从命令行以及第三方软件中使用 Git）
+    - 配置行尾转换（推荐：签出 Windows 风格，提交 Unix 风格）
+    - 完成安装
 
-3. **Verify installation**:
-   - Open Command Prompt or PowerShell
-   - Type `git --version`
-   - You should see a version number like `git version 2.40.0.windows.1`
+3.  **验证安装**：
+    - 打开命令提示符或 PowerShell
+    - 输入 `git --version`
+    - 您应该会看到类似 `git version 2.40.0.windows.1` 的版本号
 
 ### Linux
 
@@ -258,7 +258,7 @@ sudo dnf install git
 sudo pacman -S git
 ```
 
-**Verify installation**:
-- Open Terminal
-- Type `git --version`
-- You should see a version number
+**验证安装**：
+- 打开终端
+- 输入 `git --version`
+- 您应该会看到一个版本号

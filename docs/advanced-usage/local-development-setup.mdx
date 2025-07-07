@@ -1,55 +1,55 @@
 ---
-sidebar_label: Local Development Setup
+sidebar_label: 本地开发设置
 ---
 
-## Local Setup & Development
+## 本地设置与开发
 
-:::note Developer Information Only
-This section is for developers contributing to Roo Code or those who wish to build and run the extension from source.
+:::note 仅供开发者参考
+本节适用于为 Roo Code 贡献代码的开发者，或者希望从源代码构建和运行此扩展的用户。
 :::
 
-To set up Roo Code for local development:
+要设置 Roo Code 进行本地开发：
 
-1.  **Clone the repository:**
+1.  **克隆仓库：**
     ```bash
     git clone https://github.com/RooCodeInc/Roo-Code.git
     cd Roo-Code
     ```
 
-2.  **Install dependencies:**
-    Roo Code uses `pnpm` for package management.
+2.  **安装依赖：**
+    Roo Code 使用 `pnpm` 进行包管理。
     ```bash
     pnpm install
     ```
 
-3.  **Run the extension for development:**
-    You have two primary methods:
+3.  **运行扩展进行开发：**
+    你有两种主要方法：
 
-    *   **Directly in VS Code (Recommended for active development):**
-        *   Open the cloned `Roo-Code` folder in VS Code.
-        *   Press `F5` (or select **Run** → **Start Debugging** from the menu). This opens a new VS Code window (Extension Development Host) with Roo Code running.
-        *   Changes to the webview code (under `webview-ui/`) will often update live.
-        *   Changes to the core extension code (under `src/`) typically require restarting the Extension Development Host window.
+    *   **直接在 VS Code 中运行（推荐用于活跃开发）：**
+        *   在 VS Code 中打开克隆的 `Roo-Code` 文件夹。
+        *   按 `F5`（或从菜单中选择 **运行** → **启动调试**）。这会打开一个新的 VS Code 窗口（扩展开发主机），其中运行着 Roo Code。
+        *   对 webview 代码（位于 `webview-ui/` 目录下）的更改通常会实时更新。
+        *   对核心扩展代码（位于 `src/` 目录下）的更改通常需要重启扩展开发主机窗口。
 
-    *   **Building and Installing a VSIX package:**
-        This method is useful for testing the packaged extension or distributing development builds.
-        1.  Build the VSIX file:
+    *   **构建并安装 VSIX 包：**
+        此方法对于测试打包后的扩展或分发开发版本非常有用。
+        1.  构建 VSIX 文件：
             ```bash
             pnpm vsix
             ```
-            A `.vsix` file (e.g., `roo-cline-<version>.vsix`) will be created in the `bin/` directory.
+            一个 `.vsix` 文件（例如 `roo-cline-<version>.vsix`）将在 `bin/` 目录中创建。
 
-        2.  Install the VSIX in VS Code:
-            *   **Using the command line:**
+        2.  在 VS Code 中安装 VSIX：
+            *   **使用命令行：**
                 ```bash
                 code --install-extension bin/roo-cline-<version>.vsix
                 ```
-                (Replace `<version>` with the actual version number in the filename).
-            *   **Using the VS Code interface:**
-                *   Open the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`).
-                *   Click the "..." (More Actions) menu in the Extensions view sidebar.
-                *   Select "Install from VSIX..."
-                *   Browse to and select the generated `.vsix` file from the `bin/` directory.
+                （将 `<version>` 替换为文件名中的实际版本号）。
+            *   **使用 VS Code 界面：**
+                *   打开扩展视图（`Ctrl+Shift+X` 或 `Cmd+Shift+X`）。
+                *   在扩展视图侧边栏中点击“...”（更多操作）菜单。
+                *   选择“从 VSIX 安装...”
+                *   浏览并选择 `bin/` 目录中生成的 `.vsix` 文件。
 
                 <img src="/img/installing/installing-2.png" alt="VS Code's Install from VSIX dialog" width="600" />
-                *Installing a development VSIX using VS Code's "Install from VSIX..." dialog.*
+                *使用 VS Code 的“从 VSIX 安装...”对话框安装开发版 VSIX。*

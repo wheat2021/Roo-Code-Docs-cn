@@ -1,91 +1,91 @@
 # insert_content
 
-The `insert_content` tool adds new lines of content into an existing file without modifying the original content. It's ideal for inserting code blocks, configuration entries, or log lines at specific locations.
+`insert_content` 工具可将新内容行添加到现有文件中，而无需修改原始内容。它非常适合在特定位置插入代码块、配置条目或日志行。
 
 ---
 
-## Parameters
+## 参数
 
-The tool accepts these parameters:
+该工具接受以下参数：
 
-- `path` (required): The relative path (from the workspace root) of the file to insert content into.
-- `line` (required): The 1-based line number *before* which the content should be inserted. Use `0` to append the content to the end of the file.
-- `content` (required): The text content to insert.
-
----
-
-## What It Does
-
-This tool reads the target file, identifies the specified insertion point based on the `line` parameter, and inserts the provided `content` at that location. If `line` is `0`, the content is added to the end. Changes are presented in a diff view for user approval before being saved.
+- `path` (必需): 要插入内容的文件相对于工作区根目录的路径。
+- `line` (必需): 内容应插入到此行号（从 1 开始）*之前*。使用 `0` 可将内容附加到文件末尾。
+- `content` (必需): 要插入的文本内容。
 
 ---
 
-## When is it used?
+## 功能说明
 
-- When adding new import statements at the beginning of a file.
-- When inserting new functions or methods into existing code.
-- When adding configuration blocks to settings files.
-- When appending log entries or data records.
-- When adding any multi-line text block without altering existing lines.
+此工具会读取目标文件，根据 `line` 参数确定指定的插入点，并将提供的 `content` 插入到该位置。如果 `line` 为 `0`，则内容将添加到末尾。更改会显示在差异视图中，供用户批准后保存。
 
 ---
 
-## Key Features
+## 使用场景
 
-- **Targeted Insertion**: Adds content precisely at the specified line number or appends to the end.
-- **Preserves Existing Content**: Does not modify or delete original file lines.
-- **Interactive Approval**: Shows proposed insertions in a diff view, requiring explicit user approval.
-- **User Edit Support**: Allows editing the proposed content directly within the diff view before final approval.
-- **Handles Line Numbers**: Correctly interprets the `line` parameter (1-based or 0 for append).
-- **Context Tracking**: Records the file edit operation for context management.
-- **Error Handling**: Checks for missing parameters, invalid line numbers, and file access issues.
+- 在文件开头添加新的导入语句时。
+- 在现有代码中插入新函数或方法时。
+- 在配置文件中添加配置块时。
+- 附加日志条目或数据记录时。
+- 在不更改现有行的情况下添加任何多行文本块时。
 
 ---
 
-## Limitations
+## 主要特性
 
-- **Insert Only**: Cannot replace or delete existing content. Use `apply_diff` or `search_and_replace` for modifications.
-- **Requires Existing File**: The target file specified by `path` must exist.
-- **Review Overhead**: The mandatory diff view approval adds an interactive step.
-
----
-
-## How It Works
-
-When the `insert_content` tool is invoked, it follows this process:
-
-1.  **Parameter Validation**: Checks for required `path`, `line`, and `content`. Validates `line` is a non-negative integer.
-2.  **File Reading**: Reads the content of the target file specified by `path`.
-3.  **Insertion Point Calculation**: Converts the 1-based `line` parameter to a 0-based index for internal processing (`-1` for appending).
-4.  **Content Insertion**: Uses an internal utility (`insertGroups`) to merge the original file lines with the new `content` at the calculated index.
-5.  **Diff View Interaction**:
-    *   Opens the file in the diff view (`cline.diffViewProvider.open`).
-    *   Updates the diff view with the proposed content (`cline.diffViewProvider.update`).
-6.  **User Approval**: Presents the change via `askApproval`. Reverts if rejected.
-7.  **Saving Changes**: If approved, saves the changes using `cline.diffViewProvider.saveChanges`.
-8.  **File Context Tracking**: Tracks the edit using `cline.getFileContextTracker().trackFileContext`.
-9.  **Handling User Edits**: If the user edited the content in the diff view, reports the final merged content back.
-10. **Result Reporting**: Reports success (including user edits) or failure back to the AI model.
+- **精确定位插入**: 在指定的行号精确添加内容，或附加到文件末尾。
+- **保留现有内容**: 不会修改或删除文件的原始行。
+- **交互式批准**: 在差异视图中显示建议的插入内容，需要用户明确批准。
+- **支持用户编辑**: 允许在最终批准前直接在差异视图中编辑建议的内容。
+- **处理行号**: 正确解释 `line` 参数（从 1 开始，或 0 表示附加）。
+- **上下文跟踪**: 记录文件编辑操作以进行上下文管理。
+- **错误处理**: 检查缺失的参数、无效的行号和文件访问问题。
 
 ---
 
-## Usage Examples
+## 限制
 
-Inserting import statements at the beginning of a file (`line: 1`):
+- **仅限插入**: 无法替换或删除现有内容。如需修改，请使用 `apply_diff` 或 `search_and_replace`。
+- **需要现有文件**: `path` 指定的目标文件必须存在。
+- **审查开销**: 强制性的差异视图批准增加了一个交互步骤。
+
+---
+
+## 工作原理
+
+当调用 `insert_content` 工具时，它会遵循以下流程：
+
+1.  **参数验证**: 检查必需的 `path`、`line` 和 `content`。验证 `line` 是否为非负整数。
+2.  **文件读取**: 读取 `path` 指定的目标文件的内容。
+3.  **计算插入点**: 将基于 1 的 `line` 参数转换为基于 0 的索引以进行内部处理（`-1` 用于附加）。
+4.  **内容插入**: 使用内部实用程序 (`insertGroups`) 将原始文件行与新的 `content` 在计算出的索引位置合并。
+5.  **差异视图交互**:
+    *   在差异视图中打开文件 (`cline.diffViewProvider.open`)。
+    *   使用建议的内容更新差异视图 (`cline.diffViewProvider.update`)。
+6.  **用户批准**: 通过 `askApproval` 提交更改。如果被拒绝则还原。
+7.  **保存更改**: 如果获得批准，则使用 `cline.diffViewProvider.saveChanges` 保存更改。
+8.  **文件上下文跟踪**: 使用 `cline.getFileContextTracker().trackFileContext` 跟踪编辑。
+9.  **处理用户编辑**: 如果用户在差异视图中编辑了内容，则报告最终合并的内容。
+10. **结果报告**: 向 AI 模型报告成功（包括用户编辑）或失败。
+
+---
+
+## 使用示例
+
+在文件开头插入导入语句 (`line: 1`):
 
 ```xml
 <insert_content>
 <path>src/utils.ts</path>
 <line>1</line>
 <content>
-// Add imports at start of file
+// 在文件开头添加导入
 import { sum } from './math';
 import { parse } from 'date-fns';
 </content>
 </insert_content>
 ```
 
-Appending content to the end of a file (`line: 0`):
+将内容附加到文件末尾 (`line: 0`):
 
 ```xml
 <insert_content>
@@ -99,7 +99,7 @@ Appending content to the end of a file (`line: 0`):
 </insert_content>
 ```
 
-Inserting a function before line 50:
+在第 50 行之前插入一个函数:
 
 ```xml
 <insert_content>
@@ -115,4 +115,3 @@ async function fetchUserData(userId) {
 }
 </content>
 </insert_content>
-```

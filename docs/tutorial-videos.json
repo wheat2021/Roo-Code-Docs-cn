@@ -2,27 +2,27 @@
   "videos": [
     {
       "id": "Mcq3r1EPZ-4",
-      "title": "Installing Roo Code in VS Code"
+      "title": "在 VS Code 中安装 Roo Code"
     },
     {
       "id": "eEJErgZBqLE",
-      "title": "Configuring Profiles | Detailed Tutorial"
+      "title": "配置文件 | 详细教程"
     },
     {
       "id": "QDy3dm1xJ6Y",
-      "title": "Setting up MCP server in Roo"
+      "title": "在 Roo 中设置 MCP 服务器"
     },
     {
       "id": "jW4_PPyRXCs",
-      "title": "Auto Approve in Roo Code Explained | Detailed Tutorial"
+      "title": "Roo Code 自动批准功能详解 | 详细教程"
     },
     {
       "id": "qgqceCuhlRA",
-      "title": "Custom Modes in Roo Code | Official Tutorial "
+      "title": "Roo Code 自定义模式 | 官方教程"
     },
     {
       "id": "Ho30nyY332E",
-      "title": "Checkpoints in Roo Code | Official Tutorial"
+      "title": "Roo Code 中的检查点 | 官方教程"
     }
   ]
 }

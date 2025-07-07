@@ -1,10 +1,10 @@
 ---
-sidebar_label: 'Boomerang Tasks'
+sidebar_label: '回旋镖任务'
 ---
 
-# Boomerang Tasks: Orchestrate Complex Workflows
+# 回旋镖任务：编排复杂工作流
 
-Boomerang Tasks (also known as subtasks or task orchestration) allow you to break down complex projects into smaller, manageable pieces using the built-in **`🪃 Orchestrator` Mode (aka Boomerang Mode)**. Think of it like delegating parts of your work to specialized assistants. Each subtask runs in its own context, often using a different Roo Code mode tailored for that specific job (like [`💻 Code`](/basic-usage/using-modes#code-mode-default), [`🏗️ Architect`](/basic-usage/using-modes#architect-mode), or [`🪲 Debug`](/basic-usage/using-modes#debug-mode)). The Orchestrator mode manages this process.
+回旋镖任务（也称为子任务或任务编排）允许您使用内置的 **`🪃 编排器` 模式（又名回旋镖模式）** 将复杂项目分解为更小、可管理的部分。可以把它想象成将您的部分工作委托给专门的助手。每个子任务都在其自己的上下文中运行，通常使用为该特定工作量身定制的不同 Roo Code 模式（例如 [`💻 编码`](/basic-usage/using-modes#code-mode-default)、[`🏗️ 架构师`](/basic-usage/using-modes#architect-mode) 或 [`🪲 调试`](/basic-usage/using-modes#debug-mode)）。编排器模式负责管理此过程。
 
 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden' }}>
   <iframe
@@ -24,63 +24,63 @@ Boomerang Tasks (also known as subtasks or task orchestration) allow you to brea
 
 <br />
 
-:::info Orchestrator Mode is Built-In
-The `🪃 Orchestrator` mode (previously achieved via a custom "Boomerang Mode") is now a built-in mode specifically designed to orchestrate workflows by breaking down tasks and delegating them to other modes. You no longer need to create a custom mode for this functionality.
+:::info 编排器模式是内置的
+`🪃 编排器` 模式（以前通过自定义“回旋镖模式”实现）现在是一个内置模式，专门用于通过分解任务并将其委托给其他模式来编排工作流。您不再需要为此功能创建自定义模式。
 
-Learn more about [Built-in Modes](/basic-usage/using-modes#built-in-modes).
+了解更多关于[内置模式](/basic-usage/using-modes#built-in-modes)的信息。
 :::
 
 ---
 
-## Why Use Boomerang Tasks?
+## 为什么使用回旋镖任务？
 
--   **Tackle Complexity:** Break large, multi-step projects (e.g., building a full feature) into focused subtasks (e.g., design, implementation, documentation).
--   **Use Specialized Modes:** Automatically delegate subtasks to the mode best suited for that specific piece of work, leveraging specialized capabilities for optimal results.
--   **Maintain Focus & Efficiency:** Each subtask operates in its own isolated context with a separate conversation history. This prevents the parent (orchestrator) task from becoming cluttered with the detailed execution steps (like code diffs or file analysis results), allowing it to focus efficiently on the high-level workflow and manage the overall process based on concise summaries from completed subtasks.
--   **Streamline Workflows:** Results from one subtask can be automatically passed to the next, creating a smooth flow (e.g., architectural decisions feeding into the coding task).
-
----
-
-## How It Works
-
-1.  When in the [`🪃 Orchestrator`](/basic-usage/using-modes#orchestrator-mode-aka-boomerang-mode) mode (aka Boomerang Mode), Roo analyzes a complex task and suggests breaking it down into a subtask[^1].
-
-2.  The parent task (in Orchestrator mode) pauses, and the new subtask begins in a different, specialized mode[^2].
-3.  When the subtask's goal is achieved, Roo signals completion.
-4.  The parent task resumes with only the summary[^3] of the subtask. The parent uses this summary to continue the main workflow.
+-   **应对复杂性：** 将大型、多步骤的项目（例如，构建一个完整的功能）分解为专注的子任务（例如，设计、实现、文档）。
+-   **使用专门模式：** 自动将子任务委托给最适合该特定工作的模式，利用专门的功能以获得最佳结果。
+-   **保持专注和效率：** 每个子任务都在其自己独立的环境中运行，拥有独立的对话历史。这可以防止父（编排器）任务因详细的执行步骤（如代码差异或文件分析结果）而变得混乱，使其能够高效地专注于高层工作流，并根据已完成子任务的简明摘要来管理整个过程。
+-   **简化工作流：** 一个子任务的结果可以自动传递给下一个子任务，从而创建流畅的工作流程（例如，架构决策输入到编码任务中）。
 
 ---
 
-## Key Considerations
+## 工作原理
 
--   **Approval Required:** By default, you must approve the creation and completion of each subtask. This can be automated via the [Auto-Approving Actions](/features/auto-approving-actions#subtasks) settings if desired.
--   **Context Isolation and Transfer:** Each subtask operates in complete isolation with its own conversation history. It does not automatically inherit the parent's context. Information must be explicitly passed:
-    *   **Down:** Via the initial instructions provided when the subtask is created.
-    *   **Up:** Via the final summary provided when the subtask finishes. Be mindful that only this summary returns to the parent.
--   **Navigation:** Roo's interface helps you see the hierarchy of tasks (which task is the parent, which are children). You can typically navigate between active and paused tasks.
+1.  在 [`🪃 编排器`](/basic-usage/using-modes#orchestrator-mode-aka-boomerang-mode) 模式（又名回旋镖模式）下，Roo 会分析一个复杂的任务，并建议将其分解为一个子任务[^1]。
 
-Boomerang Tasks provide a powerful way to manage complex development workflows directly within Roo Code, leveraging specialized modes for maximum efficiency.
+2.  父任务（在编排器模式下）暂停，新的子任务在另一个专门的模式下开始[^2]。
+3.  当子任务的目标达成后，Roo 会发出完成信号。
+4.  父任务仅带着子任务的摘要[^3]恢复。父任务使用此摘要来继续主工作流。
 
-:::tip Keep Tasks Focused
-Use subtasks (delegated via Orchestrator mode) to maintain clarity. If a request significantly shifts focus or requires a different expertise (mode), consider creating a subtask rather than overloading the current one.
+---
+
+## 关键注意事项
+
+-   **需要批准：** 默认情况下，您必须批准每个子任务的创建和完成。如果需要，可以通过[自动批准操作](/features/auto-approving-actions#subtasks)设置来自动化此过程。
+-   **上下文隔离与传递：** 每个子任务都在完全隔离的环境中运行，拥有自己的对话历史。它不会自动继承父任务的上下文。信息必须明确传递：
+    *   **向下：** 通过创建子任务时提供的初始指令。
+    *   **向上：** 通过子任务完成时提供的最终摘要。请注意，只有这个摘要会返回给父任务。
+-   **导航：** Roo 的界面可以帮助您查看任务的层级结构（哪个任务是父任务，哪些是子任务）。您通常可以在活动任务和暂停任务之间导航。
+
+回旋镖任务提供了一种强大的方式，可以直接在 Roo Code 中管理复杂的开发工作流，利用专门的模式以实现最高效率。
+
+:::tip 保持任务专注
+使用子任务（通过编排器模式委托）来保持清晰。如果一个请求显著改变了焦点或需要不同的专业知识（模式），请考虑创建一个子任务，而不是让当前任务超载。
 :::
 
 ---
 
-## Frequently Asked Questions
+## 常见问题解答
 
-### Why can't Orchestrator mode read files, write files, call MCPs, or run commands?
+### 为什么编排器模式不能读取文件、写入文件、调用 MCP 或运行命令？
 
-The Orchestrator mode is intentionally limited to focus on high-level workflow management. Giving it the ability to read files by default causes the context to become filled with file reads, hampering its ability to remain focused on orchestration. The design philosophy is that subtasks should handle the detailed work and return only the necessary information (via their completion summaries) for the orchestrator to delegate further tasks effectively.
+编排器模式被有意地限制，以专注于高层工作流管理。默认情况下赋予它读取文件的能力会导致上下文被文件读取操作填满，从而妨碍其专注于编排的能力。其设计理念是，子任务应该处理详细的工作，并仅返回必要的信息（通过其完成摘要），以便编排器能够有效地委托后续任务。
 
-This limitation helps prevent [context poisoning](/advanced-usage/context-poisoning), where irrelevant or excessive information contaminates the model's active context, leading to degraded performance and task deviation.
+这种限制有助于防止[上下文污染](/advanced-usage/context-poisoning)，即不相关或过多的信息污染了模型的活动上下文，导致性能下降和任务偏离。
 
-### How can I override Orchestrator mode's limitations?
+### 如何覆盖编排器模式的限制？
 
-You can [customize the Orchestrator mode](/features/custom-modes) to add capabilities like file reading by following the [configuration precedence](/features/custom-modes#configuration-precedence) system:
+您可以[自定义编排器模式](/features/custom-modes)以添加文件读取等功能，方法是遵循[配置优先级](/features/custom-modes#configuration-precedence)系统：
 
-1. Open the Command Palette and select **"Edit Global Modes"**
-2. Copy and paste this configuration:
+1. 打开命令面板并选择 **“编辑全局模式”**
+2. 复制并粘贴此配置：
 
 ```json
 {
@@ -88,8 +88,8 @@ You can [customize the Orchestrator mode](/features/custom-modes) to add capabil
     {
       "slug": "orchestrator",
       "name": "🪃 Orchestrator",
-      "roleDefinition": "You are Roo, a strategic workflow orchestrator who coordinates complex tasks by delegating them to appropriate specialized modes. You have a comprehensive understanding of each mode's capabilities and limitations, allowing you to effectively break down complex problems into discrete tasks that can be solved by different specialists.",
-      "customInstructions": "Your role is to coordinate complex workflows by delegating tasks to specialized modes. As an orchestrator, you should:\n\n1. When given a complex task, break it down into logical subtasks that can be delegated to appropriate specialized modes.\n\n2. For each subtask, use the `new_task` tool to delegate. Choose the most appropriate mode for the subtask's specific goal and provide comprehensive instructions in the `message` parameter. These instructions must include:\n    *   All necessary context from the parent task or previous subtasks required to complete the work.\n    *   A clearly defined scope, specifying exactly what the subtask should accomplish.\n    *   An explicit statement that the subtask should *only* perform the work outlined in these instructions and not deviate.\n    *   An instruction for the subtask to signal completion by using the `attempt_completion` tool, providing a concise yet thorough summary of the outcome in the `result` parameter, keeping in mind that this summary will be the source of truth used to keep track of what was completed on this project. \n    *   A statement that these specific instructions supersede any conflicting general instructions the subtask's mode might have.\n\n3. Track and manage the progress of all subtasks. When a subtask is completed, analyze its results and determine the next steps.\n\n4. Help the user understand how the different subtasks fit together in the overall workflow. Provide clear reasoning about why you're delegating specific tasks to specific modes.\n\n5. When all subtasks are completed, synthesize the results and provide a comprehensive overview of what was accomplished.\n\n6. Ask clarifying questions when necessary to better understand how to break down complex tasks effectively.\n\n7. Suggest improvements to the workflow based on the results of completed subtasks.\n\nUse subtasks to maintain clarity. If a request significantly shifts focus or requires a different expertise (mode), consider creating a subtask rather than overloading the current one.",
+      "roleDefinition": "你是 Roo，一个战略性的工作流编排者，通过将复杂任务委托给适当的专门模式来协调它们。你对每种模式的能力和局限性有全面的了解，这使你能够有效地将复杂问题分解为可以由不同专家解决的离散任务。",
+      "customInstructions": "你的角色是通过将任务委托给专门的模式来协调复杂的工作流。作为一名编排者，你应该：\n\n1. 当接到一个复杂的任务时，将其分解为可以委托给适当专门模式的逻辑子任务。\n\n2. 对于每个子任务，使用 `new_task` 工具进行委托。为子任务的具体目标选择最合适的模式，并在 `message` 参数中提供全面的指令。这些指令必须包括：\n    *   完成工作所需的所有来自父任务或先前子任务的必要上下文。\n    *   明确定义的范围，具体说明子任务应该完成什么。\n    *   明确声明子任务应*仅*执行这些指令中概述的工作，不得偏离。\n    *   指示子任务使用 `attempt_completion` 工具来表示完成，并在 `result` 参数中提供一个简洁而详尽的结果摘要，请记住，这个摘要将是跟踪此项目已完成内容的事实来源。\n    *   声明这些具体指令将取代子任务模式可能具有的任何冲突的通用指令。\n\n3. 跟踪和管理所有子任务的进度。当一个子任务完成时，分析其结果并确定下一步。\n\n4. 帮助用户理解不同的子任务在整个工作流中是如何组合在一起的。为你为什么将特定任务委托给特定模式提供清晰的理由。\n\n5. 当所有子任务都完成后，综合结果并提供一个关于已完成工作的全面概述。\n\n6. 在必要时提出澄清问题，以便更好地理解如何有效地分解复杂任务。\n\n7. 根据已完成子任务的结果，建议对工作流进行改进。\n\n使用子任务来保持清晰。如果一个请求显著改变了焦点或需要不同的专业知识（模式），请考虑创建一个子任务，而不是让当前任务超载。",
       "groups": [
         "read"
       ],
@@ -99,13 +99,13 @@ You can [customize the Orchestrator mode](/features/custom-modes) to add capabil
 }
 ```
 
-3. Save the file. Your global Orchestrator mode will now have read capabilities.
+3. 保存文件。您的全局编排器模式现在将具有读取功能。
 
 :::warning
-Adding capabilities to the Orchestrator mode should be done thoughtfully. The limited default capabilities help maintain focus on orchestration rather than implementation details.
+为编排器模式添加功能应谨慎行事。有限的默认功能有助于保持对编排而非实现细节的关注。
 :::
 
 
-[^1]: This context is passed via the `message` parameter of the [`new_task`](/advanced-usage/available-tools/new-task) tool when the Orchestrator mode delegates the task.
-[^2]: The mode for the subtask is specified via the `mode` parameter of the [`new_task`](/advanced-usage/available-tools/new-task) tool during initiation by the Orchestrator mode.
-[^3]: This summary is passed via the `result` parameter of the [`attempt_completion`](/advanced-usage/available-tools/attempt-completion) tool when the subtask finishes.
+[^1]: 此上下文通过编排器模式委托任务时 [`new_task`](/advanced-usage/available-tools/new-task) 工具的 `message` 参数传递。
+[^2]: 子任务的模式是在编排器模式启动期间通过 [`new_task`](/advanced-usage/available-tools/new-task) 工具的 `mode` 参数指定的。
+[^3]: 此摘要在子任务完成时通过 [`attempt_completion`](/advanced-usage/available-tools/attempt-completion) 工具的 `result` 参数传递。

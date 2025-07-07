@@ -1,88 +1,88 @@
 ---
-sidebar_label: 'Footgun Prompting'
+sidebar_label: '危险的提示词工程'
 ---
 
-# Footgun Prompting: Override System Prompts
+# 危险的提示词工程：覆盖系统提示
 
-Footgun Prompting (System Prompt Override) lets you replace the default system prompt for a specific Roo Code mode. This offers granular control but bypasses built-in safeguards. Use with caution.
+危险的提示词工程（系统提示覆盖）允许您替换特定 Roo Code 模式的默认系统提示。这提供了精细的控制，但会绕过内置的保护措施。请谨慎使用。
 
-<img src="/img/footgun-prompting/footgun-prompting-1.png" alt="Warning indicator for active system prompt override" width="600" />
-**Warning Indicator:** When a system prompt override is active for the current mode, Roo Code will display a warning icon in the chat input area to remind you that the default behavior has been modified.
+<img src="/img/footgun-prompting/footgun-prompting-1.png" alt="活动系统提示覆盖的警告指示器" width="600" />
+**警告指示器：** 当某个模式的系统提示覆盖处于活动状态时，Roo Code 会在聊天输入区域显示一个警告图标，提醒您默认行为已被修改。
 
 
-:::info **footgun** _(noun)_
+:::info **footgun** _(名词)_
 
-1.  _(programming slang, humorous, derogatory)_ Any feature likely to lead to the programmer shooting themself in the foot.
+1.  _(编程俚语，幽默，贬义)_ 任何可能导致程序员“搬起石头砸自己的脚”的功能。
 
-> The System Prompt Override is considered a footgun because modifying the core instructions without a deep understanding can lead to unexpected or broken behavior, especially regarding tool usage and response consistency.
+> 系统提示覆盖被认为是一个“footgun”，因为在没有深入理解的情况下修改核心指令，可能会导致意外或损坏的行为，尤其是在工具使用和响应一致性方面。
 
 :::
 
 ---
 
-## How It Works
+## 工作原理
 
-1.  **Override File:** Create a file named `.roo/system-prompt-{mode-slug}` in your workspace root (e.g., `.roo/system-prompt-code` for the Code mode).
-2.  **Content:** The content of this file becomes the new system prompt for that specific mode.
-3.  **Activation:** Roo Code automatically detects this file. When present, it replaces most of the standard system prompt sections.
-4.  **Preserved Sections:** Only the core `roleDefinition` and any `customInstructions` you've set for the mode are kept alongside your override content. Standard sections like tool descriptions, rules, and capabilities are bypassed.
-5.  **Construction:** The final prompt sent to the model looks like this:
+1.  **覆盖文件：** 在您的工作区根目录中创建一个名为 `.roo/system-prompt-{mode-slug}` 的文件（例如，为 Code 模式创建 `.roo/system-prompt-code`）。
+2.  **内容：** 该文件的内容将成为该特定模式的新系统提示。
+3.  **激活：** Roo Code 会自动检测此文件。当文件存在时，它会替换大部分标准的系统提示部分。
+4.  **保留部分：** 只有核心的 `roleDefinition` 和您为该模式设置的任何 `customInstructions` 会与您的覆盖内容一起保留。工具描述、规则和功能等标准部分将被绕过。
+5.  **构造：** 发送给模型的最终提示如下所示：
 
     ```
     ${roleDefinition}
 
-    ${content_of_your_override_file}
+    ${您的覆盖文件的内容}
 
     ${customInstructions}
     ```
 
 ---
 
-## Accessing the Feature
+## 如何使用此功能
 
-Find the option and instructions in the Roo Code UI:
+在 Roo Code 用户界面中找到该选项和说明：
 
-1.  Click the <Codicon name="notebook" /> icon in the Roo Code top menu bar.
-2.  Expand the **"Advanced: Override System Prompt"** section.
-3.  Clicking the file path link within the explanation will open or create the correct override file for the currently selected mode in VS Code.
+1.  点击 Roo Code 顶部菜单栏中的 <Codicon name="notebook" /> 图标。
+2.  展开 **“高级：覆盖系统提示”** 部分。
+3.  点击说明中的文件路径链接，将在 VS Code 中打开或创建当前所选模式的正确覆盖文件。
 
-<img src="/img/footgun-prompting/footgun-prompting.png" alt="UI showing the Advanced: Override System Prompt section" width="500" />
-
----
-
-## Using Context Variables
-
-When creating your custom system prompt file, you can use special variables (placeholders) that Roo Code will automatically replace with relevant information about the current environment. This allows you to make your prompts more dynamic and context-aware.
-
-Here are the available variables:
-
-- `{{mode}}`: The slug (short name) of the current Roo Code mode being used (e.g., `code`, `chat-mode`).
-- `{{language}}`: The display language configured in VS Code (e.g., `en`, `es`).
-- `{{shell}}`: The default terminal shell configured in VS Code (e.g., `/bin/bash`, `powershell.exe`).
-- `{{operatingSystem}}`: The type of operating system your computer is running (e.g., `Linux`, `Darwin` for macOS, `Windows_NT`).
-- `{{workspace}}`: The file path to the root of your current project workspace.
-
-**Example Usage:**
-
-You can include these variables directly in your prompt file content like this:
-
-```
-You are assisting a user in the '{{mode}}' mode.
-Their operating system is {{operatingSystem}} and their default shell is {{shell}}.
-The project is located at: {{workspace}}.
-Please respond in {{language}}.
-```
-
-Roo Code substitutes these placeholders before sending the prompt to the model.
+<img src="/img/footgun-prompting/footgun-prompting.png" alt="显示“高级：覆盖系统提示”部分的用户界面" width="500" />
 
 ---
 
-## Key Considerations & Warnings
+## 使用上下文变量
 
-- **Intended Audience:** Best suited for users deeply familiar with Roo Code's prompting system and the implications of modifying core instructions.
-- **Impact on Functionality:** Custom prompts override standard instructions, including those for tool usage and response consistency. This can cause unexpected behavior or errors if not managed carefully.
-- **Mode-Specific:** Each override file applies only to the mode specified in its filename (`{mode-slug}`).
-- **No File, No Override:** If the `.roo/system-prompt-{mode-slug}` file doesn't exist, Roo Code uses the standard system prompt generation process for that mode.
-- **Blank Files Ignored:** If the override file exists but is empty (blank), it will be ignored and the default system prompt will be used.
-- **Directory Creation:** Roo Code ensures the `.roo` directory exists before attempting to read or create the override file.
-Use this feature cautiously. Incorrect implementation can significantly degrade Roo Code's performance and reliability for the affected mode.
+在创建自定义系统提示文件时，您可以使用一些特殊变量（占位符），Roo Code 会自动将它们替换为有关当前环境的相关信息。这使您的提示更具动态性和上下文感知能力。
+
+以下是可用的变量：
+
+- `{{mode}}`: 当前使用的 Roo Code 模式的标识符（简称）（例如 `code`, `chat-mode`）。
+- `{{language}}`: 在 VS Code 中配置的显示语言（例如 `en`, `es`）。
+- `{{shell}}`: 在 VS Code 中配置的默认终端 shell（例如 `/bin/bash`, `powershell.exe`）。
+- `{{operatingSystem}}`: 您的计算机正在运行的操作系统类型（例如 `Linux`, `Darwin` (macOS), `Windows_NT`）。
+- `{{workspace}}`: 当前项目工作区根目录的文件路径。
+
+**示例用法：**
+
+您可以像这样直接在提示文件内容中包含这些变量：
+
+```
+您正在以 '{{mode}}' 模式协助用户。
+他们的操作系统是 {{operatingSystem}}，默认 shell 是 {{shell}}。
+项目位于：{{workspace}}。
+请用 {{language}} 回答。
+```
+
+Roo Code 在将提示发送给模型之前会替换这些占位符。
+
+---
+
+## 关键注意事项和警告
+
+- **目标用户：** 最适合那些非常熟悉 Roo Code 提示系统以及修改核心指令所带来影响的用户。
+- **对功能的影响：** 自定义提示会覆盖标准指令，包括那些用于工具使用和响应一致性的指令。如果管理不当，这可能会导致意外行为或错误。
+- **模式特定：** 每个覆盖文件仅适用于其文件名中指定的模式 (`{mode-slug}`)。
+- **无文件，无覆盖：** 如果 `.roo/system-prompt-{mode-slug}` 文件不存在，Roo Code 将对该模式使用标准的系统提示生成过程。
+- **空文件将被忽略：** 如果覆盖文件存在但为空（空白），它将被忽略，并将使用默认的系统提示。
+- **目录创建：** Roo Code 会在尝试读取或创建覆盖文件之前，确保 `.roo` 目录存在。
+请谨慎使用此功能。不正确的实现会严重降低受影响模式下 Roo Code 的性能和可靠性。

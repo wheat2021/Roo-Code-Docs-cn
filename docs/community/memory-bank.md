@@ -1,13 +1,13 @@
-# Memory Bank Project by GreatScottyMac
+# GreatScottyMac 的 Memory Bank 项目
 
-[View Project on GitHub](https://github.com/GreatScottyMac/roo-code-memory-bank)
+[在 GitHub 上查看项目](https://github.com/GreatScottyMac/roo-code-memory-bank)
 
-The Roo Code Memory Bank project solves a critical challenge in AI-assisted development: **maintaining context across sessions**. By providing a structured memory system integrated with VS Code, it ensures your AI assistant maintains a deep understanding of your project across sessions.
+Roo Code Memory Bank 项目解决了一个在 AI 辅助开发中的关键挑战：**跨会话维护上下文**。通过提供一个与 VS Code 集成的结构化记忆系统，它能确保您的 AI 助手在不同会话中都能深入理解您的项目。
 
 ---
 
-## Key Features
+## 主要功能
 
-- 🧠 **Persistent Context**: Remembers project details across sessions and maintains consistent understanding of your codebase
-- 🔄 **Smart Workflows**: Mode-based operation with automatic context switching and project-specific customization
-- 📊 **Knowledge Management**: Structured documentation with technical decision tracking and automated progress monitoring
+- 🧠 **持久化上下文**: 跨会话记住项目细节，并保持对代码库的一致理解。
+- 🔄 **智能工作流**: 基于模式的操作，具有自动上下文切换和项目特定的自定义功能。
+- 📊 **知识管理**: 结构化文档，包含技术决策跟踪和自动化进度监控。

@@ -2,26 +2,26 @@
 sidebar_label: Google Gemini
 ---
 
-# Using Google Gemini With Roo Code
+# 通过 Roo Code 使用 Google Gemini
 
-Roo Code supports Google's Gemini family of models through the Google AI Gemini API.
+Roo Code 通过 Google AI Gemini API 支持 Google 的 Gemini 系列模型。
 
-**Website:** [https://ai.google.dev/](https://ai.google.dev/)
-
----
-
-## Getting an API Key
-
-1.  **Go to Google AI Studio:** Navigate to [https://ai.google.dev/](https://ai.google.dev/).
-2.  **Sign In:** Sign in with your Google account.
-3.  **Create API Key:** Click on "Create API key" in the left-hand menu.
-4.  **Copy API Key:** Copy the generated API key.
+**网站：** [https://ai.google.dev/](https://ai.google.dev/)
 
 ---
 
-## Supported Models
+## 获取 API 密钥
 
-Roo Code supports the following Gemini models:
+1.  **前往 Google AI Studio：** 访问 [https://ai.google.dev/](https://ai.google.dev/)。
+2.  **登录：** 使用您的 Google 帐户登录。
+3.  **创建 API 密钥：** 点击左侧菜单中的“创建 API 密钥”。
+4.  **复制 API 密钥：** 复制生成的 API 密钥。
+
+---
+
+## 支持的模型
+
+Roo Code 支持以下 Gemini 模型：
 
 * `gemini-2.5-flash-preview-05-20`
 * `gemini-2.5-pro-exp-03-25`
@@ -38,19 +38,19 @@ Roo Code supports the following Gemini models:
 * `gemini-1.5-pro-exp-0827`
 * `gemini-exp-1206`
 
-Refer to the [Gemini documentation](https://ai.google.dev/models/gemini) for more details on each model.
+有关每个模型的更多详细信息，请参阅 [Gemini 文档](https://ai.google.dev/models/gemini)。
 
 ---
 
-## Configuration in Roo Code
+## 在 Roo Code 中配置
 
-1.  **Open Roo Code Settings:** Click the gear icon (<Codicon name="gear" />) in the Roo Code panel.
-2.  **Select Provider:** Choose "Google Gemini" from the "API Provider" dropdown.
-3.  **Enter API Key:** Paste your Gemini API key into the "Gemini API Key" field.
-4.  **Select Model:** Choose your desired Gemini model from the "Model" dropdown.
+1.  **打开 Roo Code 设置：** 点击 Roo Code 面板中的齿轮图标 (<Codicon name="gear" />)。
+2.  **选择提供商：** 从“API 提供商”下拉菜单中选择“Google Gemini”。
+3.  **输入 API 密钥：** 将您的 Gemini API 密钥粘贴到“Gemini API 密钥”字段中。
+4.  **选择模型：** 从“模型”下拉菜单中选择您想要的 Gemini 模型。
 
 ---
 
-## Tips and Notes
+## 提示与说明
 
-*   **Pricing:**  Gemini API usage is priced based on input and output tokens. Refer to the [Gemini pricing page](https://ai.google.dev/pricing) for detailed information.
+*   **定价：** Gemini API 的使用根据输入和输出令牌计费。有关详细信息，请参阅 [Gemini 定价页面](https://ai.google.dev/pricing)。
