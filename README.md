@@ -1,6 +1,6 @@
 # Roo Code 中文文档
 
-**请注意：** 此仓库是 Roo Code 官方文档的中文翻译版本，目前正在翻译过程中。内容的准确性和时效性请以原始英文文档为准。
+**请注意：** 此仓库是 Roo Code 2025年7月7日官方文档的中文翻译版本，目前已经翻译完毕。内容的准确性和时效性请以原始英文文档为准。
 
 *   **原始英文文档网站：** [https://docs.roocode.com](https://docs.roocode.com)
 *   **原始英文文档仓库：** [https://github.com/RooCodeInc/Roo-Code-Docs](https://github.com/RooCodeInc/Roo-Code-Docs)

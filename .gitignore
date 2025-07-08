@@ -29,3 +29,5 @@ TEMP/
 .history/
 
 .roo/mcp.json
+.idea/
+*.swp
